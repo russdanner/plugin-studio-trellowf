@@ -1,0 +1,92 @@
+# This file describes a plugin for use in CrafterCMS
+
+# The version of the format for this file
+descriptorVersion: 2
+
+# Describe the plugin
+plugin:
+  type: site
+  id: org.rd.plugin.trellowf
+  name: Trello Worlfow
+  tags:
+    - workflow
+    - trello
+  version:
+    major: 1
+    minor: 0
+    patch: 0
+  description: A plugin to provide a workflow
+  documentation: "https://raw.githubusercontent.com/russdanner/plugin-studio-mediaconvert/master/README.md"
+  website:
+    name: Trello Plugin
+    url: https://github.com/russdanner/plugin-trello
+  media:
+    screenshots:
+      - title: CrafterCMS
+        description: CrafterCMS Plugin for Trello
+        url: "https://raw.githubusercontent.com/russdanner/plugin-studio-trello-wf/master/.crafter/logo.png"
+  developer:
+    company:
+      name: Russ Danner
+      email: russdanner@craftercms.com
+      url: https://github.com/russdanner
+  build:
+    id: cafebabe313b24b5e0481d6ba87901d0b02716c9
+    date: 2022-01-07T00:00:00Z
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+  crafterCmsVersions:
+    - major: 4
+      minor: 0
+      patch: 0
+    - major: 4
+      minor: 0
+      patch: 1
+    - major: 4
+      minor: 0
+      patch: 2
+  crafterCmsEditions:
+    - community
+    - enterprise
+  parameters:
+    - label: Trello
+      name: trelloApiKey
+      description: Trello Key
+    - label: Trello
+      name: trelloApiToken
+      description: Trello Token
+    - label: Trello
+      name: trelloDefaultBoardId
+      description: Default Board Id
+installation:
+    - type: filter
+      elementXpath: //widget[@id='org.rd.plugin.trellowf.components.reactComponent']
+      parentXpath: //widget[@id='craftercms.components.ToolsPanel']/configuration/widgets
+      element:
+        name: widget
+        attributes:
+          - name: id
+            value: org.rd.plugin.trellowf.components.reactComponent
+
+    - type: preview-app
+      elementXpath: //widget[@id='org.rd.plugin.trellowf.components.reactComponent']
+      parentXpath: //widget[@id='craftercms.components.ToolsPanel']/configuration/widgets
+      element:
+        name: widget
+        attributes:
+          - name: id
+            value: org.rd.plugin.trellowf.components.reactComponent
+        children:
+          - name: plugin
+            attributes:
+              - name: id
+                value: org.rd.plugin.trellowf
+              - name: site
+                value: "{site}"
+              - name: type
+                value: apps
+              - name: name
+                value: trellowf
+              - name: file
+                value: index.modern.js
