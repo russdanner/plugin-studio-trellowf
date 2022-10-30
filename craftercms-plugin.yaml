@@ -14,9 +14,9 @@ plugin:
   version:
     major: 1
     minor: 0
-    patch: 1
+    patch: 3
   description: A plugin to provide a workflow
-  documentation: "https://raw.githubusercontent.com/russdanner/plugin-studio-mediaconvert/master/README.md"
+  documentation: "https://raw.githubusercontent.com/russdanner/plugin-studio-trellowf/master/README.md"
   website:
     name: Trello Plugin
     url: https://github.com/russdanner/plugin-trello
