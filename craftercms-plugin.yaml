@@ -14,7 +14,7 @@ plugin:
   version:
     major: 1
     minor: 0
-    patch: 4
+    patch: 5
   description: A plugin to provide a workflow
   documentation: "https://raw.githubusercontent.com/russdanner/plugin-studio-trellowf/master/README.md"
   website:
@@ -62,7 +62,7 @@ plugin:
     - label: Default Board Id 
       name: trelloDefaultBoardId
       description: Default Board Id
-installation:
+  installation:
     - type: preview-app
       elementXpath: //widget[@id='org.rd.plugin.trellowf.components.reactComponent']
       parentXpath: //widget[@id='craftercms.components.ToolsPanel']/configuration/widgets
