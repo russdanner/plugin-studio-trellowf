@@ -1,6 +1,6 @@
 # Trello Workflow Plugin for CrafterCMS
 
-Add a the ability to view and link to trello boards in your Studio project
+Add a the ability to view and link to Trello boards in your Studio project
 
 # Installation
 
