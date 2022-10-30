@@ -63,15 +63,6 @@ plugin:
       name: trelloDefaultBoardId
       description: Default Board Id
 installation:
-    - type: filter
-      elementXpath: //widget[@id='org.rd.plugin.trellowf.components.reactComponent']
-      parentXpath: //widget[@id='craftercms.components.ToolsPanel']/configuration/widgets
-      element:
-        name: widget
-        attributes:
-          - name: id
-            value: org.rd.plugin.trellowf.components.reactComponent
-
     - type: preview-app
       elementXpath: //widget[@id='org.rd.plugin.trellowf.components.reactComponent']
       parentXpath: //widget[@id='craftercms.components.ToolsPanel']/configuration/widgets
