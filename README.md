@@ -24,3 +24,7 @@ You may add as many boards to your sidebar as you like by adding the widget to S
          </configuration>
     </widget>
 ```
+
+# Screenshots
+<img width="1446" alt="craftercms-trello-board-screenshot-1" src="https://user-images.githubusercontent.com/169432/198916799-f081ab78-e6ca-4866-9429-4ac746f415df.png">
+
