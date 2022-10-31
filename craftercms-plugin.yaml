@@ -7,7 +7,7 @@ descriptorVersion: 2
 plugin:
   type: site
   id: org.rd.plugin.trellowf
-  name: Trello Worlfow
+  name: Trello Workfow
   tags:
     - workflow
     - trello
@@ -15,7 +15,7 @@ plugin:
     major: 1
     minor: 0
     patch: 5
-  description: A plugin to provide a workflow
+  description: A plugin to provide a Trello-based workflow
   documentation: "https://raw.githubusercontent.com/russdanner/plugin-studio-trellowf/master/README.md"
   website:
     name: Trello Plugin
