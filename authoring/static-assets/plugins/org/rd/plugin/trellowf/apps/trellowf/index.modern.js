@@ -1,7 +1,7 @@
 var { useLayoutEffect, useEffect, useRef, useCallback, useMemo, forwardRef, useContext, createContext, createElement, Fragment: Fragment$1, Children, isValidElement, cloneElement, useState, useImperativeHandle, Suspense: Suspense$1 } = craftercms.libs.React;
 var React = craftercms.libs.React && Object.prototype.hasOwnProperty.call(craftercms.libs.React, 'default') ? craftercms.libs.React['default'] : craftercms.libs.React;
 var _utils = craftercms.libs.MaterialUI && Object.prototype.hasOwnProperty.call(craftercms.libs.MaterialUI, 'default') ? craftercms.libs.MaterialUI['default'] : craftercms.libs.MaterialUI;
-var { Skeleton, Tooltip, Dialog, DialogTitle, Grid, Card, CardHeader, Paper, Typography: Typography$1, Box } = craftercms.libs.MaterialUI;
+var { Skeleton, Tooltip, useTheme: useTheme$3, Dialog, DialogTitle, Typography: Typography$1, IconButton: IconButton$1, Grid, Card, CardHeader, Paper, Box } = craftercms.libs.MaterialUI;
 var { createIntl, createIntlCache, useIntl } = craftercms.libs.ReactIntl;
 
 /*! *****************************************************************************
@@ -44,6 +44,173 @@ var __assign = function() {
     return __assign.apply(this, arguments);
 };
 
+var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
+
+function getDefaultExportFromCjs (x) {
+	return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, 'default') ? x['default'] : x;
+}
+
+function createCommonjsModule(fn, basedir, module) {
+	return module = {
+		path: basedir,
+		exports: {},
+		require: function (path, base) {
+			return commonjsRequire(path, (base === undefined || base === null) ? module.path : base);
+		}
+	}, fn(module, module.exports), module.exports;
+}
+
+function commonjsRequire () {
+	throw new Error('Dynamic requires are not currently supported by @rollup/plugin-commonjs');
+}
+
+var interopRequireDefault = createCommonjsModule(function (module) {
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : {
+    "default": obj
+  };
+}
+
+module.exports = _interopRequireDefault;
+module.exports["default"] = module.exports, module.exports.__esModule = true;
+});
+
+var createSvgIcon = createCommonjsModule(function (module, exports) {
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+Object.defineProperty(exports, "default", {
+  enumerable: true,
+  get: function () {
+    return _utils.createSvgIcon;
+  }
+});
+});
+
+/*
+object-assign
+(c) Sindre Sorhus
+@license MIT
+*/
+/* eslint-disable no-unused-vars */
+var getOwnPropertySymbols = Object.getOwnPropertySymbols;
+var hasOwnProperty = Object.prototype.hasOwnProperty;
+var propIsEnumerable = Object.prototype.propertyIsEnumerable;
+
+function toObject(val) {
+	if (val === null || val === undefined) {
+		throw new TypeError('Object.assign cannot be called with null or undefined');
+	}
+
+	return Object(val);
+}
+
+function shouldUseNative() {
+	try {
+		if (!Object.assign) {
+			return false;
+		}
+
+		// Detect buggy property enumeration order in older V8 versions.
+
+		// https://bugs.chromium.org/p/v8/issues/detail?id=4118
+		var test1 = new String('abc');  // eslint-disable-line no-new-wrappers
+		test1[5] = 'de';
+		if (Object.getOwnPropertyNames(test1)[0] === '5') {
+			return false;
+		}
+
+		// https://bugs.chromium.org/p/v8/issues/detail?id=3056
+		var test2 = {};
+		for (var i = 0; i < 10; i++) {
+			test2['_' + String.fromCharCode(i)] = i;
+		}
+		var order2 = Object.getOwnPropertyNames(test2).map(function (n) {
+			return test2[n];
+		});
+		if (order2.join('') !== '0123456789') {
+			return false;
+		}
+
+		// https://bugs.chromium.org/p/v8/issues/detail?id=3056
+		var test3 = {};
+		'abcdefghijklmnopqrst'.split('').forEach(function (letter) {
+			test3[letter] = letter;
+		});
+		if (Object.keys(Object.assign({}, test3)).join('') !==
+				'abcdefghijklmnopqrst') {
+			return false;
+		}
+
+		return true;
+	} catch (err) {
+		// We don't expect any of the above to throw, but better to be safe.
+		return false;
+	}
+}
+
+var objectAssign = shouldUseNative() ? Object.assign : function (target, source) {
+	var from;
+	var to = toObject(target);
+	var symbols;
+
+	for (var s = 1; s < arguments.length; s++) {
+		from = Object(arguments[s]);
+
+		for (var key in from) {
+			if (hasOwnProperty.call(from, key)) {
+				to[key] = from[key];
+			}
+		}
+
+		if (getOwnPropertySymbols) {
+			symbols = getOwnPropertySymbols(from);
+			for (var i = 0; i < symbols.length; i++) {
+				if (propIsEnumerable.call(from, symbols[i])) {
+					to[symbols[i]] = from[symbols[i]];
+				}
+			}
+		}
+	}
+
+	return to;
+};
+
+var reactJsxRuntime_production_min = createCommonjsModule(function (module, exports) {
+var g=60103;exports.Fragment=60107;if("function"===typeof Symbol&&Symbol.for){var h=Symbol.for;g=h("react.element");exports.Fragment=h("react.fragment");}var m=React.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentOwner,n=Object.prototype.hasOwnProperty,p={key:!0,ref:!0,__self:!0,__source:!0};
+function q(c,a,k){var b,d={},e=null,l=null;void 0!==k&&(e=""+k);void 0!==a.key&&(e=""+a.key);void 0!==a.ref&&(l=a.ref);for(b in a)n.call(a,b)&&!p.hasOwnProperty(b)&&(d[b]=a[b]);if(c&&c.defaultProps)for(b in a=c.defaultProps,a)void 0===d[b]&&(d[b]=a[b]);return {$$typeof:g,type:c,key:e,ref:l,props:d,_owner:m.current}}exports.jsx=q;exports.jsxs=q;
+});
+
+var jsxRuntime = createCommonjsModule(function (module) {
+
+{
+  module.exports = reactJsxRuntime_production_min;
+}
+});
+
+var EditRounded = createCommonjsModule(function (module, exports) {
+
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _createSvgIcon = interopRequireDefault(createSvgIcon);
+
+
+
+var _default = (0, _createSvgIcon.default)( /*#__PURE__*/(0, jsxRuntime.jsx)("path", {
+  d: "M3 17.46v3.04c0 .28.22.5.5.5h3.04c.13 0 .26-.05.35-.15L17.81 9.94l-3.75-3.75L3.15 17.1c-.1.1-.15.22-.15.36zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.9959.9959 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"
+}), 'EditRounded');
+
+exports.default = _default;
+});
+
+var EditRoundedIcon = /*@__PURE__*/getDefaultExportFromCjs(EditRounded);
+
 function _objectWithoutPropertiesLoose(source, excluded) {
   if (source == null) return {};
   var target = {};
@@ -75,26 +242,6 @@ function _extends() {
   };
 
   return _extends.apply(this, arguments);
-}
-
-var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
-
-function getDefaultExportFromCjs (x) {
-	return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, 'default') ? x['default'] : x;
-}
-
-function createCommonjsModule(fn, basedir, module) {
-	return module = {
-		path: basedir,
-		exports: {},
-		require: function (path, base) {
-			return commonjsRequire(path, (base === undefined || base === null) ? module.path : base);
-		}
-	}, fn(module, module.exports), module.exports;
-}
-
-function commonjsRequire () {
-	throw new Error('Dynamic requires are not currently supported by @rollup/plugin-commonjs');
 }
 
 /**
@@ -588,107 +735,6 @@ function generateUtilityClasses(componentName, slots) {
   });
   return result;
 }
-
-/*
-object-assign
-(c) Sindre Sorhus
-@license MIT
-*/
-/* eslint-disable no-unused-vars */
-var getOwnPropertySymbols = Object.getOwnPropertySymbols;
-var hasOwnProperty = Object.prototype.hasOwnProperty;
-var propIsEnumerable = Object.prototype.propertyIsEnumerable;
-
-function toObject(val) {
-	if (val === null || val === undefined) {
-		throw new TypeError('Object.assign cannot be called with null or undefined');
-	}
-
-	return Object(val);
-}
-
-function shouldUseNative() {
-	try {
-		if (!Object.assign) {
-			return false;
-		}
-
-		// Detect buggy property enumeration order in older V8 versions.
-
-		// https://bugs.chromium.org/p/v8/issues/detail?id=4118
-		var test1 = new String('abc');  // eslint-disable-line no-new-wrappers
-		test1[5] = 'de';
-		if (Object.getOwnPropertyNames(test1)[0] === '5') {
-			return false;
-		}
-
-		// https://bugs.chromium.org/p/v8/issues/detail?id=3056
-		var test2 = {};
-		for (var i = 0; i < 10; i++) {
-			test2['_' + String.fromCharCode(i)] = i;
-		}
-		var order2 = Object.getOwnPropertyNames(test2).map(function (n) {
-			return test2[n];
-		});
-		if (order2.join('') !== '0123456789') {
-			return false;
-		}
-
-		// https://bugs.chromium.org/p/v8/issues/detail?id=3056
-		var test3 = {};
-		'abcdefghijklmnopqrst'.split('').forEach(function (letter) {
-			test3[letter] = letter;
-		});
-		if (Object.keys(Object.assign({}, test3)).join('') !==
-				'abcdefghijklmnopqrst') {
-			return false;
-		}
-
-		return true;
-	} catch (err) {
-		// We don't expect any of the above to throw, but better to be safe.
-		return false;
-	}
-}
-
-var objectAssign = shouldUseNative() ? Object.assign : function (target, source) {
-	var from;
-	var to = toObject(target);
-	var symbols;
-
-	for (var s = 1; s < arguments.length; s++) {
-		from = Object(arguments[s]);
-
-		for (var key in from) {
-			if (hasOwnProperty.call(from, key)) {
-				to[key] = from[key];
-			}
-		}
-
-		if (getOwnPropertySymbols) {
-			symbols = getOwnPropertySymbols(from);
-			for (var i = 0; i < symbols.length; i++) {
-				if (propIsEnumerable.call(from, symbols[i])) {
-					to[symbols[i]] = from[symbols[i]];
-				}
-			}
-		}
-	}
-
-	return to;
-};
-
-var reactJsxRuntime_production_min = createCommonjsModule(function (module, exports) {
-var g=60103;exports.Fragment=60107;if("function"===typeof Symbol&&Symbol.for){var h=Symbol.for;g=h("react.element");exports.Fragment=h("react.fragment");}var m=React.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentOwner,n=Object.prototype.hasOwnProperty,p={key:!0,ref:!0,__self:!0,__source:!0};
-function q(c,a,k){var b,d={},e=null,l=null;void 0!==k&&(e=""+k);void 0!==a.key&&(e=""+a.key);void 0!==a.ref&&(l=a.ref);for(b in a)n.call(a,b)&&!p.hasOwnProperty(b)&&(d[b]=a[b]);if(c&&c.defaultProps)for(b in a=c.defaultProps,a)void 0===d[b]&&(d[b]=a[b]);return {$$typeof:g,type:c,key:e,ref:l,props:d,_owner:m.current}}exports.jsx=q;exports.jsxs=q;
-});
-
-var jsxRuntime = createCommonjsModule(function (module) {
-
-{
-  module.exports = reactJsxRuntime_production_min;
-}
-});
 
 var _extends_1 = createCommonjsModule(function (module) {
 function _extends() {
@@ -5642,30 +5688,6 @@ const IconButton = /*#__PURE__*/forwardRef(function IconButton(inProps, ref) {
   }, other, {
     children: children
   }));
-});
-
-var interopRequireDefault = createCommonjsModule(function (module) {
-function _interopRequireDefault(obj) {
-  return obj && obj.__esModule ? obj : {
-    "default": obj
-  };
-}
-
-module.exports = _interopRequireDefault;
-module.exports["default"] = module.exports, module.exports.__esModule = true;
-});
-
-var createSvgIcon = createCommonjsModule(function (module, exports) {
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-Object.defineProperty(exports, "default", {
-  enumerable: true,
-  get: function () {
-    return _utils.createSvgIcon;
-  }
-});
 });
 
 var ChevronRightRounded = createCommonjsModule(function (module, exports) {
@@ -13855,72 +13877,6 @@ function ToolsPanelListItemButton(props) {
   );
 }
 
-/**
- * @deprecated Not used internally. Use `MediaQueryListEvent` from lib.dom.d.ts instead.
- */
-
-function useMediaQuery(queryInput, options = {}) {
-  const theme = useTheme$1(); // Wait for jsdom to support the match media feature.
-  // All the browsers MUI support have this built-in.
-  // This defensive check is here for simplicity.
-  // Most of the time, the match media logic isn't central to people tests.
-
-  const supportMatchMedia = typeof window !== 'undefined' && typeof window.matchMedia !== 'undefined';
-  const {
-    defaultMatches = false,
-    matchMedia = supportMatchMedia ? window.matchMedia : null,
-    noSsr = false,
-    ssrMatchMedia = null
-  } = getThemeProps({
-    name: 'MuiUseMediaQuery',
-    props: options,
-    theme
-  });
-
-  let query = typeof queryInput === 'function' ? queryInput(theme) : queryInput;
-  query = query.replace(/^@media( ?)/m, '');
-  const [match, setMatch] = useState(() => {
-    if (noSsr && supportMatchMedia) {
-      return matchMedia(query).matches;
-    }
-
-    if (ssrMatchMedia) {
-      return ssrMatchMedia(query).matches;
-    } // Once the component is mounted, we rely on the
-    // event listeners to return the correct matches value.
-
-
-    return defaultMatches;
-  });
-  useEnhancedEffect(() => {
-    let active = true;
-
-    if (!supportMatchMedia) {
-      return undefined;
-    }
-
-    const queryList = matchMedia(query);
-
-    const updateMatch = () => {
-      // Workaround Safari wrong implementation of matchMedia
-      // TODO can we remove it?
-      // https://github.com/mui-org/material-ui/pull/17315#issuecomment-528286677
-      if (active) {
-        setMatch(queryList.matches);
-      }
-    };
-
-    updateMatch();
-    queryList.addListener(updateMatch);
-    return () => {
-      active = false;
-      queryList.removeListener(updateMatch);
-    };
-  }, [query, matchMedia, supportMatchMedia]);
-
-  return match;
-}
-
 var js_cookie = createCommonjsModule(function (module, exports) {
 (function (global, factory) {
    module.exports = factory() ;
@@ -14079,10 +14035,9 @@ var ReactComponent = function (_a) {
     }, []);
     var dataLoadChannels = function () {
         // @ts-ignore
-        var siteId = jsCookie.get("crafterSite");
+        var siteId = jsCookie.get('crafterSite');
         // @ts-ignore
-        var serviceUrl = '/studio/api/2/plugin/script/plugins/org/rd/plugin/trellowf/trellowf/board/lists.json'
-            + '?siteId=' + siteId;
+        var serviceUrl = '/studio/api/2/plugin/script/plugins/org/rd/plugin/trellowf/trellowf/board/lists.json' + '?siteId=' + siteId;
         if (boardId) {
             serviceUrl += '&boardId=' + boardId;
         }
@@ -14092,35 +14047,37 @@ var ReactComponent = function (_a) {
         });
     };
     var _b = useState(false), open = _b[0], setOpen = _b[1];
+    var darkMode = useTheme$3().palette.mode === 'dark';
     var _c = useState({
-        board: { name: "", url: "", prefs: { backgroundImage: "" } },
-        lists: {},
-        textColor: (String(useMediaQuery('(prefers-color-scheme: dark)')) === "true") ? 'white' : 'black',
-        listBackgroundColor: (useMediaQuery('(prefers-color-scheme: dark)') === true) ? 'grey' : 'grey.A200'
+        board: { name: '', url: '', prefs: { backgroundImage: '' } },
+        lists: {}
     }), state = _c[0], setState = _c[1];
     return (createElement(Fragment$1, null,
-        createElement(ToolsPanelListItemButton, { icon: { id: '@mui/icons-material/AutoAwesomeMotionOutlined' }, title: state.board.name, onClick: function () { return setOpen(true); } }),
+        createElement(ToolsPanelListItemButton, { icon: { id: '@mui/icons-material/AbcRounded' }, title: state.board.name, onClick: function () { return setOpen(true); } }),
         createElement(Dialog, { fullWidth: true, maxWidth: 'xl', onClose: function () { return setOpen(false); }, "aria-labelledby": "simple-dialog-title", open: open, style: { overflow: 'auto' } },
-            createElement(DialogTitle, { id: "max-width-dialog-title" },
-                createElement("a", { style: { textDecoration: "none", color: "" + state.textColor }, href: state.board.url, target: "new" }, state.board.name)),
+            createElement(DialogTitle, { sx: { display: 'flex', justifyContent: 'space-between' }, id: "max-width-dialog-title" },
+                createElement(Typography$1, null, state.board.name),
+                createElement(IconButton$1, { href: state.board.url, target: "new", "aria-label": "Edit in Trello" },
+                    createElement(EditRoundedIcon, null))),
             createElement(Grid, { container: true, spacing: 2, style: { backgroundImage: "url(" + state.board.prefs.backgroundImage + ")" } },
                 createElement(Grid, { item: true, xs: 12 },
-                    createElement(Grid, { container: true, justifyContent: "left", paddingTop: 3, paddingBottom: 3, paddingLeft: 3, spacing: 3, style: { flexFlow: 'row' } }, state.lists && Object.entries(state.lists).map(function (_a) {
-                        var _b;
-                        var listIdx = _a[0];
-                        var list = state.lists[listIdx];
-                        var cards = list.cards && Object.entries(list.cards).map(function (_a) {
-                            var cardIdx = _a[0];
-                            var card = list.cards[cardIdx];
-                            return (createElement(Card, null,
-                                createElement("a", { href: card.url, target: "card", style: { textDecoration: "none", color: state.textColor } },
-                                    (card.cover.color && card.cover.color != "") ? (createElement("div", { style: { backgroundColor: "" + card.cover.color } }, "\u00A0")) : (createElement("div", null, "\u00A0")),
-                                    createElement(CardHeader, { style: { color: state.textColor }, title: card.name, titleTypographyProps: { variant: 'body1' } }))));
-                        });
-                        return (createElement(Paper, { elevation: 1, style: { margin: '10px' }, sx: { p: 1, bgcolor: state.listBackgroundColor } },
-                            createElement(Typography$1, { variant: "h6", component: "h2", sx: { mb: 1 } }, list.name),
-                            createElement(Box, { sx: (_b = {}, _b["." + cardClasses.root + ":not(:last-child)"] = { mb: 1 }, _b) }, cards)));
-                    })))))));
+                    createElement(Grid, { container: true, justifyContent: "left", paddingTop: 3, paddingBottom: 3, paddingLeft: 3, spacing: 3, style: { flexFlow: 'row' } }, state.lists &&
+                        Object.entries(state.lists).map(function (_a) {
+                            var _b;
+                            var listIdx = _a[0];
+                            var list = state.lists[listIdx];
+                            var cards = list.cards &&
+                                Object.entries(list.cards).map(function (_a) {
+                                    var cardIdx = _a[0];
+                                    var card = list.cards[cardIdx];
+                                    return (createElement(Card, { elevation: 3, sx: { borderTop: card.cover.color ? "10px solid " + card.cover.color : "" } },
+                                        createElement(CardHeader, { action: createElement(IconButton$1, { href: card.url, target: "card", "aria-label": "Edit in Trello" },
+                                                createElement(EditRoundedIcon, null)), title: card.name, titleTypographyProps: { variant: 'body1' } })));
+                                });
+                            return (createElement(Paper, { elevation: 1, style: { margin: '10px' }, sx: { p: 1, bgcolor: darkMode ? 'grey' : 'grey.A200' } },
+                                createElement(Typography$1, { variant: "h6", component: "h2", sx: { mb: 1 } }, list.name),
+                                createElement(Box, { sx: (_b = {}, _b["." + cardClasses.root + ":not(:last-child)"] = { mb: 1 }, _b) }, cards)));
+                        })))))));
 };
 
 var plugin /*: PluginDescriptor */ = {
