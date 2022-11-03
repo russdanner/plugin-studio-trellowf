@@ -59,7 +59,7 @@ plugin:
     - label: Trello Token
       name: trelloApiToken
       description: Trello Token
-    - label: Default Board Id 
+    - label: Default Board Id
       name: trelloDefaultBoardId
       description: Default Board Id
   installation:
@@ -83,4 +83,4 @@ plugin:
               - name: name
                 value: trellowf
               - name: file
-                value: index.modern.js
+                value: index.js

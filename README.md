@@ -18,7 +18,7 @@ You may add as many boards to your `Sidebar` as you like by adding the widget to
                site="{site}"
                type="apps"
                name="trellowf"
-               file="index.modern.js"/>
+               file="index.js"/>
          <configuration>
             <boardId>A0ID0HERE0</boardId>
          </configuration>
