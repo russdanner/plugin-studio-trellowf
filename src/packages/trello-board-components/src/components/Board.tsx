@@ -77,8 +77,8 @@ const Board = ({ boardId }: BoardProps) => {
         Object.values(state.lists).map((list) => (
           <Paper
             elevation={1}
-            style={{ margin: '10px' }}
-            sx={(theme) => ({ p: 1, bgcolor: theme.palette.mode === 'dark' ? 'grey' : 'grey.A200' })}
+            style={{ }}
+            sx={(theme) => ({ width: "200px", display: "inline-table", margin: '10px',  p: 1, bgcolor: theme.palette.mode === 'dark' ? 'grey' : 'grey.A200' })}
           >
             <Typography variant="h6" component="h2" sx={{ mb: 1 }}>
               {list.name}

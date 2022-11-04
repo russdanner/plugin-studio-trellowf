@@ -68,7 +68,7 @@ module.exports = {
         // },
         {
           src: './dist/*',
-          dest: '../../../authoring/static-assets/plugins/org/rd/plugin/trellof/apps/trellowf'
+          dest: '../../../authoring/static-assets/plugins/org/rd/plugin/trellowf/apps/trellowf'
         }
       ]
     })
