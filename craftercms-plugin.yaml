@@ -14,7 +14,7 @@ plugin:
   version:
     major: 1
     minor: 0
-    patch: 7
+    patch: 8
   description: A plugin to provide a Trello-based workflow
   documentation: "https://raw.githubusercontent.com/russdanner/plugin-studio-trellowf/master/README.md"
   website:
