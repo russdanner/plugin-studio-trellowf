@@ -13,16 +13,18 @@ You will need the following information:
 
 You may add as many boards to your `Sidebar` as you like by adding the widget to Studio's UI.xml and specifying the board ID:
 ```
-    <widget id="org.rd.plugin.trellowf.components.reactComponent">
-       <plugin id="org.rd.plugin.trellowf"
-               site="{site}"
-               type="apps"
-               name="trellowf"
-               file="index.js"/>
-         <configuration>
-            <boardId>A0ID0HERE0</boardId>
-         </configuration>
-    </widget>
+            <widget id="org.rd.plugin.trellowf.openBoardButton">
+               <plugin id="org.rd.plugin.trellowf"
+                       site="{site}"
+                       type="apps"
+                       name="trellowf"
+                       file="index.js"/>
+               <configuration>
+                  <title>News Workflow</title> 
+                  <icon id="@mui/icons-material/CodeRounded"/>
+                  <boardId>A0ID0HERE0</boardId>
+               </configuration>
+            </widget>    
 ```
 
 # Screenshots
