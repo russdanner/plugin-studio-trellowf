@@ -1,5 +1,5 @@
 const typescript = require('rollup-plugin-typescript2');
-// const commonjs = require('@rollup/plugin-commonjs');
+const commonjs = require('@rollup/plugin-commonjs');
 const resolve = require('@rollup/plugin-node-resolve');
 const replaceImportsWithVars = require('rollup-plugin-replace-imports-with-vars');
 const json = require('@rollup/plugin-json');
@@ -16,6 +16,7 @@ const globals = {
   'rxjs/operators': 'craftercms.libs.rxjs',
   '@emotion/css/create-instance': 'craftercms.libs.createEmotion',
   'react-dom': 'craftercms.libs.ReactDOM',
+  'react-dom/client': 'craftercms.libs.ReactDOMClient',
   'react-intl': 'craftercms.libs.ReactIntl',
   'react-redux': 'craftercms.libs.ReactRedux',
   '@mui/material': 'craftercms.libs.MaterialUI',
@@ -59,7 +60,7 @@ module.exports = {
     // !!: If used, terser should be after `replaceImportsWithVars`
     terser(),
     resolve({ extensions }),
-    // commonjs(),
+    commonjs(),
     copy({
       hook: 'closeBundle',
       targets: [
@@ -68,8 +69,8 @@ module.exports = {
         //   dest: '/path/to/where/you/want/to/copy'
         // },
         {
-          src: './dist/*',
-          dest: '../../../authoring/static-assets/plugins/org/rd/plugin/trellowf/apps/trellowf'
+          src: './dist/index.js',
+          dest: '/Users/rart/Workspace/craftercms/develop-2022.10.14.06.21/crafter-authoring/data/repos/sites/editorial-neue/sandbox/static-assets/'
         }
       ]
     })
