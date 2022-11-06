@@ -1,10 +1,25 @@
 import * as React from 'react';
+import { styled } from '@mui/material/styles';
 import { useEffect, useState } from 'react';
 import EditRoundedIcon from '@mui/icons-material/EditRounded';
-import { Box, Card, CardHeader, IconButton, Paper, Typography, cardClasses, Fab } from '@mui/material';
+import {
+  Box,
+  Card,
+  CardHeader,
+  CardActions,
+  CardContent,
+  Collapse,
+  Paper,
+  Typography,
+  cardClasses,
+  Fab
+} from '@mui/material';
+import IconButton, { IconButtonProps } from '@mui/material/IconButton';
+
 import useActiveSiteId from '@craftercms/studio-ui/hooks/useActiveSiteId';
 import { get } from '@craftercms/studio-ui/utils/ajax';
 import { ApiResponse, ApiResponseErrorState } from '@craftercms/studio-ui';
+import BoardCard from '/Users/rdanner/code/plugin-studio-trellowf/src/packages/trello-board-components/src/components/BoardCard';
 
 export interface BoardProps {
   boardId: string;
@@ -92,17 +107,7 @@ const Board = ({ boardId }: BoardProps) => {
             <Box sx={{ [`.${cardClasses.root}:not(:last-child)`]: { mb: 1 } }}>
               {list.cards &&
                 Object.values(list.cards).map((card) => (
-                  <Card elevation={3} sx={{ borderTop: card.cover.color ? `10px solid ${card.cover.color}` : `` }}>
-                    <CardHeader
-                      action={
-                        <IconButton href={card.url} target="card" aria-label="Edit in Trello">
-                          <EditRoundedIcon />
-                        </IconButton>
-                      }
-                      title={card.name}
-                      titleTypographyProps={{ variant: 'body1' }}
-                    />
-                  </Card>
+                  <BoardCard cardName={card.name} trelloCardUrl={card.url} coverColor={card.cover.color} />
                 ))}
             </Box>
           </Paper>

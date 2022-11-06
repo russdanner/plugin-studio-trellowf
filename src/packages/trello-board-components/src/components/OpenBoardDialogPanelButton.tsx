@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 
 export function OpenBoardDialogPanelButton(props) {
   const boardLabel = props.title ? props.title : 'Trello Board';
-  const boardIcon = props.icon.id ? props.icon.id : '@mui/icons-material/ContentPasteOutlined';
+  const boardIcon = (props.icon && props.icon.id) ? props.icon.id : '@mui/icons-material/ContentPasteOutlined';
 
   const dispatch = useDispatch();
   return (
