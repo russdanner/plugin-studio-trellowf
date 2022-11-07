@@ -1,6 +1,9 @@
 import * as React from 'react';
 import { useEffect, useState } from 'react';
 import EditRoundedIcon from '@mui/icons-material/EditRounded';
+import ExpandMoreRoundedIcon from '@mui/icons-material/ExpandMoreRounded';
+import MoreVertRoundedIcon from '@mui/icons-material/MoreVertRounded';
+
 import {
   Box,
   Card,
@@ -14,21 +17,19 @@ import {
   Fab
 } from '@mui/material';
 
-import MoreVertIcon from '@mui/icons-material/MoreVert';
 import IconButton, { IconButtonProps } from '@mui/material/IconButton';
 
 export interface BoardCardProps {
   cardName: string;
   trelloCardUrl: string;
   coverColor: string;
+  description: string;
 }
 
-const BoardCard = ({ cardName, trelloCardUrl, coverColor }: BoardCardProps) => {
+const BoardCard = ({ cardName, trelloCardUrl, coverColor, description }: BoardCardProps) => {
   interface ExpandMoreProps extends IconButtonProps {
     expand: boolean;
   }
-
-  
 
   const [expanded, setExpanded] = React.useState(false);
   const handleExpandClick = () => {
@@ -39,8 +40,8 @@ const BoardCard = ({ cardName, trelloCardUrl, coverColor }: BoardCardProps) => {
     <Card elevation={3} sx={{ borderTop: coverColor ? `10px solid ${coverColor}` : `` }}>
       <CardHeader
         action={
-          <IconButton href={trelloCardUrl} target="card" aria-label="Edit in Trello">
-            <EditRoundedIcon />
+          <IconButton aria-label="settings">
+            <MoreVertRoundedIcon />
           </IconButton>
         }
         title={cardName}
@@ -48,30 +49,13 @@ const BoardCard = ({ cardName, trelloCardUrl, coverColor }: BoardCardProps) => {
       />
 
       <CardActions disableSpacing>
-        <div  onClick={handleExpandClick} aria-expanded={expanded} aria-label="show more">
-          <p>Expand More Icon</p>
+        <div onClick={handleExpandClick} aria-expanded={expanded} aria-label="show more">
+          <p><ExpandMoreRoundedIcon/></p>
         </div>
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-          <Typography paragraph>Method:</Typography>
-          <Typography paragraph>
-            Heat 1/2 cup of the broth in a pot until simmering, add saffron and set aside for 10 minutes.
-          </Typography>
-          <Typography paragraph>
-            Heat oil in a (14- to 16-inch) paella pan or a large, deep skillet over medium-high heat. Add chicken,
-            shrimp and chorizo, and cook, stirring occasionally until lightly browned, 6 to 8 minutes. Transfer shrimp
-            to a large plate and set aside, leaving chicken and chorizo in the pan. Add pimentón, bay leaves, garlic,
-            tomatoes, onion, salt and pepper, and cook, stirring often until thickened and fragrant, about 10 minutes.
-            Add saffron broth and remaining 4 1/2 cups chicken broth; bring to a boil.
-          </Typography>
-          <Typography paragraph>
-            Add rice and stir very gently to distribute. Top with artichokes and peppers, and cook without stirring,
-            until most of the liquid is absorbed, 15 to 18 minutes. Reduce heat to medium-low, add reserved shrimp and
-            mussels, tucking them down into the rice, and cook again without stirring, until mussels have opened and
-            rice is just tender, 5 to 7 minutes more. (Discard any mussels that don&apos;t open.)
-          </Typography>
-          <Typography>Set aside off of the heat to let rest for 10 minutes, and then serve.</Typography>
+          <Typography paragraph>{description}</Typography>
         </CardContent>
       </Collapse>
     </Card>

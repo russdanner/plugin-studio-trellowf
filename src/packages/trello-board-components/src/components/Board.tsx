@@ -15,6 +15,7 @@ import {
   Fab
 } from '@mui/material';
 import IconButton, { IconButtonProps } from '@mui/material/IconButton';
+import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 
 import useActiveSiteId from '@craftercms/studio-ui/hooks/useActiveSiteId';
 import { get } from '@craftercms/studio-ui/utils/ajax';
@@ -32,7 +33,11 @@ const Board = ({ boardId }: BoardProps) => {
     board: null,
     lists: null as Record<
       string,
-      { name: string; cards: Record<string, { url: string; name: string; cover: { color: string } }> }
+      {
+        id: string;
+        name: string;
+        cards: Record<string, { id: string; url: string; name: string; cover: { color: string }; desc: string }>;
+      }
     >
   });
   const dataLoadChannels = () => {
@@ -68,51 +73,81 @@ const Board = ({ boardId }: BoardProps) => {
   }, []);
 
   return (
-    <Box
-      sx={{
-        backgroundImage: state.board ? `url(${state.board.prefs.backgroundImage})` : null,
-        flexDirection: 'row',
-        position: 'relative',
-        height: '100%'
-      }}
-    >
-      {error && <ApiResponseErrorState error={error} />}
-      {state.board && (
-        <Fab
-          href={state.board.url}
-          target="new"
-          aria-label="Edit in Trello"
-          sx={{ position: 'absolute', bottom: 20, right: 20 }}
-          color="info"
-        >
-          <EditRoundedIcon />
-        </Fab>
-      )}
-      {state.lists &&
-        Object.values(state.lists).map((list) => (
-          <Paper
-            elevation={1}
-            style={{}}
-            sx={(theme) => ({
-              width: '200px',
-              display: 'inline-table',
-              margin: '10px',
-              p: 1,
-              bgcolor: theme.palette.mode === 'dark' ? 'grey' : 'grey.A200'
-            })}
+    <DragDropContext onDragEnd={(result) => console.log(result)}>
+      <Box
+        sx={{
+          backgroundImage: state.board ? `url(${state.board.prefs.backgroundImage})` : null,
+          flexDirection: 'row',
+          position: 'relative',
+          height: '100%'
+        }}
+      >
+        {error && <ApiResponseErrorState error={error} />}
+        {state.board && (
+          <Fab
+            href={state.board.url}
+            target="new"
+            aria-label="Edit in Trello"
+            sx={{ position: 'absolute', bottom: 20, right: 20 }}
+            color="info"
           >
-            <Typography variant="h6" component="h2" sx={{ mb: 1 }}>
-              {list.name}
-            </Typography>
-            <Box sx={{ [`.${cardClasses.root}:not(:last-child)`]: { mb: 1 } }}>
-              {list.cards &&
-                Object.values(list.cards).map((card) => (
-                  <BoardCard cardName={card.name} trelloCardUrl={card.url} coverColor={card.cover.color} />
-                ))}
-            </Box>
-          </Paper>
-        ))}
-    </Box>
+            <EditRoundedIcon />
+          </Fab>
+        )}
+        {state.lists &&
+          Object.values(state.lists).map((list) => {
+            return (
+              <Paper
+                elevation={1}
+                style={{}}
+                sx={(theme) => ({
+                  width: '200px',
+                  display: 'inline-table',
+                  margin: '10px',
+                  p: 1,
+                  bgcolor: theme.palette.mode === 'dark' ? 'grey' : 'grey.A200'
+                })}
+              >
+                <Typography variant="h6" component="h2" sx={{ mb: 1 }}>
+                  {list.name}
+                </Typography>
+
+                <Droppable droppableId={list.id}>
+                  {(provided, snapshot) => {
+                    return (
+                      <Box sx={{ [`.${cardClasses.root}:not(:last-child)`]: { mb: 1 } }}>
+                        {list.cards &&
+                          Object.values(list.cards).map((card, cardIndex) => {
+                            return (
+                              <Draggable key={card.id} draggableId={card.id} index={cardIndex}>
+                                {(provided, snapshot) => {
+                                  return (
+                                    <div
+                                      ref={provided.innerRef}
+                                      {...provided.draggableProps}
+                                      {...provided.dragHandleProps}
+                                    >
+                                      <BoardCard
+                                        cardName={card.name}
+                                        trelloCardUrl={card.url}
+                                        coverColor={card.cover.color}
+                                        description={card.desc}
+                                      />
+                                    </div>
+                                  );
+                                }}
+                              </Draggable>
+                            );
+                          })}
+                      </Box>
+                    );
+                  }}
+                </Droppable>
+              </Paper>
+            );
+          })}
+      </Box>
+    </DragDropContext>
   );
 };
 
