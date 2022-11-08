@@ -36,6 +36,25 @@ const BoardCard = ({ cardName, trelloCardUrl, coverColor, description }: BoardCa
     setExpanded(!expanded);
   };
 
+  let TrelloCardActions = <></>;
+
+  if (description) {
+    TrelloCardActions = (
+      <div>
+        <CardActions disableSpacing>
+          <div onClick={handleExpandClick} aria-expanded={expanded} aria-label="show more">
+            <ExpandMoreRoundedIcon />
+          </div>
+        </CardActions>
+        <Collapse in={expanded} timeout="auto" unmountOnExit>
+          <CardContent>
+            <Typography paragraph>{description}</Typography>
+          </CardContent>
+        </Collapse>
+      </div>
+    );
+  }
+
   return (
     <Card elevation={3} sx={{ borderTop: coverColor ? `10px solid ${coverColor}` : `` }}>
       <CardHeader
@@ -48,18 +67,7 @@ const BoardCard = ({ cardName, trelloCardUrl, coverColor, description }: BoardCa
         titleTypographyProps={{ variant: 'body1' }}
       />
 
-      <CardActions disableSpacing>
-        <div onClick={handleExpandClick} aria-expanded={expanded} aria-label="show more">
-          <p>
-            <ExpandMoreRoundedIcon />
-          </p>
-        </div>
-      </CardActions>
-      <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <CardContent>
-          <Typography paragraph>{description}</Typography>
-        </CardContent>
-      </Collapse>
+      {TrelloCardActions}
     </Card>
   );
 };

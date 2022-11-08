@@ -101,9 +101,9 @@ const Board = ({ boardId }: BoardProps) => {
                 elevation={1}
                 style={{}}
                 sx={(theme) => ({
-                  width: '200px',
+                  width: '280px',
                   display: 'inline-table',
-                  margin: '10px',
+                  margin: '5px',
                   p: 1,
                   bgcolor: theme.palette.mode === 'dark' ? 'grey' : 'grey.A200'
                 })}
@@ -115,7 +115,9 @@ const Board = ({ boardId }: BoardProps) => {
                 <Droppable droppableId={list.id}>
                   {(provided, snapshot) => {
                     return (
-                      <Box sx={{ [`.${cardClasses.root}:not(:last-child)`]: { mb: 1 } }}>
+                      <Box sx={{ [`.${cardClasses.root}:not(:last-child)`]: { mb: 1 } }}
+                      {...provided.droppableProps}
+                      ref={provided.innerRef}>
                         {list.cards &&
                           Object.values(list.cards).map((card, cardIndex) => {
                             return (
@@ -127,12 +129,14 @@ const Board = ({ boardId }: BoardProps) => {
                                       {...provided.draggableProps}
                                       {...provided.dragHandleProps}
                                     >
-                                      <BoardCard
+                                     <div style={{padding: '5px'}}>
+                                      <BoardCard 
                                         cardName={card.name}
                                         trelloCardUrl={card.url}
                                         coverColor={card.cover.color}
                                         description={card.desc}
                                       />
+                                      </div>
                                     </div>
                                   );
                                 }}
