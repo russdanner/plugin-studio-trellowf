@@ -50,7 +50,9 @@ const BoardCard = ({ cardName, trelloCardUrl, coverColor, description }: BoardCa
 
       <CardActions disableSpacing>
         <div onClick={handleExpandClick} aria-expanded={expanded} aria-label="show more">
-          <p><ExpandMoreRoundedIcon/></p>
+          <p>
+            <ExpandMoreRoundedIcon />
+          </p>
         </div>
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>

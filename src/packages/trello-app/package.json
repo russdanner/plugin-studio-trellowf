@@ -9,9 +9,9 @@
     "url": "craftercms/craftercms-ui-plugin-sample",
     "directory": "packages/example-component-library"
   },
-  "main": "dist/index.js",
-  "module": "build/index.js",
-  "typings": "build/index.d.ts",
+  "main": "dist/app.js",
+  "module": "build/app.js",
+  "typings": "build/app.d.ts",
   "engines": {
     "node": ">=10"
   },

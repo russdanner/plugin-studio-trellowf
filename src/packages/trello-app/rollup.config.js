@@ -69,8 +69,8 @@ module.exports = {
         //   dest: '/path/to/where/you/want/to/copy'
         // },
         {
-          src: './dist/index.js',
-          dest: '/Users/rart/Workspace/craftercms/develop-2022.10.14.06.21/crafter-authoring/data/repos/sites/editorial-neue/sandbox/static-assets/'
+          src: './dist/*',
+          dest: '../../../authoring/static-assets/plugins/org/rd/plugin/trellowf/apps/trellowf'
         }
       ]
     })
