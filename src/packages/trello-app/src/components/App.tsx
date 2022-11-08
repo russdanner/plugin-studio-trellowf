@@ -1,9 +1,9 @@
 import * as React from 'react';
+import { useEffect, useState } from 'react';
 import { Dispatch } from 'redux';
 import { useDispatch } from 'react-redux';
 import { Box, Button, List, ListItem, Typography } from '@mui/material';
 import { HashRouter, Link, Route, Switch } from 'react-router-dom';
-
 import GlobalState from '@craftercms/studio-ui/models/GlobalState';
 import {
   blockUI,
@@ -12,47 +12,28 @@ import {
   unblockUI
 } from '@craftercms/studio-ui/state/actions/system';
 import { batchActions } from '@craftercms/studio-ui/state/actions/misc';
+import { useSelection } from '@craftercms/studio-ui/hooks/useSelection';
+
 import { reloadDetailedItem } from '@craftercms/studio-ui/state/actions/content';
 import { showEditDialog, showPreviewDialog } from '@craftercms/studio-ui/state/actions/dialogs';
+import { isImage } from '@craftercms/studio-ui/utils/content';
+import { fetchSandboxItem } from '@craftercms/studio-ui/services/content';
 
-function TrelloAppPage(props) {
-  return (
-    <div style={{ textAlign: 'center', margin: '50px auto' }}>
-      <img src="/studio/static-assets/images/content_creation.svg" />
-      <h1>CrafterCMS ❤ Trello</h1>
-      <h3>{props.message}</h3>
-    </div>
-  );
-}
-
-function Preview(props) {
-  // example url:
-  // http://localhost:8080/studio/plugin?site=t5&type=apps&pluginId=org.rd.plugin.trellowf&name=trellowf&file=cb2.js#/preview?contentId=/site/website/crafter-level-descriptor.level.xml
-  const {
-    match: { params },
-    location: { search }
-  } = props;
-
-  const searchArgs = new URLSearchParams(search);
-  const contentId = searchArgs.get('contentId');
-  const siteId = searchArgs.get('siteId');
-
-  if (contentId.indexOf('/site/website/') != -1 && contentId.indexOf('.level.xml') == -1) {
+function handlePreviewRequest(sandboxItem, { siteId, contentId, authoringBase, dispatch }) {
+  if (sandboxItem.systemType === 'page') {
     // content item is a page
     let pageUrl = contentId.replace('/site/website/', '').replace('index.xml', '').replace('.xml', '.html');
     window.location.href = '/studio/preview#/?page=' + pageUrl + '&site=' + siteId;
   } else if (contentId.indexOf('/site/') != -1) {
     // content item is a component
-    window.craftercms.getStore().dispatch(
+    dispatch(
       showEditDialog({
-        site: 't5',
+        site: siteId,
         path: contentId,
-        authoringBase: window.craftercms.getStore().getState().env.authoringBase,
+        authoringBase: authoringBase,
         readonly: true
       })
     );
-
-    return <TrelloAppPage message="We are processing your preview request" />;
   } else if (contentId.indexOf('/static-assets/') != -1) {
     // content item is a component
     if (
@@ -72,8 +53,6 @@ function Preview(props) {
           authoringBase: window.craftercms.getStore().getState().env.authoringBase
         })
       );
-
-      return <TrelloAppPage message="We are processing your preview request" />;
     } else if (contentId.indexOf('.mp4') != -1) {
       //  invoke isVideo
       window.craftercms.getStore().dispatch(
@@ -96,9 +75,48 @@ function Preview(props) {
         })
       );
     }
-  } else {
-    return <TrelloAppPage message="OOPS! We don't recognize your preview request" />;
   }
+}
+
+function TrelloAppPage(props) {
+  return (
+    <div style={{ textAlign: 'center', margin: '50px auto' }}>
+      <img src="/studio/static-assets/images/content_creation.svg" />
+      <h1>CrafterCMS ❤ Trello</h1>
+      <h3>{props.message}</h3>
+    </div>
+  );
+}
+
+function Preview(props) {
+  // example url:
+  // <STUDIO_SERVE>/studio/plugin?site=t5&type=apps&pluginId=org.rd.plugin.trellowf&name=trellowf&file=cb2.js#/preview?contentId=/site/website/crafter-level-descriptor.level.xml
+  const {
+    match: { params },
+    location: { search }
+  } = props;
+
+  const searchArgs = new URLSearchParams(search);
+  const contentId = searchArgs.get('contentId');
+  const siteId = searchArgs.get('siteId');
+  const dispatch = useDispatch();
+  const authoringBase = useSelection((state) => state.env.authoringBase);
+
+  const [item, setItem] = useState(null);
+
+  useEffect(() => {
+    let params = { siteId, contentId, authoringBase, dispatch };
+
+    fetchSandboxItem(siteId, contentId, { castAsDetailedItem: true }).subscribe({
+      next(sandboxItem) {
+        setItem(sandboxItem);
+        handlePreviewRequest(sandboxItem, params);
+      },
+      error() {}
+    });
+  }, [siteId, contentId, authoringBase, dispatch]);
+
+  return <TrelloAppPage message="OOPS! We don't recognize your preview request" />;
 }
 
 function Index() {

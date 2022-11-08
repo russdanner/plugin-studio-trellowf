@@ -10,7 +10,17 @@ You will need the following information:
 - Trello API Token
 - The ID of a board to load if no `boardId` is provided in the `Sidebar` widget configuration
 
+# Generating Keys for Trello
 
+1. Go to the following URL to generate a Trello API Key
+https://trello.com/app-key
+
+2. Invoke the following URL to generate a Trello API Token
+https://trello.com/1/authorize?expiration=nevers&name=CrafterCMS&scope=read,write&response_type=token&key={YOUR_KEY}
+
+You may alter `name` and `expiration` parameters as is desired.
+
+# Adding more than one Trello board to a project
 You may add as many boards to your `Sidebar` as you like by adding the widget to Studio's UI.xml and specifying the board ID:
 ```xml
 <widget id="org.rd.plugin.trellowf.openBoardButton">

@@ -40,11 +40,36 @@ const Board = ({ boardId }: BoardProps) => {
       }
     >
   });
-  const dataLoadChannels = () => {
+
+  const onDragEnd = (result) => {
+    //if(!result.destination) return;
+    //console.log(result)
+
+    moveCard(result.destination.droppableId, result.draggableId);
+  };
+
+  const moveCard = (listId, cardId) => {
+    let serviceUrl = `/studio/api/2/plugin/script/plugins/org/rd/plugin/trellowf/trellowf/card/move.json?siteId=${siteId}&listId=${listId}&cardId=${cardId}`;
+
+    get(serviceUrl).subscribe({
+      next: (response) => {
+        loadBoardData();
+      },
+      error(e) {
+        console.error(e);
+        setError(
+          e.response?.response ?? ({ code: '?', message: 'Unknown Error. Check browser console.' } as ApiResponse)
+        );
+      }
+    });
+  };
+
+  const loadBoardData = () => {
     let serviceUrl = `/studio/api/2/plugin/script/plugins/org/rd/plugin/trellowf/trellowf/board/lists.json?siteId=${siteId}`;
     if (boardId) {
       serviceUrl += '&boardId=' + boardId;
     }
+
     get(serviceUrl).subscribe({
       next: (response) => {
         setState({
@@ -63,9 +88,9 @@ const Board = ({ boardId }: BoardProps) => {
   };
 
   useEffect(() => {
-    dataLoadChannels();
+    loadBoardData();
     let intervalRef = setInterval(() => {
-      dataLoadChannels();
+      loadBoardData();
     }, 10000);
     return function () {
       clearInterval(intervalRef);
@@ -73,7 +98,7 @@ const Board = ({ boardId }: BoardProps) => {
   }, []);
 
   return (
-    <DragDropContext onDragEnd={(result) => console.log(result)}>
+    <DragDropContext onDragEnd={(result) => onDragEnd(result)}>
       <Box
         sx={{
           backgroundImage: state.board ? `url(${state.board.prefs.backgroundImage})` : null,
@@ -112,12 +137,14 @@ const Board = ({ boardId }: BoardProps) => {
                   {list.name}
                 </Typography>
 
-                <Droppable droppableId={list.id}>
+                <Droppable droppableId={list.id} key={list.id}>
                   {(provided, snapshot) => {
                     return (
-                      <Box sx={{ [`.${cardClasses.root}:not(:last-child)`]: { mb: 1 } }}
-                      {...provided.droppableProps}
-                      ref={provided.innerRef}>
+                      <Box
+                        sx={{ [`.${cardClasses.root}:not(:last-child)`]: { mb: 1 } }}
+                        {...provided.droppableProps}
+                        ref={provided.innerRef}
+                      >
                         {list.cards &&
                           Object.values(list.cards).map((card, cardIndex) => {
                             return (
@@ -129,14 +156,15 @@ const Board = ({ boardId }: BoardProps) => {
                                       {...provided.draggableProps}
                                       {...provided.dragHandleProps}
                                     >
-                                     <div style={{padding: '5px'}}>
-                                      <BoardCard 
-                                        cardName={card.name}
-                                        trelloCardUrl={card.url}
-                                        coverColor={card.cover.color}
-                                        description={card.desc}
-                                      />
+                                      <div style={{ padding: '5px' }}>
+                                        <BoardCard
+                                          cardName={card.name}
+                                          trelloCardUrl={card.url}
+                                          coverColor={card.cover.color}
+                                          description={card.desc}
+                                        />
                                       </div>
+                                      {provided.placeholder}
                                     </div>
                                   );
                                 }}
