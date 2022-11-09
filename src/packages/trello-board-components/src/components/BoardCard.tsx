@@ -1,10 +1,23 @@
 import * as React from 'react';
 import { useEffect, useState } from 'react';
+import { Dispatch } from 'redux';
+import { useDispatch } from 'react-redux';
+
 import EditRoundedIcon from '@mui/icons-material/EditRounded';
 import ExpandMoreRoundedIcon from '@mui/icons-material/ExpandMoreRounded';
 import MoreVertRoundedIcon from '@mui/icons-material/MoreVertRounded';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
+import {
+  newContentCreationComplete,
+  showEditDialog,
+  showNewContentDialog
+} from '@craftercms/studio-ui/state/actions/dialogs';
+import { get } from '@craftercms/studio-ui/utils/ajax';
+import { ApiResponse, ApiResponseErrorState } from '@craftercms/studio-ui';
+import { lookupItemByPath } from '@craftercms/studio-ui/utils/content';
+import { useItemsByPath } from '@craftercms/studio-ui/hooks/useItemsByPath';
+import useActiveSiteId from '@craftercms/studio-ui/hooks/useActiveSiteId';
 
 import {
   Box,
@@ -27,18 +40,32 @@ export interface BoardCardProps {
   trelloCardUrl: string;
   coverColor: string;
   description: string;
+  attachmentCount: number;
 }
 
-const BoardCard = ({ cardId, cardName, trelloCardUrl, coverColor, description }: BoardCardProps) => {
+const BoardCard = ({ cardId, cardName, trelloCardUrl, coverColor, description, attachmentCount }: BoardCardProps) => {
   interface ExpandMoreProps extends IconButtonProps {
     expand: boolean;
   }
 
+  const siteId = useActiveSiteId();
+  const dispatch = useDispatch();
   const [expanded, setExpanded] = React.useState(false);
-
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
   const ITEM_HEIGHT = 48;
+
   const handleExpandClick = () => {
     setExpanded(!expanded);
+  };
+
+  const attachContent = (contentName, siteId, cardId, contentId) => {
+    let serviceUrl = `/studio/api/2/plugin/script/plugins/org/rd/plugin/trellowf/trellowf/card/attach-content.json?siteId=${siteId}&name=${contentName}&cardId=${cardId}&contentId=${contentId}`;
+
+    get(serviceUrl).subscribe({
+      next: (response) => {},
+      error(e) {}
+    });
   };
 
   const handleCardActionsClose = () => {
@@ -46,39 +73,56 @@ const BoardCard = ({ cardId, cardName, trelloCardUrl, coverColor, description }:
   };
 
   const handleCreateContent = () => {
-    alert('Create Content ' + cardId);
-    handleCardActionsClose();
+    dispatch(
+      showNewContentDialog({
+        item: lookupItemByPath('/', useItemsByPath()),
+        // @ts-ignore - required attributes of `showEditDialog` are submitted by new content dialog `onContentTypeSelected` callback and injected into the showEditDialog action by the GlobalDialogManger
+        onContentTypeSelected: showEditDialog({})
+      })
+    );
+
+    // TODO: once created attach it to the card
+    //newContentCreationComplete
+
+    setAnchorEl(null);
   };
 
   const handleAttachContent = () => {
-    alert('Attach Content to card ' + cardId);
-    handleCardActionsClose();
+    // dispatch(
+    //   showNewContentDialog({
+    //     item: lookupItemByPath('/', items),
+    //     // @ts-ignore - required attributes of `showEditDialog` are submitted by new content dialog `onContentTypeSelected` callback and injected into the showEditDialog action by the GlobalDialogManger
+    //     onContentTypeSelected: showEditDialog({})
+    //   })
+    // );
+    //attachContent('test', useActiveSiteId(), cardId, '/site/website/index.xml');
+    attachContent('test', siteId, cardId, '/site/website/index.xml');
+
+    setAnchorEl(null);
   };
 
   const handleSubmitContent = () => {
     alert('Submit ' + cardId);
-    handleCardActionsClose();
+    setAnchorEl(null);
   };
 
   const handleRejectContent = () => {
     alert('Reject ' + cardId);
-    handleCardActionsClose();
+    setAnchorEl(null);
   };
 
   const handlePublishContent = () => {
     alert('Publish ' + cardId);
-    handleCardActionsClose();
+    setAnchorEl(null);
   };
 
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
 
   let TrelloCardActions = <></>;
 
-  if (description) {
+  if (description || attachmentCount > 0) {
     TrelloCardActions = (
       <div>
         <CardActions disableSpacing>

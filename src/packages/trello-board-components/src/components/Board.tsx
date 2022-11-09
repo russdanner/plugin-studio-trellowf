@@ -36,7 +36,10 @@ const Board = ({ boardId }: BoardProps) => {
       {
         id: string;
         name: string;
-        cards: Record<string, { id: string; url: string; name: string; cover: { color: string }; desc: string }>;
+        cards: Record<
+          string,
+          { id: string; url: string; name: string; cover: { color: string }; desc: string; badges: { attachments: number } }
+        >;
       }
     >
   });
@@ -163,6 +166,7 @@ const Board = ({ boardId }: BoardProps) => {
                                           trelloCardUrl={card.url}
                                           coverColor={card.cover.color}
                                           description={card.desc}
+                                          attachmentCount={card.badges.attachments}
                                         />
                                       </div>
                                       {provided.placeholder}
