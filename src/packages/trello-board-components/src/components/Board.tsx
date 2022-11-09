@@ -158,6 +158,7 @@ const Board = ({ boardId }: BoardProps) => {
                                     >
                                       <div style={{ padding: '5px' }}>
                                         <BoardCard
+                                          cardId={card.id}
                                           cardName={card.name}
                                           trelloCardUrl={card.url}
                                           coverColor={card.cover.color}

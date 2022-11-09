@@ -29,9 +29,16 @@ public class Trello {
     }
 
     def moveCard(boardId, listId, cardId) {
-         println("MOVE CARD >>>>")
-        def board = trelloPut("/1/cards/${cardId}?idList=${listId}")
-        return board
+        def result = trelloPut("/1/cards/${cardId}?idList=${listId}")
+        return result
+    }
+
+    def attachContentToCard(name, cardId, siteId, contentId) {
+        def studioServer = "http://localhost:8080"
+        def contentName = java.net.URLEncoder.encode(name, "UTF-8")
+        def attachmentUrl = "${studioServer}/studio/plugin%3Fsite%3D${siteId}%26type%3Dapps%26pluginId%3Dorg.rd.plugin.trellowf%26name%3Dtrellowf%26file%3Dapp.js%23/preview%3FcontentId%3D${contentId}%26siteId%3D${siteId}"
+        def result = trelloPost("/1/cards/${cardId}/attachments?name=${contentName}&url=${attachmentUrl}")
+        return result
     }
 
     /**
@@ -90,20 +97,28 @@ public class Trello {
 
 
     /**
-     * Make a get request to Trello
+     * Make a PUT request to Trello
      * @param url - the API URL
      */
     def trelloPut(url) {
-        def apiUrl = "https://api.trello.com${url}&key=${key}&token=${token}"
-        println("PUT >>>> "+apiUrl)
-        
+        def apiUrl = "https://api.trello.com${url}&key=${key}&token=${token}"        
         def result = HttpBuilder.configure { request.raw = apiUrl }.put()
-
         def object = [:] //(json && json != "") ? new JsonSlurper().parseText(result.text) : [:]
-
         return object
     }
-        /**
+
+    /**
+     * Make a POST request to Trello
+     * @param url - the API URL
+     */
+    def trelloPost(url) {
+        def apiUrl = "https://api.trello.com${url}&key=${key}&token=${token}"
+        def result = HttpBuilder.configure { request.raw = apiUrl }.post()
+        def object = [:] //(json && json != "") ? new JsonSlurper().parseText(result.text) : [:]
+        return object
+    }
+
+    /**
      * Make a get request to Trello
      * @param url - the API URL
      */

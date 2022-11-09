@@ -17,14 +17,15 @@ import { useSelection } from '@craftercms/studio-ui/hooks/useSelection';
 import { reloadDetailedItem } from '@craftercms/studio-ui/state/actions/content';
 import { showEditDialog, showPreviewDialog } from '@craftercms/studio-ui/state/actions/dialogs';
 import { isImage } from '@craftercms/studio-ui/utils/content';
+//import { isPreviewable, isVideo } from '@craftercms/studio-ui/components/PathNavigator/utils';
 import { fetchSandboxItem } from '@craftercms/studio-ui/services/content';
 
-function handlePreviewRequest(sandboxItem, { siteId, contentId, authoringBase, dispatch }) {
+function handlePreviewRequest(sandboxItem, { siteId, contentId, authoringBase, setStatusMessage, dispatch }) {
   if (sandboxItem.systemType === 'page') {
     // content item is a page
     let pageUrl = contentId.replace('/site/website/', '').replace('index.xml', '').replace('.xml', '.html');
     window.location.href = '/studio/preview#/?page=' + pageUrl + '&site=' + siteId;
-  } else if (contentId.indexOf('/site/') != -1) {
+  } else if (sandboxItem.systemType === 'component' || sandboxItem.systemType === 'levelDescriptor') {
     // content item is a component
     dispatch(
       showEditDialog({
@@ -34,47 +35,42 @@ function handlePreviewRequest(sandboxItem, { siteId, contentId, authoringBase, d
         readonly: true
       })
     );
-  } else if (contentId.indexOf('/static-assets/') != -1) {
+  } else if (sandboxItem.systemType === 'asset') {
     // content item is a component
-    if (
-      contentId.indexOf('.png') != -1 ||
-      contentId.indexOf('.gif') != -1 ||
-      contentId.indexOf('.jpg') != -1 ||
-      contentId.indexOf('.jpeg') != -1 ||
-      contentId.indexOf('.svg') != -1 ||
-      contentId.indexOf('.webp') != -1
-    ) {
+    if (isImage(sandboxItem)) {
       // invoke isImage
-      window.craftercms.getStore().dispatch(
+      dispatch(
         showPreviewDialog({
           site: siteId,
           type: 'image',
           url: contentId,
-          authoringBase: window.craftercms.getStore().getState().env.authoringBase
+          authoringBase: authoringBase
         })
       );
-    } else if (contentId.indexOf('.mp4') != -1) {
-      //  invoke isVideo
-      window.craftercms.getStore().dispatch(
+    } else if (contentId.endsWith('.mp4')) {
+      //isVideo(sandboxItem)){
+      dispatch(
         showPreviewDialog({
           site: siteId,
           type: 'video',
           url: contentId,
-          authoringBase: window.craftercms.getStore().getState().env.authoringBase
+          authoringBase: authoringBase
         })
       );
     } else {
       // assume it's just a file of sorts
       // what can I call to clean up these decisions?
-      window.craftercms.getStore().dispatch(
+      dispatch(
         showPreviewDialog({
           site: siteId,
           type: 'editor',
           url: contentId,
-          authoringBase: window.craftercms.getStore().getState().env.authoringBase
+          authoringBase: authoringBase
         })
       );
     }
+  } else {
+    setStatusMessage("Oops, we don't know how to preview this type of content item.");
   }
 }
 
@@ -101,22 +97,28 @@ function Preview(props) {
   const siteId = searchArgs.get('siteId');
   const dispatch = useDispatch();
   const authoringBase = useSelection((state) => state.env.authoringBase);
-
+  const [statusMessage, setStatusMessage] = useState('We are processing your request :)');
   const [item, setItem] = useState(null);
 
-  useEffect(() => {
-    let params = { siteId, contentId, authoringBase, dispatch };
+  if (!siteId || !contentId) {
+    setStatusMessage('siteId and contentId are required parameters for preview.');
+  } else {
+    useEffect(() => {
+      let params = { siteId, contentId, authoringBase, setStatusMessage, dispatch };
 
-    fetchSandboxItem(siteId, contentId, { castAsDetailedItem: true }).subscribe({
-      next(sandboxItem) {
-        setItem(sandboxItem);
-        handlePreviewRequest(sandboxItem, params);
-      },
-      error() {}
-    });
-  }, [siteId, contentId, authoringBase, dispatch]);
+      fetchSandboxItem(siteId, contentId, { castAsDetailedItem: true }).subscribe({
+        next(sandboxItem) {
+          setItem(sandboxItem);
+          handlePreviewRequest(sandboxItem, params);
+        },
+        error() {
+          setStatusMessage("Oops! We can't find the content you are looking for.");
+        }
+      });
+    }, [siteId, contentId, authoringBase, setStatusMessage, dispatch]);
+  }
 
-  return <TrelloAppPage message="OOPS! We don't recognize your preview request" />;
+  return <TrelloAppPage message={statusMessage} />;
 }
 
 function Index() {
