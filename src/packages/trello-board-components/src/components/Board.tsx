@@ -20,7 +20,7 @@ import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import useActiveSiteId from '@craftercms/studio-ui/hooks/useActiveSiteId';
 import { get } from '@craftercms/studio-ui/utils/ajax';
 import { ApiResponse, ApiResponseErrorState } from '@craftercms/studio-ui';
-import BoardCard from '/Users/rdanner/code/plugin-studio-trellowf/src/packages/trello-board-components/src/components/BoardCard';
+import BoardCard from './BoardCard';
 
 export interface BoardProps {
   boardId: string;
@@ -31,23 +31,26 @@ const Board = ({ boardId }: BoardProps) => {
   const [error, setError] = useState();
   const [state, setState] = useState({
     board: null,
-    lists: null as Record<
-      string,
-      {
-        id: string;
-        name: string;
-        cards: Record<
-          string,
-          { id: string; url: string; name: string; cover: { color: string }; desc: string; badges: { attachments: number } }
-        >;
-      }
-    >
+    lists: null as Array<{
+      id: string;
+      name: string;
+      cards: Record<
+        string,
+        {
+          id: string;
+          url: string;
+          name: string;
+          cover: { color: string };
+          desc: string;
+          badges: { attachments: number };
+          cardAttachments: Array<{ id: string; name: string; url: string }>;
+          cardComments: Array<{ id: string }>;
+        }
+      >;
+    }>
   });
 
   const onDragEnd = (result) => {
-    //if(!result.destination) return;
-    //console.log(result)
-
     moveCard(result.destination.droppableId, result.draggableId);
   };
 
@@ -77,8 +80,8 @@ const Board = ({ boardId }: BoardProps) => {
       next: (response) => {
         setState({
           ...state,
-          board: { ...response.response.result.board },
-          lists: { ...response.response.result.lists }
+          board: response.response.result.board,
+          lists: response.response.result.lists
         });
       },
       error(e) {
@@ -107,7 +110,8 @@ const Board = ({ boardId }: BoardProps) => {
           backgroundImage: state.board ? `url(${state.board.prefs.backgroundImage})` : null,
           flexDirection: 'row',
           position: 'relative',
-          height: '100%'
+          width: '300%;',
+          height: '500%'
         }}
       >
         {error && <ApiResponseErrorState error={error} />}
@@ -123,7 +127,7 @@ const Board = ({ boardId }: BoardProps) => {
           </Fab>
         )}
         {state.lists &&
-          Object.values(state.lists).map((list) => {
+          state.lists.map((list) => {
             return (
               <Paper
                 elevation={1}
@@ -167,6 +171,7 @@ const Board = ({ boardId }: BoardProps) => {
                                           coverColor={card.cover.color}
                                           description={card.desc}
                                           attachmentCount={card.badges.attachments}
+                                          cardAttachments={card.cardAttachments}
                                         />
                                       </div>
                                       {provided.placeholder}
