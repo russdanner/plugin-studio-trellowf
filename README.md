@@ -16,7 +16,7 @@ You will need the following information:
 https://trello.com/app-key
 
 2. Invoke the following URL to generate a Trello API Token
-https://trello.com/1/authorize?expiration=nevers&name=CrafterCMS&scope=read,write&response_type=token&key={YOUR_KEY}
+https://trello.com/1/authorize?expiration=never&name=CrafterCMS&scope=read,write&response_type=token&key={YOUR_KEY}
 
 You may alter `name` and `expiration` parameters as is desired.
 
@@ -38,6 +38,7 @@ You may add as many boards to your `Sidebar` as you like by adding the widget to
     </configuration>
 </widget>
 ```
+
 
 # Screenshots
 <img width="1446" alt="craftercms-trello-board-screenshot-1" src="https://user-images.githubusercontent.com/169432/198916799-f081ab78-e6ca-4866-9429-4ac746f415df.png">

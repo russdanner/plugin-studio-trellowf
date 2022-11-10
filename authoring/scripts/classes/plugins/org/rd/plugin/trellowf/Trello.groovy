@@ -67,6 +67,12 @@ public class Trello {
         result.lists.each { list -> 
             def cards = getCardsForList(list.id)
             list.cards = cards
+
+            cards.each { card ->
+                if(card.badges.attachments > 0) {
+                    card.cardAttachments = getAttachmentsForCard(card.id)
+                }
+            }
         }
 
         return result
@@ -84,6 +90,27 @@ public class Trello {
         }
 
         return id
+    }
+
+    /**
+     * Get all details for a card (attachments, tasks, comments)
+     * @param cardId the list of cards to retrieve
+     */
+    def getDetailsForCard(cardId) {
+        def result = [:]
+
+        result.attachments = getAttachmentsForCard(cardId)
+
+        return result
+    }
+
+    /**
+     * Get all attachments on a card
+     * @param cardId the list of cards to retrieve
+     */
+    def getAttachmentsForCard(cardId) {
+        def attachments = trelloGet("/1/cards/${cardId}/attachments")
+        return attachments
     }
 
     /**

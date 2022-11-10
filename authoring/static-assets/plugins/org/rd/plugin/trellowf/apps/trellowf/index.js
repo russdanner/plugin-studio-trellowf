@@ -1,1 +1,9325 @@
-const e=craftercms.libs.React,{useState:t,useRef:r,useEffect:n,useContext:i,useLayoutEffect:o}=craftercms.libs.React,a=craftercms.libs.React&&Object.prototype.hasOwnProperty.call(craftercms.libs.React,"default")?craftercms.libs.React.default:craftercms.libs.React,l=craftercms.utils.constants.components.get("@mui/icons-material/EditRounded")&&Object.prototype.hasOwnProperty.call(craftercms.utils.constants.components.get("@mui/icons-material/EditRounded"),"default")?craftercms.utils.constants.components.get("@mui/icons-material/EditRounded").default:craftercms.utils.constants.components.get("@mui/icons-material/EditRounded"),{CardActions:c,Collapse:u,CardContent:s,Typography:d,Card:p,CardHeader:f,Box:g,Fab:m,Paper:v,cardClasses:b}=craftercms.libs.MaterialUI,{connect:h,Provider:y,useSelector:I,useDispatch:x}=craftercms.libs.ReactRedux,D=craftercms.libs.ReactDOM&&Object.prototype.hasOwnProperty.call(craftercms.libs.ReactDOM,"default")?craftercms.libs.ReactDOM.default:craftercms.libs.ReactDOM,{get:E}=craftercms.utils.ajax,{ApiResponseErrorState:w}=craftercms.components,C=craftercms.utils.constants.components.get("@mui/icons-material/ExpandMoreRounded")&&Object.prototype.hasOwnProperty.call(craftercms.utils.constants.components.get("@mui/icons-material/ExpandMoreRounded"),"default")?craftercms.utils.constants.components.get("@mui/icons-material/ExpandMoreRounded").default:craftercms.utils.constants.components.get("@mui/icons-material/ExpandMoreRounded"),A=craftercms.utils.constants.components.get("@mui/icons-material/MoreVertRounded")&&Object.prototype.hasOwnProperty.call(craftercms.utils.constants.components.get("@mui/icons-material/MoreVertRounded"),"default")?craftercms.utils.constants.components.get("@mui/icons-material/MoreVertRounded").default:craftercms.utils.constants.components.get("@mui/icons-material/MoreVertRounded"),O=craftercms.libs.MaterialUI.Menu&&Object.prototype.hasOwnProperty.call(craftercms.libs.MaterialUI.Menu,"default")?craftercms.libs.MaterialUI.Menu.default:craftercms.libs.MaterialUI.Menu,P=craftercms.libs.MaterialUI.MenuItem&&Object.prototype.hasOwnProperty.call(craftercms.libs.MaterialUI.MenuItem,"default")?craftercms.libs.MaterialUI.MenuItem.default:craftercms.libs.MaterialUI.MenuItem,{createAction:B}=craftercms.libs.ReduxToolkit,{lookupItemByPath:R}=craftercms.utils.content,N=craftercms.libs.MaterialUI.IconButton&&Object.prototype.hasOwnProperty.call(craftercms.libs.MaterialUI.IconButton,"default")?craftercms.libs.MaterialUI.IconButton.default:craftercms.libs.MaterialUI.IconButton,S=craftercms.components.ToolsPanelListItemButton&&Object.prototype.hasOwnProperty.call(craftercms.components.ToolsPanelListItemButton,"default")?craftercms.components.ToolsPanelListItemButton.default:craftercms.components.ToolsPanelListItemButton;var T=function(){return T=Object.assign||function(e){for(var t,r=1,n=arguments.length;r<n;r++)for(var i in t=arguments[r])Object.prototype.hasOwnProperty.call(t,i)&&(e[i]=t[i]);return e},T.apply(this,arguments)};function L(e,t){return L=Object.setPrototypeOf?Object.setPrototypeOf.bind():function(e,t){return e.__proto__=t,e},L(e,t)}function M(e,t){e.prototype=Object.create(t.prototype),e.prototype.constructor=e,L(e,t)}function G(){return G=Object.assign?Object.assign.bind():function(e){for(var t=1;t<arguments.length;t++){var r=arguments[t];for(var n in r)Object.prototype.hasOwnProperty.call(r,n)&&(e[n]=r[n])}return e},G.apply(this,arguments)}function _(e,t,r){return t in e?Object.defineProperty(e,t,{value:r,enumerable:!0,configurable:!0,writable:!0}):e[t]=r,e}function k(e,t){var r=Object.keys(e);if(Object.getOwnPropertySymbols){var n=Object.getOwnPropertySymbols(e);t&&(n=n.filter((function(t){return Object.getOwnPropertyDescriptor(e,t).enumerable}))),r.push.apply(r,n)}return r}function F(e){for(var t=1;t<arguments.length;t++){var r=null!=arguments[t]?arguments[t]:{};t%2?k(Object(r),!0).forEach((function(t){_(e,t,r[t])})):Object.getOwnPropertyDescriptors?Object.defineProperties(e,Object.getOwnPropertyDescriptors(r)):k(Object(r)).forEach((function(t){Object.defineProperty(e,t,Object.getOwnPropertyDescriptor(r,t))}))}return e}function U(e){return"Minified Redux error #"+e+"; visit https://redux.js.org/Errors?code="+e+" for the full message or use the non-minified dev environment for full errors. "}var j="function"==typeof Symbol&&Symbol.observable||"@@observable",W=function(){return Math.random().toString(36).substring(7).split("").join(".")},H={INIT:"@@redux/INIT"+W(),REPLACE:"@@redux/REPLACE"+W(),PROBE_UNKNOWN_ACTION:function(){return"@@redux/PROBE_UNKNOWN_ACTION"+W()}};function V(e){if("object"!=typeof e||null===e)return!1;for(var t=e;null!==Object.getPrototypeOf(t);)t=Object.getPrototypeOf(t);return Object.getPrototypeOf(e)===t}function q(e,t,r){var n;if("function"==typeof t&&"function"==typeof r||"function"==typeof r&&"function"==typeof arguments[3])throw new Error(U(0));if("function"==typeof t&&void 0===r&&(r=t,t=void 0),void 0!==r){if("function"!=typeof r)throw new Error(U(1));return r(q)(e,t)}if("function"!=typeof e)throw new Error(U(2));var i=e,o=t,a=[],l=a,c=!1;function u(){l===a&&(l=a.slice())}function s(){if(c)throw new Error(U(3));return o}function d(e){if("function"!=typeof e)throw new Error(U(4));if(c)throw new Error(U(5));var t=!0;return u(),l.push(e),function(){if(t){if(c)throw new Error(U(6));t=!1,u();var r=l.indexOf(e);l.splice(r,1),a=null}}}function p(e){if(!V(e))throw new Error(U(7));if(void 0===e.type)throw new Error(U(8));if(c)throw new Error(U(9));try{c=!0,o=i(o,e)}finally{c=!1}for(var t=a=l,r=0;r<t.length;r++){(0,t[r])()}return e}function f(e){if("function"!=typeof e)throw new Error(U(10));i=e,p({type:H.REPLACE})}function g(){var e,t=d;return(e={subscribe:function(e){if("object"!=typeof e||null===e)throw new Error(U(11));function r(){e.next&&e.next(s())}return r(),{unsubscribe:t(r)}}})[j]=function(){return this},e}return p({type:H.INIT}),(n={dispatch:p,subscribe:d,getState:s,replaceReducer:f})[j]=g,n}function z(e,t){return function(){return t(e.apply(this,arguments))}}function Y(e,t){if("function"==typeof e)return z(e,t);if("object"!=typeof e||null===e)throw new Error(U(16));var r={};for(var n in e){var i=e[n];"function"==typeof i&&(r[n]=z(i,t))}return r}function J(){for(var e=arguments.length,t=new Array(e),r=0;r<e;r++)t[r]=arguments[r];return 0===t.length?function(e){return e}:1===t.length?t[0]:t.reduce((function(e,t){return function(){return e(t.apply(void 0,arguments))}}))}function X(e,i){var o=t((function(){return{inputs:i,result:e()}}))[0],a=r(!0),l=r(o),c=a.current||Boolean(i&&l.current.inputs&&function(e,t){if(e.length!==t.length)return!1;for(var r=0;r<e.length;r++)if(e[r]!==t[r])return!1;return!0}(i,l.current.inputs))?l.current:{inputs:i,result:e()};return n((function(){a.current=!1,l.current=c}),[c]),c.result}var K=X,Q=function(e,t){return X((function(){return e}),t)},Z="Invariant failed";var $=function(e){var t=e.top,r=e.right,n=e.bottom,i=e.left;return{top:t,right:r,bottom:n,left:i,width:r-i,height:n-t,x:i,y:t,center:{x:(r+i)/2,y:(n+t)/2}}},ee=function(e,t){return{top:e.top-t.top,left:e.left-t.left,bottom:e.bottom+t.bottom,right:e.right+t.right}},te=function(e,t){return{top:e.top+t.top,left:e.left+t.left,bottom:e.bottom-t.bottom,right:e.right-t.right}},re={top:0,right:0,bottom:0,left:0},ne=function(e){var t=e.borderBox,r=e.margin,n=void 0===r?re:r,i=e.border,o=void 0===i?re:i,a=e.padding,l=void 0===a?re:a,c=$(ee(t,n)),u=$(te(t,o)),s=$(te(u,l));return{marginBox:c,borderBox:$(t),paddingBox:u,contentBox:s,margin:n,border:o,padding:l}},ie=function(e){var t=e.slice(0,-2);if("px"!==e.slice(-2))return 0;var r=Number(t);return isNaN(r)&&function(e,t){if(!e)throw new Error(Z)}(!1),r},oe=function(e,t){var r,n,i=e.borderBox,o=e.border,a=e.margin,l=e.padding,c=(n=t,{top:(r=i).top+n.y,left:r.left+n.x,bottom:r.bottom+n.y,right:r.right+n.x});return ne({borderBox:c,border:o,margin:a,padding:l})},ae=function(e,t){return void 0===t&&(t={x:window.pageXOffset,y:window.pageYOffset}),oe(e,t)},le=function(e,t){var r={top:ie(t.marginTop),right:ie(t.marginRight),bottom:ie(t.marginBottom),left:ie(t.marginLeft)},n={top:ie(t.paddingTop),right:ie(t.paddingRight),bottom:ie(t.paddingBottom),left:ie(t.paddingLeft)},i={top:ie(t.borderTopWidth),right:ie(t.borderRightWidth),bottom:ie(t.borderBottomWidth),left:ie(t.borderLeftWidth)};return ne({borderBox:e,margin:r,padding:n,border:i})},ce=function(e){var t=e.getBoundingClientRect(),r=window.getComputedStyle(e);return le(t,r)},ue=Number.isNaN||function(e){return"number"==typeof e&&e!=e};function se(e,t){if(e.length!==t.length)return!1;for(var r=0;r<e.length;r++)if(n=e[r],i=t[r],!(n===i||ue(n)&&ue(i)))return!1;var n,i;return!0}function de(e,t){var r;void 0===t&&(t=se);var n,i=[],o=!1;return function(){for(var a=[],l=0;l<arguments.length;l++)a[l]=arguments[l];return o&&r===this&&t(a,i)||(n=e.apply(this,a),o=!0,r=this,i=a),n}}var pe=function(e){var t=[],r=null,n=function(){for(var n=arguments.length,i=new Array(n),o=0;o<n;o++)i[o]=arguments[o];t=i,r||(r=requestAnimationFrame((function(){r=null,e.apply(void 0,t)})))};return n.cancel=function(){r&&(cancelAnimationFrame(r),r=null)},n};function fe(e,t){}function ge(){}function me(e,t,r){var n=t.map((function(t){var n,i,o=(n=r,i=t.options,G({},n,{},i));return e.addEventListener(t.eventName,t.fn,o),function(){e.removeEventListener(t.eventName,t.fn,o)}}));return function(){n.forEach((function(e){e()}))}}fe.bind(null,"warn"),fe.bind(null,"error");function ve(e){this.message=e}function be(e,t){if(!e)throw new ve("Invariant failed")}ve.prototype.toString=function(){return this.message};var he=function(e){function t(){for(var t,r=arguments.length,n=new Array(r),i=0;i<r;i++)n[i]=arguments[i];return(t=e.call.apply(e,[this].concat(n))||this).callbacks=null,t.unbind=ge,t.onWindowError=function(e){var r=t.getCallbacks();r.isDragging()&&r.tryAbort(),e.error instanceof ve&&e.preventDefault()},t.getCallbacks=function(){if(!t.callbacks)throw new Error("Unable to find AppCallbacks in <ErrorBoundary/>");return t.callbacks},t.setCallbacks=function(e){t.callbacks=e},t}M(t,e);var r=t.prototype;return r.componentDidMount=function(){this.unbind=me(window,[{eventName:"error",fn:this.onWindowError}])},r.componentDidCatch=function(e){if(!(e instanceof ve))throw e;this.setState({})},r.componentWillUnmount=function(){this.unbind()},r.render=function(){return this.props.children(this.setCallbacks)},t}(a.Component),ye=function(e){return e+1},Ie=function(e,t){var r=e.droppableId===t.droppableId,n=ye(e.index),i=ye(t.index);return r?"\n      You have moved the item from position "+n+"\n      to position "+i+"\n    ":"\n    You have moved the item from position "+n+"\n    in list "+e.droppableId+"\n    to list "+t.droppableId+"\n    in position "+i+"\n  "},xe=function(e,t,r){return t.droppableId===r.droppableId?"\n      The item "+e+"\n      has been combined with "+r.draggableId:"\n      The item "+e+"\n      in list "+t.droppableId+"\n      has been combined with "+r.draggableId+"\n      in list "+r.droppableId+"\n    "},De=function(e){return"\n  The item has returned to its starting position\n  of "+ye(e.index)+"\n"},Ee="\n  Press space bar to start a drag.\n  When dragging you can use the arrow keys to move the item around and escape to cancel.\n  Some screen readers may require you to be in focus mode or to use your pass through key\n",we=function(e){return"\n  You have lifted an item in position "+ye(e.source.index)+"\n"},Ce=function(e){var t=e.destination;if(t)return Ie(e.source,t);var r=e.combine;return r?xe(e.draggableId,e.source,r):"You are over an area that cannot be dropped on"},Ae=function(e){if("CANCEL"===e.reason)return"\n      Movement cancelled.\n      "+De(e.source)+"\n    ";var t=e.destination,r=e.combine;return t?"\n      You have dropped the item.\n      "+Ie(e.source,t)+"\n    ":r?"\n      You have dropped the item.\n      "+xe(e.draggableId,e.source,r)+"\n    ":"\n    The item has been dropped while not over a drop area.\n    "+De(e.source)+"\n  "},Oe={x:0,y:0},Pe=function(e,t){return{x:e.x+t.x,y:e.y+t.y}},Be=function(e,t){return{x:e.x-t.x,y:e.y-t.y}},Re=function(e,t){return e.x===t.x&&e.y===t.y},Ne=function(e){return{x:0!==e.x?-e.x:0,y:0!==e.y?-e.y:0}},Se=function(e,t,r){var n;return void 0===r&&(r=0),(n={})[e]=t,n["x"===e?"y":"x"]=r,n},Te=function(e,t){return Math.sqrt(Math.pow(t.x-e.x,2)+Math.pow(t.y-e.y,2))},Le=function(e,t){return Math.min.apply(Math,t.map((function(t){return Te(e,t)})))},Me=function(e){return function(t){return{x:e(t.x),y:e(t.y)}}},Ge=function(e,t){return{top:e.top+t.y,left:e.left+t.x,bottom:e.bottom+t.y,right:e.right+t.x}},_e=function(e){return[{x:e.left,y:e.top},{x:e.right,y:e.top},{x:e.left,y:e.bottom},{x:e.right,y:e.bottom}]},ke=function(e,t){return t&&t.shouldClipSubject?function(e,t){var r=$({top:Math.max(t.top,e.top),right:Math.min(t.right,e.right),bottom:Math.min(t.bottom,e.bottom),left:Math.max(t.left,e.left)});return r.width<=0||r.height<=0?null:r}(t.pageMarginBox,e):$(e)},Fe=function(e){var t=e.page,r=e.withPlaceholder,n=e.axis,i=e.frame,o=function(e,t){return t?Ge(e,t.scroll.diff.displacement):e}(t.marginBox,i),a=function(e,t,r){var n;return r&&r.increasedBy?G({},e,((n={})[t.end]=e[t.end]+r.increasedBy[t.line],n)):e}(o,n,r);return{page:t,withPlaceholder:r,active:ke(a,i)}},Ue=function(e,t){e.frame||be(!1);var r=e.frame,n=Be(t,r.scroll.initial),i=Ne(n),o=G({},r,{scroll:{initial:r.scroll.initial,current:t,diff:{value:n,displacement:i},max:r.scroll.max}});return G({},e,{frame:o,subject:Fe({page:e.subject.page,withPlaceholder:e.subject.withPlaceholder,axis:e.axis,frame:o})})};function je(e){return Object.values?Object.values(e):Object.keys(e).map((function(t){return e[t]}))}function We(e,t){if(e.findIndex)return e.findIndex(t);for(var r=0;r<e.length;r++)if(t(e[r]))return r;return-1}function He(e,t){if(e.find)return e.find(t);var r=We(e,t);return-1!==r?e[r]:void 0}function Ve(e){return Array.prototype.slice.call(e)}var qe=de((function(e){return e.reduce((function(e,t){return e[t.descriptor.id]=t,e}),{})})),ze=de((function(e){return e.reduce((function(e,t){return e[t.descriptor.id]=t,e}),{})})),Ye=de((function(e){return je(e)})),Je=de((function(e){return je(e)})),Xe=de((function(e,t){var r=Je(t).filter((function(t){return e===t.descriptor.droppableId})).sort((function(e,t){return e.descriptor.index-t.descriptor.index}));return r}));function Ke(e){return e.at&&"REORDER"===e.at.type?e.at.destination:null}function Qe(e){return e.at&&"COMBINE"===e.at.type?e.at.combine:null}var Ze=de((function(e,t){return t.filter((function(t){return t.descriptor.id!==e.descriptor.id}))})),$e=function(e,t){return e.descriptor.droppableId===t.descriptor.id},et={point:Oe,value:0},tt={invisible:{},visible:{},all:[]},rt={displaced:tt,displacedBy:et,at:null},nt=function(e,t){return function(r){return e<=r&&r<=t}},it=function(e){var t=nt(e.top,e.bottom),r=nt(e.left,e.right);return function(n){if(t(n.top)&&t(n.bottom)&&r(n.left)&&r(n.right))return!0;var i=t(n.top)||t(n.bottom),o=r(n.left)||r(n.right);if(i&&o)return!0;var a=n.top<e.top&&n.bottom>e.bottom,l=n.left<e.left&&n.right>e.right;return!(!a||!l)||(a&&o||l&&i)}},ot=function(e){var t=nt(e.top,e.bottom),r=nt(e.left,e.right);return function(e){return t(e.top)&&t(e.bottom)&&r(e.left)&&r(e.right)}},at={direction:"vertical",line:"y",crossAxisLine:"x",start:"top",end:"bottom",size:"height",crossAxisStart:"left",crossAxisEnd:"right",crossAxisSize:"width"},lt={direction:"horizontal",line:"x",crossAxisLine:"y",start:"left",end:"right",size:"width",crossAxisStart:"top",crossAxisEnd:"bottom",crossAxisSize:"height"},ct=function(e){var t=e.target,r=e.destination,n=e.viewport,i=e.withDroppableDisplacement,o=e.isVisibleThroughFrameFn,a=i?function(e,t){var r=t.frame?t.frame.scroll.diff.displacement:Oe;return Ge(e,r)}(t,r):t;return function(e,t,r){return!!t.subject.active&&r(t.subject.active)(e)}(a,r,o)&&function(e,t,r){return r(t)(e)}(a,n,o)},ut=function(e){return ct(G({},e,{isVisibleThroughFrameFn:it}))},st=function(e){return ct(G({},e,{isVisibleThroughFrameFn:ot}))};function dt(e){var t=e.afterDragging,r=e.destination,n=e.displacedBy,i=e.viewport,o=e.forceShouldAnimate,a=e.last;return t.reduce((function(e,t){var l=function(e,t){var r=e.page.marginBox,n={top:t.point.y,right:0,bottom:0,left:t.point.x};return $(ee(r,n))}(t,n),c=t.descriptor.id;if(e.all.push(c),!ut({target:l,destination:r,viewport:i,withDroppableDisplacement:!0}))return e.invisible[t.descriptor.id]=!0,e;var u=function(e,t,r){if("boolean"==typeof r)return r;if(!t)return!0;var n=t.invisible,i=t.visible;if(n[e])return!1;var o=i[e];return!o||o.shouldAnimate}(c,a,o),s={draggableId:c,shouldAnimate:u};return e.visible[c]=s,e}),{all:[],visible:{},invisible:{}})}function pt(e){var t=e.insideDestination,r=e.inHomeList,n=e.displacedBy,i=e.destination,o=function(e,t){if(!e.length)return 0;var r=e[e.length-1].descriptor.index;return t.inHomeList?r:r+1}(t,{inHomeList:r});return{displaced:tt,displacedBy:n,at:{type:"REORDER",destination:{droppableId:i.descriptor.id,index:o}}}}function ft(e){var t=e.draggable,r=e.insideDestination,n=e.destination,i=e.viewport,o=e.displacedBy,a=e.last,l=e.index,c=e.forceShouldAnimate,u=$e(t,n);if(null==l)return pt({insideDestination:r,inHomeList:u,displacedBy:o,destination:n});var s=He(r,(function(e){return e.descriptor.index===l}));if(!s)return pt({insideDestination:r,inHomeList:u,displacedBy:o,destination:n});var d=Ze(t,r),p=r.indexOf(s);return{displaced:dt({afterDragging:d.slice(p),destination:n,displacedBy:o,last:a,viewport:i.frame,forceShouldAnimate:c}),displacedBy:o,at:{type:"REORDER",destination:{droppableId:n.descriptor.id,index:l}}}}function gt(e,t){return Boolean(t.effected[e])}var mt=function(e){var t=e.isMovingForward,r=e.isInHomeList,n=e.draggable,i=e.draggables,o=e.destination,a=e.insideDestination,l=e.previousImpact,c=e.viewport,u=e.afterCritical,s=l.at;if(s||be(!1),"REORDER"===s.type){var d=function(e){var t=e.isMovingForward,r=e.isInHomeList,n=e.insideDestination,i=e.location;if(!n.length)return null;var o=i.index,a=t?o+1:o-1,l=n[0].descriptor.index,c=n[n.length-1].descriptor.index;return a<l||a>(r?c:c+1)?null:a}({isMovingForward:t,isInHomeList:r,location:s.destination,insideDestination:a});return null==d?null:ft({draggable:n,insideDestination:a,destination:o,viewport:c,last:l.displaced,displacedBy:l.displacedBy,index:d})}var p=function(e){var t=e.isMovingForward,r=e.destination,n=e.draggables,i=e.combine,o=e.afterCritical;if(!r.isCombineEnabled)return null;var a=i.draggableId,l=n[a].descriptor.index;return gt(a,o)?t?l:l-1:t?l+1:l}({isMovingForward:t,destination:o,displaced:l.displaced,draggables:i,combine:s.combine,afterCritical:u});return null==p?null:ft({draggable:n,insideDestination:a,destination:o,viewport:c,last:l.displaced,displacedBy:l.displacedBy,index:p})},vt=function(e){var t=e.afterCritical,r=e.impact,n=e.draggables,i=Qe(r);i||be(!1);var o=i.draggableId,a=n[o].page.borderBox.center,l=function(e){var t=e.displaced,r=e.afterCritical,n=e.combineWith,i=e.displacedBy,o=Boolean(t.visible[n]||t.invisible[n]);return gt(n,r)?o?Oe:Ne(i.point):o?i.point:Oe}({displaced:r.displaced,afterCritical:t,combineWith:o,displacedBy:r.displacedBy});return Pe(a,l)},bt=function(e,t){return t.margin[e.start]+t.borderBox[e.size]/2},ht=function(e,t,r){return t[e.crossAxisStart]+r.margin[e.crossAxisStart]+r.borderBox[e.crossAxisSize]/2},yt=function(e){var t=e.axis,r=e.moveRelativeTo,n=e.isMoving;return Se(t.line,r.marginBox[t.end]+bt(t,n),ht(t,r.marginBox,n))},It=function(e){var t=e.axis,r=e.moveRelativeTo,n=e.isMoving;return Se(t.line,r.marginBox[t.start]-function(e,t){return t.margin[e.end]+t.borderBox[e.size]/2}(t,n),ht(t,r.marginBox,n))},xt=function(e){var t=e.impact,r=e.draggable,n=e.draggables,i=e.droppable,o=e.afterCritical,a=Xe(i.descriptor.id,n),l=r.page,c=i.axis;if(!a.length)return function(e){var t=e.axis,r=e.moveInto,n=e.isMoving;return Se(t.line,r.contentBox[t.start]+bt(t,n),ht(t,r.contentBox,n))}({axis:c,moveInto:i.page,isMoving:l});var u=t.displaced,s=t.displacedBy,d=u.all[0];if(d){var p=n[d];if(gt(d,o))return It({axis:c,moveRelativeTo:p.page,isMoving:l});var f=oe(p.page,s.point);return It({axis:c,moveRelativeTo:f,isMoving:l})}var g=a[a.length-1];if(g.descriptor.id===r.descriptor.id)return l.borderBox.center;if(gt(g.descriptor.id,o)){var m=oe(g.page,Ne(o.displacedBy.point));return yt({axis:c,moveRelativeTo:m,isMoving:l})}return yt({axis:c,moveRelativeTo:g.page,isMoving:l})},Dt=function(e,t){var r=e.frame;return r?Pe(t,r.scroll.diff.displacement):t},Et=function(e){var t=function(e){var t=e.impact,r=e.draggable,n=e.droppable,i=e.draggables,o=e.afterCritical,a=r.page.borderBox.center,l=t.at;return n&&l?"REORDER"===l.type?xt({impact:t,draggable:r,draggables:i,droppable:n,afterCritical:o}):vt({impact:t,draggables:i,afterCritical:o}):a}(e),r=e.droppable;return r?Dt(r,t):t},wt=function(e,t){var r=Be(t,e.scroll.initial),n=Ne(r);return{frame:$({top:t.y,bottom:t.y+e.frame.height,left:t.x,right:t.x+e.frame.width}),scroll:{initial:e.scroll.initial,max:e.scroll.max,current:t,diff:{value:r,displacement:n}}}};function Ct(e,t){return e.map((function(e){return t[e]}))}var At=function(e){var t=e.pageBorderBoxCenter,r=e.draggable,n=function(e,t){return Pe(e.scroll.diff.displacement,t)}(e.viewport,t),i=Be(n,r.page.borderBox.center);return Pe(r.client.borderBox.center,i)},Ot=function(e){var t=e.draggable,r=e.destination,n=e.newPageBorderBoxCenter,i=e.viewport,o=e.withDroppableDisplacement,a=e.onlyOnMainAxis,l=void 0!==a&&a,c=Be(n,t.page.borderBox.center),u={target:Ge(t.page.borderBox,c),destination:r,withDroppableDisplacement:o,viewport:i};return l?function(e){return ct(G({},e,{isVisibleThroughFrameFn:(t=e.destination.axis,function(e){var r=nt(e.top,e.bottom),n=nt(e.left,e.right);return function(e){return t===at?r(e.top)&&r(e.bottom):n(e.left)&&n(e.right)}})}));var t}(u):st(u)},Pt=function(e){var t=e.isMovingForward,r=e.draggable,n=e.destination,i=e.draggables,o=e.previousImpact,a=e.viewport,l=e.previousPageBorderBoxCenter,c=e.previousClientSelection,u=e.afterCritical;if(!n.isEnabled)return null;var s=Xe(n.descriptor.id,i),d=$e(r,n),p=function(e){var t=e.isMovingForward,r=e.draggable,n=e.destination,i=e.insideDestination,o=e.previousImpact;if(!n.isCombineEnabled)return null;if(!Ke(o))return null;function a(e){var t={type:"COMBINE",combine:{draggableId:e,droppableId:n.descriptor.id}};return G({},o,{at:t})}var l=o.displaced.all,c=l.length?l[0]:null;if(t)return c?a(c):null;var u=Ze(r,i);if(!c)return u.length?a(u[u.length-1].descriptor.id):null;var s=We(u,(function(e){return e.descriptor.id===c}));-1===s&&be(!1);var d=s-1;return d<0?null:a(u[d].descriptor.id)}({isMovingForward:t,draggable:r,destination:n,insideDestination:s,previousImpact:o})||mt({isMovingForward:t,isInHomeList:d,draggable:r,draggables:i,destination:n,insideDestination:s,previousImpact:o,viewport:a,afterCritical:u});if(!p)return null;var f=Et({impact:p,draggable:r,droppable:n,draggables:i,afterCritical:u});if(Ot({draggable:r,destination:n,newPageBorderBoxCenter:f,viewport:a.frame,withDroppableDisplacement:!1,onlyOnMainAxis:!0}))return{clientSelection:At({pageBorderBoxCenter:f,draggable:r,viewport:a}),impact:p,scrollJumpRequest:null};var g=Be(f,l),m=function(e){var t=e.impact,r=e.viewport,n=e.destination,i=e.draggables,o=e.maxScrollChange,a=wt(r,Pe(r.scroll.current,o)),l=n.frame?Ue(n,Pe(n.frame.scroll.current,o)):n,c=t.displaced,u=dt({afterDragging:Ct(c.all,i),destination:n,displacedBy:t.displacedBy,viewport:a.frame,last:c,forceShouldAnimate:!1}),s=dt({afterDragging:Ct(c.all,i),destination:l,displacedBy:t.displacedBy,viewport:r.frame,last:c,forceShouldAnimate:!1}),d={},p={},f=[c,u,s];return c.all.forEach((function(e){var t=function(e,t){for(var r=0;r<t.length;r++){var n=t[r].visible[e];if(n)return n}return null}(e,f);t?p[e]=t:d[e]=!0})),G({},t,{displaced:{all:c.all,invisible:d,visible:p}})}({impact:p,viewport:a,destination:n,draggables:i,maxScrollChange:g});return{clientSelection:c,impact:m,scrollJumpRequest:g}},Bt=function(e){var t=e.subject.active;return t||be(!1),t},Rt=function(e,t){var r=e.page.borderBox.center;return gt(e.descriptor.id,t)?Be(r,t.displacedBy.point):r},Nt=function(e,t){var r=e.page.borderBox;return gt(e.descriptor.id,t)?Ge(r,Ne(t.displacedBy.point)):r},St=de((function(e,t){var r=t[e.line];return{value:r,point:Se(e.line,r)}})),Tt=function(e,t){return G({},e,{scroll:G({},e.scroll,{max:t})})},Lt=function(e,t,r){var n=e.frame;$e(t,e)&&be(!1),e.subject.withPlaceholder&&be(!1);var i=St(e.axis,t.displaceBy).point,o=function(e,t,r){var n=e.axis;if("virtual"===e.descriptor.mode)return Se(n.line,t[n.line]);var i=e.subject.page.contentBox[n.size],o=Xe(e.descriptor.id,r).reduce((function(e,t){return e+t.client.marginBox[n.size]}),0)+t[n.line]-i;return o<=0?null:Se(n.line,o)}(e,i,r),a={placeholderSize:i,increasedBy:o,oldFrameMaxScroll:e.frame?e.frame.scroll.max:null};if(!n)return G({},e,{subject:Fe({page:e.subject.page,withPlaceholder:a,axis:e.axis,frame:e.frame})});var l=o?Pe(n.scroll.max,o):n.scroll.max,c=Tt(n,l);return G({},e,{subject:Fe({page:e.subject.page,withPlaceholder:a,axis:e.axis,frame:c}),frame:c})},Mt=function(e){var t=e.isMovingForward,r=e.previousPageBorderBoxCenter,n=e.draggable,i=e.isOver,o=e.draggables,a=e.droppables,l=e.viewport,c=e.afterCritical,u=function(e){var t=e.isMovingForward,r=e.pageBorderBoxCenter,n=e.source,i=e.droppables,o=e.viewport,a=n.subject.active;if(!a)return null;var l=n.axis,c=nt(a[l.start],a[l.end]),u=Ye(i).filter((function(e){return e!==n})).filter((function(e){return e.isEnabled})).filter((function(e){return Boolean(e.subject.active)})).filter((function(e){return it(o.frame)(Bt(e))})).filter((function(e){var r=Bt(e);return t?a[l.crossAxisEnd]<r[l.crossAxisEnd]:r[l.crossAxisStart]<a[l.crossAxisStart]})).filter((function(e){var t=Bt(e),r=nt(t[l.start],t[l.end]);return c(t[l.start])||c(t[l.end])||r(a[l.start])||r(a[l.end])})).sort((function(e,r){var n=Bt(e)[l.crossAxisStart],i=Bt(r)[l.crossAxisStart];return t?n-i:i-n})).filter((function(e,t,r){return Bt(e)[l.crossAxisStart]===Bt(r[0])[l.crossAxisStart]}));if(!u.length)return null;if(1===u.length)return u[0];var s=u.filter((function(e){return nt(Bt(e)[l.start],Bt(e)[l.end])(r[l.line])}));return 1===s.length?s[0]:s.length>1?s.sort((function(e,t){return Bt(e)[l.start]-Bt(t)[l.start]}))[0]:u.sort((function(e,t){var n=Le(r,_e(Bt(e))),i=Le(r,_e(Bt(t)));return n!==i?n-i:Bt(e)[l.start]-Bt(t)[l.start]}))[0]}({isMovingForward:t,pageBorderBoxCenter:r,source:i,droppables:a,viewport:l});if(!u)return null;var s=Xe(u.descriptor.id,o),d=function(e){var t=e.pageBorderBoxCenter,r=e.viewport,n=e.destination,i=e.insideDestination,o=e.afterCritical,a=i.filter((function(e){return st({target:Nt(e,o),destination:n,viewport:r.frame,withDroppableDisplacement:!0})})).sort((function(e,r){var i=Te(t,Dt(n,Rt(e,o))),a=Te(t,Dt(n,Rt(r,o)));return i<a?-1:a<i?1:e.descriptor.index-r.descriptor.index}));return a[0]||null}({pageBorderBoxCenter:r,viewport:l,destination:u,insideDestination:s,afterCritical:c}),p=function(e){var t=e.previousPageBorderBoxCenter,r=e.moveRelativeTo,n=e.insideDestination,i=e.draggable,o=e.draggables,a=e.destination,l=e.viewport,c=e.afterCritical;if(!r){if(n.length)return null;var u={displaced:tt,displacedBy:et,at:{type:"REORDER",destination:{droppableId:a.descriptor.id,index:0}}},s=Et({impact:u,draggable:i,droppable:a,draggables:o,afterCritical:c}),d=$e(i,a)?a:Lt(a,i,o);return Ot({draggable:i,destination:d,newPageBorderBoxCenter:s,viewport:l.frame,withDroppableDisplacement:!1,onlyOnMainAxis:!0})?u:null}var p,f=Boolean(t[a.axis.line]<=r.page.borderBox.center[a.axis.line]),g=(p=r.descriptor.index,r.descriptor.id===i.descriptor.id||f?p:p+1),m=St(a.axis,i.displaceBy);return ft({draggable:i,insideDestination:n,destination:a,viewport:l,displacedBy:m,last:tt,index:g})}({previousPageBorderBoxCenter:r,destination:u,draggable:n,draggables:o,moveRelativeTo:d,insideDestination:s,viewport:l,afterCritical:c});if(!p)return null;var f=Et({impact:p,draggable:n,droppable:u,draggables:o,afterCritical:c});return{clientSelection:At({pageBorderBoxCenter:f,draggable:n,viewport:l}),impact:p,scrollJumpRequest:null}},Gt=function(e){var t=e.at;return t?"REORDER"===t.type?t.destination.droppableId:t.combine.droppableId:null},_t=function(e){var t=e.state,r=e.type,n=function(e,t){var r=Gt(e);return r?t[r]:null}(t.impact,t.dimensions.droppables),i=Boolean(n),o=t.dimensions.droppables[t.critical.droppable.id],a=n||o,l=a.axis.direction,c="vertical"===l&&("MOVE_UP"===r||"MOVE_DOWN"===r)||"horizontal"===l&&("MOVE_LEFT"===r||"MOVE_RIGHT"===r);if(c&&!i)return null;var u="MOVE_DOWN"===r||"MOVE_RIGHT"===r,s=t.dimensions.draggables[t.critical.draggable.id],d=t.current.page.borderBoxCenter,p=t.dimensions,f=p.draggables,g=p.droppables;return c?Pt({isMovingForward:u,previousPageBorderBoxCenter:d,draggable:s,destination:a,draggables:f,viewport:t.viewport,previousClientSelection:t.current.client.selection,previousImpact:t.impact,afterCritical:t.afterCritical}):Mt({isMovingForward:u,previousPageBorderBoxCenter:d,draggable:s,isOver:a,draggables:f,droppables:g,viewport:t.viewport,afterCritical:t.afterCritical})};function kt(e){return"DRAGGING"===e.phase||"COLLECTING"===e.phase}function Ft(e){var t=nt(e.top,e.bottom),r=nt(e.left,e.right);return function(e){return t(e.y)&&r(e.x)}}function Ut(e){var t=e.pageBorderBox,r=e.draggable,n=e.droppables,i=Ye(n).filter((function(e){if(!e.isEnabled)return!1;var r,n,i=e.subject.active;if(!i)return!1;if(n=i,!((r=t).left<n.right&&r.right>n.left&&r.top<n.bottom&&r.bottom>n.top))return!1;if(Ft(i)(t.center))return!0;var o=e.axis,a=i.center[o.crossAxisLine],l=t[o.crossAxisStart],c=t[o.crossAxisEnd],u=nt(i[o.crossAxisStart],i[o.crossAxisEnd]),s=u(l),d=u(c);return!s&&!d||(s?l<a:c>a)}));return i.length?1===i.length?i[0].descriptor.id:function(e){var t=e.pageBorderBox,r=e.draggable,n=e.candidates,i=r.page.borderBox.center,o=n.map((function(e){var r=e.axis,n=Se(e.axis.line,t.center[r.line],e.page.borderBox.center[r.crossAxisLine]);return{id:e.descriptor.id,distance:Te(i,n)}})).sort((function(e,t){return t.distance-e.distance}));return o[0]?o[0].id:null}({pageBorderBox:t,draggable:r,candidates:i}):null}var jt=function(e,t){return $(Ge(e,t))};function Wt(e){var t=e.displaced,r=e.id;return Boolean(t.visible[r]||t.invisible[r])}var Ht=function(e){var t=e.pageOffset,r=e.draggable,n=e.draggables,i=e.droppables,o=e.previousImpact,a=e.viewport,l=e.afterCritical,c=jt(r.page.borderBox,t),u=Ut({pageBorderBox:c,draggable:r,droppables:i});if(!u)return rt;var s=i[u],d=Xe(s.descriptor.id,n),p=function(e,t){var r=e.frame;return r?jt(t,r.scroll.diff.value):t}(s,c);return function(e){var t=e.draggable,r=e.pageBorderBoxWithDroppableScroll,n=e.previousImpact,i=e.destination,o=e.insideDestination,a=e.afterCritical;if(!i.isCombineEnabled)return null;var l=i.axis,c=St(i.axis,t.displaceBy),u=c.value,s=r[l.start],d=r[l.end],p=He(Ze(t,o),(function(e){var t=e.descriptor.id,r=e.page.borderBox,i=r[l.size]/4,o=gt(t,a),c=Wt({displaced:n.displaced,id:t});return o?c?d>r[l.start]+i&&d<r[l.end]-i:s>r[l.start]-u+i&&s<r[l.end]-u-i:c?d>r[l.start]+u+i&&d<r[l.end]+u-i:s>r[l.start]+i&&s<r[l.end]-i}));return p?{displacedBy:c,displaced:n.displaced,at:{type:"COMBINE",combine:{draggableId:p.descriptor.id,droppableId:i.descriptor.id}}}:null}({pageBorderBoxWithDroppableScroll:p,draggable:r,previousImpact:o,destination:s,insideDestination:d,afterCritical:l})||function(e){var t=e.pageBorderBoxWithDroppableScroll,r=e.draggable,n=e.destination,i=e.insideDestination,o=e.last,a=e.viewport,l=e.afterCritical,c=n.axis,u=St(n.axis,r.displaceBy),s=u.value,d=t[c.start],p=t[c.end],f=function(e){var t=e.draggable,r=e.closest,n=e.inHomeList;return r?n&&r.descriptor.index>t.descriptor.index?r.descriptor.index-1:r.descriptor.index:null}({draggable:r,closest:He(Ze(r,i),(function(e){var t=e.descriptor.id,r=e.page.borderBox.center[c.line],n=gt(t,l),i=Wt({displaced:o,id:t});return n?i?p<=r:d<r-s:i?p<=r+s:d<r})),inHomeList:$e(r,n)});return ft({draggable:r,insideDestination:i,destination:n,viewport:a,last:o,displacedBy:u,index:f})}({pageBorderBoxWithDroppableScroll:p,draggable:r,destination:s,insideDestination:d,last:o.displaced,viewport:a,afterCritical:l})},Vt=function(e,t){var r;return G({},e,((r={})[t.descriptor.id]=t,r))},qt=function(e){var t=e.previousImpact,r=e.impact,n=e.droppables,i=Gt(t),o=Gt(r);if(!i)return n;if(i===o)return n;var a=n[i];if(!a.subject.withPlaceholder)return n;var l=function(e){var t=e.subject.withPlaceholder;t||be(!1);var r=e.frame;if(!r)return G({},e,{subject:Fe({page:e.subject.page,axis:e.axis,frame:null,withPlaceholder:null})});var n=t.oldFrameMaxScroll;n||be(!1);var i=Tt(r,n);return G({},e,{subject:Fe({page:e.subject.page,axis:e.axis,frame:i,withPlaceholder:null}),frame:i})}(a);return Vt(n,l)},zt=function(e){var t=e.state,r=e.clientSelection,n=e.dimensions,i=e.viewport,o=e.impact,a=e.scrollJumpRequest,l=i||t.viewport,c=n||t.dimensions,u=r||t.current.client.selection,s=Be(u,t.initial.client.selection),d={offset:s,selection:u,borderBoxCenter:Pe(t.initial.client.borderBoxCenter,s)},p={selection:Pe(d.selection,l.scroll.current),borderBoxCenter:Pe(d.borderBoxCenter,l.scroll.current),offset:Pe(d.offset,l.scroll.diff.value)},f={client:d,page:p};if("COLLECTING"===t.phase)return G({phase:"COLLECTING"},t,{dimensions:c,viewport:l,current:f});var g=c.draggables[t.critical.draggable.id],m=o||Ht({pageOffset:p.offset,draggable:g,draggables:c.draggables,droppables:c.droppables,previousImpact:t.impact,viewport:l,afterCritical:t.afterCritical}),v=function(e){var t=e.draggable,r=e.draggables,n=e.droppables,i=e.previousImpact,o=e.impact,a=qt({previousImpact:i,impact:o,droppables:n}),l=Gt(o);if(!l)return a;var c=n[l];if($e(t,c))return a;if(c.subject.withPlaceholder)return a;var u=Lt(c,t,r);return Vt(a,u)}({draggable:g,impact:m,previousImpact:t.impact,draggables:c.draggables,droppables:c.droppables});return G({},t,{current:f,dimensions:{draggables:c.draggables,droppables:v},impact:m,viewport:l,scrollJumpRequest:a||null,forceShouldAnimate:!a&&null})};var Yt=function(e){var t=e.impact,r=e.viewport,n=e.draggables,i=e.destination,o=e.forceShouldAnimate,a=t.displaced,l=function(e,t){return e.map((function(e){return t[e]}))}(a.all,n);return G({},t,{displaced:dt({afterDragging:l,destination:i,displacedBy:t.displacedBy,viewport:r.frame,forceShouldAnimate:o,last:a})})},Jt=function(e){var t=e.impact,r=e.draggable,n=e.droppable,i=e.draggables,o=e.viewport,a=e.afterCritical,l=Et({impact:t,draggable:r,draggables:i,droppable:n,afterCritical:a});return At({pageBorderBoxCenter:l,draggable:r,viewport:o})},Xt=function(e){var t=e.state,r=e.dimensions,n=e.viewport;"SNAP"!==t.movementMode&&be(!1);var i=t.impact,o=n||t.viewport,a=r||t.dimensions,l=a.draggables,c=a.droppables,u=l[t.critical.draggable.id],s=Gt(i);s||be(!1);var d=c[s],p=Yt({impact:i,viewport:o,destination:d,draggables:l}),f=Jt({impact:p,draggable:u,droppable:d,draggables:l,viewport:o,afterCritical:t.afterCritical});return zt({impact:p,clientSelection:f,state:t,dimensions:a,viewport:o})},Kt=function(e){var t=e.draggable,r=e.home,n=e.draggables,i=e.viewport,o=St(r.axis,t.displaceBy),a=Xe(r.descriptor.id,n),l=a.indexOf(t);-1===l&&be(!1);var c,u=a.slice(l+1),s=u.reduce((function(e,t){return e[t.descriptor.id]=!0,e}),{}),d={inVirtualList:"virtual"===r.descriptor.mode,displacedBy:o,effected:s};return{impact:{displaced:dt({afterDragging:u,destination:r,displacedBy:o,last:null,viewport:i.frame,forceShouldAnimate:!1}),displacedBy:o,at:{type:"REORDER",destination:(c=t.descriptor,{index:c.index,droppableId:c.droppableId})}},afterCritical:d}},Qt=function(e){var t=e.additions,r=e.updatedDroppables,n=e.viewport,i=n.scroll.diff.value;return t.map((function(e){var t=e.descriptor.droppableId,o=function(e){var t=e.frame;return t||be(!1),t}(r[t]),a=o.scroll.diff.value,l=function(e){var t=e.draggable,r=e.offset,n=e.initialWindowScroll,i=oe(t.client,r),o=ae(i,n);return G({},t,{placeholder:G({},t.placeholder,{client:i}),client:i,page:o})}({draggable:e,offset:Pe(i,a),initialWindowScroll:n.scroll.initial});return l}))},Zt=function(e){return"SNAP"===e.movementMode},$t=function(e,t,r){var n=function(e,t){return{draggables:e.draggables,droppables:Vt(e.droppables,t)}}(e.dimensions,t);return!Zt(e)||r?zt({state:e,dimensions:n}):Xt({state:e,dimensions:n})};function er(e){return e.isDragging&&"SNAP"===e.movementMode?G({phase:"DRAGGING"},e,{scrollJumpRequest:null}):e}var tr={phase:"IDLE",completed:null,shouldFlush:!1},rr=function(e,t){if(void 0===e&&(e=tr),"FLUSH"===t.type)return G({},tr,{shouldFlush:!0});if("INITIAL_PUBLISH"===t.type){"IDLE"!==e.phase&&be(!1);var r=t.payload,n=r.critical,i=r.clientSelection,o=r.viewport,a=r.dimensions,l=r.movementMode,c=a.draggables[n.draggable.id],u=a.droppables[n.droppable.id],s={selection:i,borderBoxCenter:c.client.borderBox.center,offset:Oe},d={client:s,page:{selection:Pe(s.selection,o.scroll.initial),borderBoxCenter:Pe(s.selection,o.scroll.initial),offset:Pe(s.selection,o.scroll.diff.value)}},p=Ye(a.droppables).every((function(e){return!e.isFixedOnPage})),f=Kt({draggable:c,home:u,draggables:a.draggables,viewport:o}),g=f.impact;return{phase:"DRAGGING",isDragging:!0,critical:n,movementMode:l,dimensions:a,initial:d,current:d,isWindowScrollAllowed:p,impact:g,afterCritical:f.afterCritical,onLiftImpact:g,viewport:o,scrollJumpRequest:null,forceShouldAnimate:null}}if("COLLECTION_STARTING"===t.type)return"COLLECTING"===e.phase||"DROP_PENDING"===e.phase?e:("DRAGGING"!==e.phase&&be(!1),G({phase:"COLLECTING"},e,{phase:"COLLECTING"}));if("PUBLISH_WHILE_DRAGGING"===t.type)return"COLLECTING"!==e.phase&&"DROP_PENDING"!==e.phase&&be(!1),function(e){var t=e.state,r=e.published,n=r.modified.map((function(e){var r=t.dimensions.droppables[e.droppableId];return Ue(r,e.scroll)})),i=G({},t.dimensions.droppables,{},qe(n)),o=ze(Qt({additions:r.additions,updatedDroppables:i,viewport:t.viewport})),a=G({},t.dimensions.draggables,{},o);r.removals.forEach((function(e){delete a[e]}));var l={droppables:i,draggables:a},c=Gt(t.impact),u=c?l.droppables[c]:null,s=l.draggables[t.critical.draggable.id],d=l.droppables[t.critical.droppable.id],p=Kt({draggable:s,home:d,draggables:a,viewport:t.viewport}),f=p.impact,g=p.afterCritical,m=u&&u.isCombineEnabled?t.impact:f,v=Ht({pageOffset:t.current.page.offset,draggable:l.draggables[t.critical.draggable.id],draggables:l.draggables,droppables:l.droppables,previousImpact:m,viewport:t.viewport,afterCritical:g}),b=G({phase:"DRAGGING"},t,{phase:"DRAGGING",impact:v,onLiftImpact:f,dimensions:l,afterCritical:g,forceShouldAnimate:!1});return"COLLECTING"===t.phase?b:G({phase:"DROP_PENDING"},b,{phase:"DROP_PENDING",reason:t.reason,isWaiting:!1})}({state:e,published:t.payload});if("MOVE"===t.type){if("DROP_PENDING"===e.phase)return e;kt(e)||be(!1);var m=t.payload.client;return Re(m,e.current.client.selection)?e:zt({state:e,clientSelection:m,impact:Zt(e)?e.impact:null})}if("UPDATE_DROPPABLE_SCROLL"===t.type){if("DROP_PENDING"===e.phase)return er(e);if("COLLECTING"===e.phase)return er(e);kt(e)||be(!1);var v=t.payload,b=v.id,h=v.newScroll,y=e.dimensions.droppables[b];if(!y)return e;var I=Ue(y,h);return $t(e,I,!1)}if("UPDATE_DROPPABLE_IS_ENABLED"===t.type){if("DROP_PENDING"===e.phase)return e;kt(e)||be(!1);var x=t.payload,D=x.id,E=x.isEnabled,w=e.dimensions.droppables[D];w||be(!1),w.isEnabled===E&&be(!1);var C=G({},w,{isEnabled:E});return $t(e,C,!0)}if("UPDATE_DROPPABLE_IS_COMBINE_ENABLED"===t.type){if("DROP_PENDING"===e.phase)return e;kt(e)||be(!1);var A=t.payload,O=A.id,P=A.isCombineEnabled,B=e.dimensions.droppables[O];B||be(!1),B.isCombineEnabled===P&&be(!1);var R=G({},B,{isCombineEnabled:P});return $t(e,R,!0)}if("MOVE_BY_WINDOW_SCROLL"===t.type){if("DROP_PENDING"===e.phase||"DROP_ANIMATING"===e.phase)return e;kt(e)||be(!1),e.isWindowScrollAllowed||be(!1);var N=t.payload.newScroll;if(Re(e.viewport.scroll.current,N))return er(e);var S=wt(e.viewport,N);return Zt(e)?Xt({state:e,viewport:S}):zt({state:e,viewport:S})}if("UPDATE_VIEWPORT_MAX_SCROLL"===t.type){if(!kt(e))return e;var T=t.payload.maxScroll;if(Re(T,e.viewport.scroll.max))return e;var L=G({},e.viewport,{scroll:G({},e.viewport.scroll,{max:T})});return G({phase:"DRAGGING"},e,{viewport:L})}if("MOVE_UP"===t.type||"MOVE_DOWN"===t.type||"MOVE_LEFT"===t.type||"MOVE_RIGHT"===t.type){if("COLLECTING"===e.phase||"DROP_PENDING"===e.phase)return e;"DRAGGING"!==e.phase&&be(!1);var M=_t({state:e,type:t.type});return M?zt({state:e,impact:M.impact,clientSelection:M.clientSelection,scrollJumpRequest:M.scrollJumpRequest}):e}if("DROP_PENDING"===t.type){var _=t.payload.reason;return"COLLECTING"!==e.phase&&be(!1),G({phase:"DROP_PENDING"},e,{phase:"DROP_PENDING",isWaiting:!0,reason:_})}if("DROP_ANIMATE"===t.type){var k=t.payload,F=k.completed,U=k.dropDuration,j=k.newHomeClientOffset;return"DRAGGING"!==e.phase&&"DROP_PENDING"!==e.phase&&be(!1),{phase:"DROP_ANIMATING",completed:F,dropDuration:U,newHomeClientOffset:j,dimensions:e.dimensions}}return"DROP_COMPLETE"===t.type?{phase:"IDLE",completed:t.payload.completed,shouldFlush:!1}:e},nr=function(e){return{type:"PUBLISH_WHILE_DRAGGING",payload:e}},ir=function(){return{type:"COLLECTION_STARTING",payload:null}},or=function(e){return{type:"UPDATE_DROPPABLE_SCROLL",payload:e}},ar=function(e){return{type:"UPDATE_DROPPABLE_IS_ENABLED",payload:e}},lr=function(e){return{type:"UPDATE_DROPPABLE_IS_COMBINE_ENABLED",payload:e}},cr=function(e){return{type:"MOVE",payload:e}},ur=function(){return{type:"MOVE_UP",payload:null}},sr=function(){return{type:"MOVE_DOWN",payload:null}},dr=function(){return{type:"MOVE_RIGHT",payload:null}},pr=function(){return{type:"MOVE_LEFT",payload:null}},fr=function(e){return{type:"DROP_COMPLETE",payload:e}},gr=function(e){return{type:"DROP",payload:e}},mr=function(){return{type:"DROP_ANIMATION_FINISHED",payload:null}},vr="cubic-bezier(.2,1,.1,1)",br={drop:0,combining:.7},hr={drop:.75},yr=.2+"s "+"cubic-bezier(0.2, 0, 0, 1)",Ir={fluid:"opacity "+yr,snap:"transform "+yr+", opacity "+yr,drop:function(e){var t=e+"s "+vr;return"transform "+t+", opacity "+t},outOfTheWay:"transform "+yr,placeholder:"height "+yr+", width "+yr+", margin "+yr},xr=function(e){return Re(e,Oe)?null:"translate("+e.x+"px, "+e.y+"px)"},Dr=xr,Er=function(e,t){var r=xr(e);return r?t?r+" scale("+hr.drop+")":r:null},wr=.33,Cr=.55,Ar=Cr-wr,Or=function(e){var t=e.getState,r=e.dispatch;return function(e){return function(n){if("DROP"===n.type){var i=t(),o=n.payload.reason;if("COLLECTING"!==i.phase){if("IDLE"!==i.phase){"DROP_PENDING"===i.phase&&i.isWaiting&&be(!1),"DRAGGING"!==i.phase&&"DROP_PENDING"!==i.phase&&be(!1);var a=i.critical,l=i.dimensions,c=l.draggables[i.critical.draggable.id],u=function(e){var t=e.draggables,r=e.reason,n=e.lastImpact,i=e.home,o=e.viewport,a=e.onLiftImpact;return n.at&&"DROP"===r?"REORDER"===n.at.type?{impact:n,didDropInsideDroppable:!0}:{impact:G({},n,{displaced:tt}),didDropInsideDroppable:!0}:{impact:Yt({draggables:t,impact:a,destination:i,viewport:o,forceShouldAnimate:!0}),didDropInsideDroppable:!1}}({reason:o,lastImpact:i.impact,afterCritical:i.afterCritical,onLiftImpact:i.onLiftImpact,home:i.dimensions.droppables[i.critical.droppable.id],viewport:i.viewport,draggables:i.dimensions.draggables}),s=u.impact,d=u.didDropInsideDroppable,p=d?Ke(s):null,f=d?Qe(s):null,g={index:a.draggable.index,droppableId:a.droppable.id},m={draggableId:c.descriptor.id,type:c.descriptor.type,source:g,reason:o,mode:i.movementMode,destination:p,combine:f},v=function(e){var t=e.impact,r=e.draggable,n=e.dimensions,i=e.viewport,o=e.afterCritical,a=n.draggables,l=n.droppables,c=Gt(t),u=c?l[c]:null,s=l[r.descriptor.droppableId],d=Jt({impact:t,draggable:r,draggables:a,afterCritical:o,droppable:u||s,viewport:i});return Be(d,r.client.borderBox.center)}({impact:s,draggable:c,dimensions:l,viewport:i.viewport,afterCritical:i.afterCritical}),b={critical:i.critical,afterCritical:i.afterCritical,result:m,impact:s};if(!Re(i.current.client.offset,v)||Boolean(m.combine)){var h=function(e){var t=e.current,r=e.destination,n=e.reason,i=Te(t,r);if(i<=0)return wr;if(i>=1500)return Cr;var o=wr+Ar*(i/1500);return Number(("CANCEL"===n?.6*o:o).toFixed(2))}({current:i.current.client.offset,destination:v,reason:o});r(function(e){return{type:"DROP_ANIMATE",payload:e}}({newHomeClientOffset:v,dropDuration:h,completed:b}))}else r(fr({completed:b}))}}else r(function(e){return{type:"DROP_PENDING",payload:e}}({reason:o}))}else e(n)}}},Pr=function(){return{x:window.pageXOffset,y:window.pageYOffset}};function Br(e){var t=e.onWindowScroll;var r=pe((function(){t(Pr())})),n=function(e){return{eventName:"scroll",options:{passive:!0,capture:!1},fn:function(t){t.target!==window&&t.target!==window.document||e()}}}(r),i=ge;function o(){return i!==ge}return{start:function(){o()&&be(!1),i=me(window,[n])},stop:function(){o()||be(!1),r.cancel(),i(),i=ge},isActive:o}}var Rr=function(e){var t=Br({onWindowScroll:function(t){e.dispatch({type:"MOVE_BY_WINDOW_SCROLL",payload:{newScroll:t}})}});return function(e){return function(r){t.isActive()||"INITIAL_PUBLISH"!==r.type||t.start(),t.isActive()&&function(e){return"DROP_COMPLETE"===e.type||"DROP_ANIMATE"===e.type||"FLUSH"===e.type}(r)&&t.stop(),e(r)}}},Nr=function(){var e=[];return{add:function(t){var r=setTimeout((function(){return function(t){var r=We(e,(function(e){return e.timerId===t}));-1===r&&be(!1),e.splice(r,1)[0].callback()}(r)})),n={timerId:r,callback:t};e.push(n)},flush:function(){if(e.length){var t=[].concat(e);e.length=0,t.forEach((function(e){clearTimeout(e.timerId),e.callback()}))}}}},Sr=function(e,t){t()},Tr=function(e,t){return{draggableId:e.draggable.id,type:e.droppable.type,source:{droppableId:e.droppable.id,index:e.draggable.index},mode:t}},Lr=function(e,t,r,n){if(e){var i=function(e){var t=!1,r=!1,n=setTimeout((function(){r=!0})),i=function(i){t||r||(t=!0,e(i),clearTimeout(n))};return i.wasCalled=function(){return t},i}(r);e(t,{announce:i}),i.wasCalled()||r(n(t))}else r(n(t))},Mr=function(e,t){var r=function(e,t){var r=Nr(),n=null,i=function(r){n||be(!1),n=null,Sr(0,(function(){return Lr(e().onDragEnd,r,t,Ae)}))};return{beforeCapture:function(t,r){n&&be(!1),Sr(0,(function(){var n=e().onBeforeCapture;n&&n({draggableId:t,mode:r})}))},beforeStart:function(t,r){n&&be(!1),Sr(0,(function(){var n=e().onBeforeDragStart;n&&n(Tr(t,r))}))},start:function(i,o){n&&be(!1);var a=Tr(i,o);n={mode:o,lastCritical:i,lastLocation:a.source,lastCombine:null},r.add((function(){Sr(0,(function(){return Lr(e().onDragStart,a,t,we)}))}))},update:function(i,o){var a=Ke(o),l=Qe(o);n||be(!1);var c=!function(e,t){if(e===t)return!0;var r=e.draggable.id===t.draggable.id&&e.draggable.droppableId===t.draggable.droppableId&&e.draggable.type===t.draggable.type&&e.draggable.index===t.draggable.index,n=e.droppable.id===t.droppable.id&&e.droppable.type===t.droppable.type;return r&&n}(i,n.lastCritical);c&&(n.lastCritical=i);var u,s,d=(s=a,!(null==(u=n.lastLocation)&&null==s||null!=u&&null!=s&&u.droppableId===s.droppableId&&u.index===s.index));d&&(n.lastLocation=a);var p=!function(e,t){return null==e&&null==t||null!=e&&null!=t&&e.draggableId===t.draggableId&&e.droppableId===t.droppableId}(n.lastCombine,l);if(p&&(n.lastCombine=l),c||d||p){var f=G({},Tr(i,n.mode),{combine:l,destination:a});r.add((function(){Sr(0,(function(){return Lr(e().onDragUpdate,f,t,Ce)}))}))}},flush:function(){n||be(!1),r.flush()},drop:i,abort:function(){if(n){var e=G({},Tr(n.lastCritical,n.mode),{combine:null,destination:null,reason:"CANCEL"});i(e)}}}}(e,t);return function(e){return function(t){return function(n){if("BEFORE_INITIAL_CAPTURE"!==n.type){if("INITIAL_PUBLISH"===n.type){var i=n.payload.critical;return r.beforeStart(i,n.payload.movementMode),t(n),void r.start(i,n.payload.movementMode)}if("DROP_COMPLETE"===n.type){var o=n.payload.completed.result;return r.flush(),t(n),void r.drop(o)}if(t(n),"FLUSH"!==n.type){var a=e.getState();"DRAGGING"===a.phase&&r.update(a.critical,a.impact)}else r.abort()}else r.beforeCapture(n.payload.draggableId,n.payload.movementMode)}}}},Gr=function(e){return function(t){return function(r){if("DROP_ANIMATION_FINISHED"===r.type){var n=e.getState();"DROP_ANIMATING"!==n.phase&&be(!1),e.dispatch(fr({completed:n.completed}))}else t(r)}}},_r=function(e){var t=null,r=null;return function(n){return function(i){if("FLUSH"!==i.type&&"DROP_COMPLETE"!==i.type&&"DROP_ANIMATION_FINISHED"!==i.type||(r&&(cancelAnimationFrame(r),r=null),t&&(t(),t=null)),n(i),"DROP_ANIMATE"===i.type){var o={eventName:"scroll",options:{capture:!0,passive:!1,once:!0},fn:function(){"DROP_ANIMATING"===e.getState().phase&&e.dispatch({type:"DROP_ANIMATION_FINISHED",payload:null})}};r=requestAnimationFrame((function(){r=null,t=me(window,[o])}))}}}},kr=function(e){return function(t){return function(r){if(t(r),"PUBLISH_WHILE_DRAGGING"===r.type){var n=e.getState();"DROP_PENDING"===n.phase&&(n.isWaiting||e.dispatch(gr({reason:n.reason})))}}}},Fr=J,Ur=function(e){var t,r=e.dimensionMarshal,n=e.focusMarshal,i=e.styleMarshal,o=e.getResponders,a=e.announce,l=e.autoScroller;return q(rr,Fr(function(){for(var e=arguments.length,t=new Array(e),r=0;r<e;r++)t[r]=arguments[r];return function(e){return function(){var r=e.apply(void 0,arguments),n=function(){throw new Error(U(15))},i={getState:r.getState,dispatch:function(){return n.apply(void 0,arguments)}},o=t.map((function(e){return e(i)}));return n=J.apply(void 0,o)(r.dispatch),F(F({},r),{},{dispatch:n})}}}((t=i,function(){return function(e){return function(r){"INITIAL_PUBLISH"===r.type&&t.dragging(),"DROP_ANIMATE"===r.type&&t.dropping(r.payload.completed.result.reason),"FLUSH"!==r.type&&"DROP_COMPLETE"!==r.type||t.resting(),e(r)}}}),function(e){return function(){return function(t){return function(r){"DROP_COMPLETE"!==r.type&&"FLUSH"!==r.type&&"DROP_ANIMATE"!==r.type||e.stopPublishing(),t(r)}}}}(r),function(e){return function(t){var r=t.getState,n=t.dispatch;return function(t){return function(i){if("LIFT"===i.type){var o=i.payload,a=o.id,l=o.clientSelection,c=o.movementMode,u=r();"DROP_ANIMATING"===u.phase&&n(fr({completed:u.completed})),"IDLE"!==r().phase&&be(!1),n({type:"FLUSH",payload:null}),n({type:"BEFORE_INITIAL_CAPTURE",payload:{draggableId:a,movementMode:c}});var s={draggableId:a,scrollOptions:{shouldPublishImmediately:"SNAP"===c}},d=e.startPublishing(s),p=d.critical,f=d.dimensions,g=d.viewport;n({type:"INITIAL_PUBLISH",payload:{critical:p,dimensions:f,clientSelection:l,movementMode:c,viewport:g}})}else t(i)}}}}(r),Or,Gr,_r,kr,function(e){return function(t){return function(r){return function(n){if(function(e){return"DROP_COMPLETE"===e.type||"DROP_ANIMATE"===e.type||"FLUSH"===e.type}(n))return e.stop(),void r(n);if("INITIAL_PUBLISH"===n.type){r(n);var i=t.getState();return"DRAGGING"!==i.phase&&be(!1),void e.start(i)}r(n),e.scroll(t.getState())}}}}(l),Rr,function(e){var t=!1;return function(){return function(r){return function(n){if("INITIAL_PUBLISH"===n.type)return t=!0,e.tryRecordFocus(n.payload.critical.draggable.id),r(n),void e.tryRestoreFocusRecorded();if(r(n),t){if("FLUSH"===n.type)return t=!1,void e.tryRestoreFocusRecorded();if("DROP_COMPLETE"===n.type){t=!1;var i=n.payload.completed.result;i.combine&&e.tryShiftRecord(i.draggableId,i.combine.draggableId),e.tryRestoreFocusRecorded()}}}}}}(n),Mr(o,a))))};var jr=function(e){var t=e.scrollHeight,r=e.scrollWidth,n=e.height,i=e.width,o=Be({x:r,y:t},{x:i,y:n});return{x:Math.max(0,o.x),y:Math.max(0,o.y)}},Wr=function(){var e=document.documentElement;return e||be(!1),e},Hr=function(){var e=Wr();return jr({scrollHeight:e.scrollHeight,scrollWidth:e.scrollWidth,width:e.clientWidth,height:e.clientHeight})},Vr=function(e){var t=e.critical,r=e.scrollOptions,n=e.registry,i=function(){var e=Pr(),t=Hr(),r=e.y,n=e.x,i=Wr(),o=i.clientWidth,a=i.clientHeight;return{frame:$({top:r,left:n,right:n+o,bottom:r+a}),scroll:{initial:e,current:e,max:t,diff:{value:Oe,displacement:Oe}}}}(),o=i.scroll.current,a=t.droppable,l=n.droppable.getAllByType(a.type).map((function(e){return e.callbacks.getDimensionAndWatchScroll(o,r)})),c=n.draggable.getAllByType(t.draggable.type).map((function(e){return e.getDimension(o)}));return{dimensions:{draggables:ze(c),droppables:qe(l)},critical:t,viewport:i}};function qr(e,t,r){return r.descriptor.id!==t.id&&(r.descriptor.type===t.type&&"virtual"===e.droppable.getById(r.descriptor.droppableId).descriptor.mode)}var zr,Yr,Jr=function(e,t){var r=null,n=function(e){var t=e.registry,r=e.callbacks,n={additions:{},removals:{},modified:{}},i=null,o=function(){i||(r.collectionStarting(),i=requestAnimationFrame((function(){i=null;var e=n,o=e.additions,a=e.removals,l=e.modified,c=Object.keys(o).map((function(e){return t.draggable.getById(e).getDimension(Oe)})).sort((function(e,t){return e.descriptor.index-t.descriptor.index})),u=Object.keys(l).map((function(e){return{droppableId:e,scroll:t.droppable.getById(e).callbacks.getScrollWhileDragging()}})),s={additions:c,removals:Object.keys(a),modified:u};n={additions:{},removals:{},modified:{}},r.publish(s)})))};return{add:function(e){var t=e.descriptor.id;n.additions[t]=e,n.modified[e.descriptor.droppableId]=!0,n.removals[t]&&delete n.removals[t],o()},remove:function(e){var t=e.descriptor;n.removals[t.id]=!0,n.modified[t.droppableId]=!0,n.additions[t.id]&&delete n.additions[t.id],o()},stop:function(){i&&(cancelAnimationFrame(i),i=null,n={additions:{},removals:{},modified:{}})}}}({callbacks:{publish:t.publishWhileDragging,collectionStarting:t.collectionStarting},registry:e}),i=function(t){r||be(!1);var i=r.critical.draggable;"ADDITION"===t.type&&qr(e,i,t.value)&&n.add(t.value),"REMOVAL"===t.type&&qr(e,i,t.value)&&n.remove(t.value)},o={updateDroppableIsEnabled:function(n,i){e.droppable.exists(n)||be(!1),r&&t.updateDroppableIsEnabled({id:n,isEnabled:i})},updateDroppableIsCombineEnabled:function(n,i){r&&(e.droppable.exists(n)||be(!1),t.updateDroppableIsCombineEnabled({id:n,isCombineEnabled:i}))},scrollDroppable:function(t,n){r&&e.droppable.getById(t).callbacks.scroll(n)},updateDroppableScroll:function(n,i){r&&(e.droppable.exists(n)||be(!1),t.updateDroppableScroll({id:n,newScroll:i}))},startPublishing:function(t){r&&be(!1);var n=e.draggable.getById(t.draggableId),o=e.droppable.getById(n.descriptor.droppableId),a={draggable:n.descriptor,droppable:o.descriptor},l=e.subscribe(i);return r={critical:a,unsubscribe:l},Vr({critical:a,registry:e,scrollOptions:t.scrollOptions})},stopPublishing:function(){if(r){n.stop();var t=r.critical.droppable;e.droppable.getAllByType(t.type).forEach((function(e){return e.callbacks.dragStopped()})),r.unsubscribe(),r=null}}};return o},Xr=function(e,t){return"IDLE"===e.phase||"DROP_ANIMATING"===e.phase&&(e.completed.result.draggableId!==t&&"DROP"===e.completed.result.reason)},Kr=function(e){window.scrollBy(e.x,e.y)},Qr=de((function(e){return Ye(e).filter((function(e){return!!e.isEnabled&&!!e.frame}))})),Zr=function(e){var t=e.center,r=e.destination,n=e.droppables;if(r){var i=n[r];return i.frame?i:null}var o=function(e,t){var r=He(Qr(t),(function(t){return t.frame||be(!1),Ft(t.frame.pageMarginBox)(e)}));return r}(t,n);return o},$r=.25,en=.05,tn=28,rn=function(e){return Math.pow(e,2)},nn={stopDampeningAt:1200,accelerateAt:360},on=function(e){var t=e.startOfRange,r=e.endOfRange,n=e.current,i=r-t;return 0===i?0:(n-t)/i},an=nn.accelerateAt,ln=nn.stopDampeningAt,cn=function(e){var t=e.distanceToEdge,r=e.thresholds,n=e.dragStartTime,i=e.shouldUseTimeDampening,o=function(e,t){if(e>t.startScrollingFrom)return 0;if(e<=t.maxScrollValueAt)return tn;if(e===t.startScrollingFrom)return 1;var r=on({startOfRange:t.maxScrollValueAt,endOfRange:t.startScrollingFrom,current:e}),n=tn*rn(1-r);return Math.ceil(n)}(t,r);return 0===o?0:i?Math.max(function(e,t){var r=t,n=ln,i=Date.now()-r;if(i>=ln)return e;if(i<an)return 1;var o=on({startOfRange:an,endOfRange:n,current:i}),a=e*rn(o);return Math.ceil(a)}(o,n),1):o},un=function(e){var t=e.container,r=e.distanceToEdges,n=e.dragStartTime,i=e.axis,o=e.shouldUseTimeDampening,a=function(e,t){return{startScrollingFrom:e[t.size]*$r,maxScrollValueAt:e[t.size]*en}}(t,i);return r[i.end]<r[i.start]?cn({distanceToEdge:r[i.end],thresholds:a,dragStartTime:n,shouldUseTimeDampening:o}):-1*cn({distanceToEdge:r[i.start],thresholds:a,dragStartTime:n,shouldUseTimeDampening:o})},sn=Me((function(e){return 0===e?0:e})),dn=function(e){var t=e.dragStartTime,r=e.container,n=e.subject,i=e.center,o=e.shouldUseTimeDampening,a={top:i.y-r.top,right:r.right-i.x,bottom:r.bottom-i.y,left:i.x-r.left},l=un({container:r,distanceToEdges:a,dragStartTime:t,axis:at,shouldUseTimeDampening:o}),c=un({container:r,distanceToEdges:a,dragStartTime:t,axis:lt,shouldUseTimeDampening:o}),u=sn({x:c,y:l});if(Re(u,Oe))return null;var s=function(e){var t=e.container,r=e.subject,n=e.proposedScroll,i=r.height>t.height,o=r.width>t.width;return o||i?o&&i?null:{x:o?0:n.x,y:i?0:n.y}:n}({container:r,subject:n,proposedScroll:u});return s?Re(s,Oe)?null:s:null},pn=Me((function(e){return 0===e?0:e>0?1:-1})),fn=(zr=function(e,t){return e<0?e:e>t?e-t:0},function(e){var t=e.current,r=e.max,n=e.change,i=Pe(t,n),o={x:zr(i.x,r.x),y:zr(i.y,r.y)};return Re(o,Oe)?null:o}),gn=function(e){var t=e.max,r=e.current,n=e.change,i={x:Math.max(r.x,t.x),y:Math.max(r.y,t.y)},o=pn(n),a=fn({max:i,current:r,change:o});return!a||(0!==o.x&&0===a.x||0!==o.y&&0===a.y)},mn=function(e,t){return gn({current:e.scroll.current,max:e.scroll.max,change:t})},vn=function(e,t){var r=e.frame;return!!r&&gn({current:r.scroll.current,max:r.scroll.max,change:t})},bn=function(e){var t=e.state,r=e.dragStartTime,n=e.shouldUseTimeDampening,i=e.scrollWindow,o=e.scrollDroppable,a=t.current.page.borderBoxCenter,l=t.dimensions.draggables[t.critical.draggable.id].page.marginBox;if(t.isWindowScrollAllowed){var c=function(e){var t=e.viewport,r=e.subject,n=e.center,i=e.dragStartTime,o=e.shouldUseTimeDampening,a=dn({dragStartTime:i,container:t.frame,subject:r,center:n,shouldUseTimeDampening:o});return a&&mn(t,a)?a:null}({dragStartTime:r,viewport:t.viewport,subject:l,center:a,shouldUseTimeDampening:n});if(c)return void i(c)}var u=Zr({center:a,destination:Gt(t.impact),droppables:t.dimensions.droppables});if(u){var s=function(e){var t=e.droppable,r=e.subject,n=e.center,i=e.dragStartTime,o=e.shouldUseTimeDampening,a=t.frame;if(!a)return null;var l=dn({dragStartTime:i,container:a.pageMarginBox,subject:r,center:n,shouldUseTimeDampening:o});return l&&vn(t,l)?l:null}({dragStartTime:r,droppable:u,subject:l,center:a,shouldUseTimeDampening:n});s&&o(u.descriptor.id,s)}},hn=function(e){var t=e.move,r=e.scrollDroppable,n=e.scrollWindow,i=function(e,t){if(!vn(e,t))return t;var n=function(e,t){var r=e.frame;return r&&vn(e,t)?fn({current:r.scroll.current,max:r.scroll.max,change:t}):null}(e,t);if(!n)return r(e.descriptor.id,t),null;var i=Be(t,n);return r(e.descriptor.id,i),Be(t,i)},o=function(e,t,r){if(!e)return r;if(!mn(t,r))return r;var i=function(e,t){if(!mn(e,t))return null;var r=e.scroll.max,n=e.scroll.current;return fn({current:n,max:r,change:t})}(t,r);if(!i)return n(r),null;var o=Be(r,i);return n(o),Be(r,o)};return function(e){var r=e.scrollJumpRequest;if(r){var n=Gt(e.impact);n||be(!1);var a=i(e.dimensions.droppables[n],r);if(a){var l=e.viewport,c=o(e.isWindowScrollAllowed,l,a);c&&function(e,r){var n=Pe(e.current.client.selection,r);t({client:n})}(e,c)}}}},yn=function(e){var t=e.scrollDroppable,r=e.scrollWindow,n=e.move,i=function(e){var t=e.scrollWindow,r=e.scrollDroppable,n=pe(t),i=pe(r),o=null,a=function(e){o||be(!1);var t=o,r=t.shouldUseTimeDampening,a=t.dragStartTime;bn({state:e,scrollWindow:n,scrollDroppable:i,dragStartTime:a,shouldUseTimeDampening:r})};return{start:function(e){o&&be(!1);var t=Date.now(),r=!1,n=function(){r=!0};bn({state:e,dragStartTime:0,shouldUseTimeDampening:!1,scrollWindow:n,scrollDroppable:n}),o={dragStartTime:t,shouldUseTimeDampening:r},r&&a(e)},stop:function(){o&&(n.cancel(),i.cancel(),o=null)},scroll:a}}({scrollWindow:r,scrollDroppable:t}),o=hn({move:n,scrollWindow:r,scrollDroppable:t});return{scroll:function(e){"DRAGGING"===e.phase&&("FLUID"!==e.movementMode?e.scrollJumpRequest&&o(e):i.scroll(e))},start:i.start,stop:i.stop}},In={base:Yr="data-rbd-drag-handle",draggableId:Yr+"-draggable-id",contextId:Yr+"-context-id"},xn=function(){var e="data-rbd-draggable";return{base:e,contextId:e+"-context-id",id:e+"-id"}}(),Dn=function(){var e="data-rbd-droppable";return{base:e,contextId:e+"-context-id",id:e+"-id"}}(),En={contextId:"data-rbd-scroll-container-context-id"},wn=function(e,t){return e.map((function(e){var r=e.styles[t];return r?e.selector+" { "+r+" }":""})).join(" ")},Cn="undefined"!=typeof window&&void 0!==window.document&&void 0!==window.document.createElement?o:n,An=function(){var e=document.querySelector("head");return e||be(!1),e},On=function(e){var t=document.createElement("style");return e&&t.setAttribute("nonce",e),t.type="text/css",t};function Pn(e,t){var n=K((function(){return function(e){var t,r,n,i=(t=e,function(e){return"["+e+'="'+t+'"]'}),o=(r="\n      cursor: -webkit-grab;\n      cursor: grab;\n    ",{selector:i(In.contextId),styles:{always:"\n          -webkit-touch-callout: none;\n          -webkit-tap-highlight-color: rgba(0,0,0,0);\n          touch-action: manipulation;\n        ",resting:r,dragging:"pointer-events: none;",dropAnimating:r}}),a=[(n="\n      transition: "+Ir.outOfTheWay+";\n    ",{selector:i(xn.contextId),styles:{dragging:n,dropAnimating:n,userCancel:n}}),o,{selector:i(Dn.contextId),styles:{always:"overflow-anchor: none;"}},{selector:"body",styles:{dragging:"\n        cursor: grabbing;\n        cursor: -webkit-grabbing;\n        user-select: none;\n        -webkit-user-select: none;\n        -moz-user-select: none;\n        -ms-user-select: none;\n        overflow-anchor: none;\n      "}}];return{always:wn(a,"always"),resting:wn(a,"resting"),dragging:wn(a,"dragging"),dropAnimating:wn(a,"dropAnimating"),userCancel:wn(a,"userCancel")}}(e)}),[e]),i=r(null),o=r(null),a=Q(de((function(e){var t=o.current;t||be(!1),t.textContent=e})),[]),l=Q((function(e){var t=i.current;t||be(!1),t.textContent=e}),[]);Cn((function(){(i.current||o.current)&&be(!1);var r=On(t),c=On(t);return i.current=r,o.current=c,r.setAttribute("data-rbd-always",e),c.setAttribute("data-rbd-dynamic",e),An().appendChild(r),An().appendChild(c),l(n.always),a(n.resting),function(){var e=function(e){var t=e.current;t||be(!1),An().removeChild(t),e.current=null};e(i),e(o)}}),[t,l,a,n.always,n.resting,e]);var c=Q((function(){return a(n.dragging)}),[a,n.dragging]),u=Q((function(e){a("DROP"!==e?n.userCancel:n.dropAnimating)}),[a,n.dropAnimating,n.userCancel]),s=Q((function(){o.current&&a(n.resting)}),[a,n.resting]);return K((function(){return{dragging:c,dropping:u,resting:s}}),[c,u,s])}var Bn=function(e){return e&&e.ownerDocument?e.ownerDocument.defaultView:window};function Rn(e){return e instanceof Bn(e).HTMLElement}function Nn(e){var t=r({}),n=r(null),i=r(null),o=r(!1),a=Q((function(e,r){var n={id:e,focus:r};return t.current[e]=n,function(){var r=t.current;r[e]!==n&&delete r[e]}}),[]),l=Q((function(t){var r=function(e,t){var r="["+In.contextId+'="'+e+'"]',n=Ve(document.querySelectorAll(r));if(!n.length)return null;var i=He(n,(function(e){return e.getAttribute(In.draggableId)===t}));return i&&Rn(i)?i:null}(e,t);r&&r!==document.activeElement&&r.focus()}),[e]),c=Q((function(e,t){n.current===e&&(n.current=t)}),[]),u=Q((function(){i.current||o.current&&(i.current=requestAnimationFrame((function(){i.current=null;var e=n.current;e&&l(e)})))}),[l]),s=Q((function(e){n.current=null;var t=document.activeElement;t&&t.getAttribute(In.draggableId)===e&&(n.current=e)}),[]);return Cn((function(){return o.current=!0,function(){o.current=!1;var e=i.current;e&&cancelAnimationFrame(e)}}),[]),K((function(){return{register:a,tryRecordFocus:s,tryRestoreFocusRecorded:u,tryShiftRecord:c}}),[a,s,u,c])}function Sn(){var e={draggables:{},droppables:{}},t=[];function r(e){t.length&&t.forEach((function(t){return t(e)}))}function n(t){return e.draggables[t]||null}function i(t){return e.droppables[t]||null}return{draggable:{register:function(t){e.draggables[t.descriptor.id]=t,r({type:"ADDITION",value:t})},update:function(t,r){var n=e.draggables[r.descriptor.id];n&&n.uniqueId===t.uniqueId&&(delete e.draggables[r.descriptor.id],e.draggables[t.descriptor.id]=t)},unregister:function(t){var i=t.descriptor.id,o=n(i);o&&t.uniqueId===o.uniqueId&&(delete e.draggables[i],r({type:"REMOVAL",value:t}))},getById:function(e){var t=n(e);return t||be(!1),t},findById:n,exists:function(e){return Boolean(n(e))},getAllByType:function(t){return je(e.draggables).filter((function(e){return e.descriptor.type===t}))}},droppable:{register:function(t){e.droppables[t.descriptor.id]=t},unregister:function(t){var r=i(t.descriptor.id);r&&t.uniqueId===r.uniqueId&&delete e.droppables[t.descriptor.id]},getById:function(e){var t=i(e);return t||be(!1),t},findById:i,exists:function(e){return Boolean(i(e))},getAllByType:function(t){return je(e.droppables).filter((function(e){return e.descriptor.type===t}))}},subscribe:function(e){return t.push(e),function(){var r=t.indexOf(e);-1!==r&&t.splice(r,1)}},clean:function(){e.draggables={},e.droppables={},t.length=0}}}var Tn=a.createContext(null),Ln=function(){var e=document.body;return e||be(!1),e},Mn={position:"absolute",width:"1px",height:"1px",margin:"-1px",border:"0",padding:"0",overflow:"hidden",clip:"rect(0 0 0 0)","clip-path":"inset(100%)"};var Gn=0,_n={separator:"::"};function kn(e,t){return void 0===t&&(t=_n),K((function(){return""+e+t.separator+Gn++}),[t.separator,e])}var Fn=a.createContext(null);function Un(e){var t=r(e);return n((function(){t.current=e})),t}var jn,Wn=((jn={})[13]=!0,jn[9]=!0,jn),Hn=function(e){Wn[e.keyCode]&&e.preventDefault()},Vn=function(){var e="visibilitychange";return"undefined"==typeof document?e:He([e,"ms"+e,"webkit"+e,"moz"+e,"o"+e],(function(e){return"on"+e in document}))||e}();var qn,zn={type:"IDLE"};function Yn(e){var t=e.cancel,r=e.completed,n=e.getPhase,i=e.setPhase;return[{eventName:"mousemove",fn:function(e){var t=e.button,r=e.clientX,o=e.clientY;if(0===t){var a={x:r,y:o},l=n();if("DRAGGING"===l.type)return e.preventDefault(),void l.actions.move(a);"PENDING"!==l.type&&be(!1);var c=l.point;if(u=c,s=a,Math.abs(s.x-u.x)>=5||Math.abs(s.y-u.y)>=5){var u,s;e.preventDefault();var d=l.actions.fluidLift(a);i({type:"DRAGGING",actions:d})}}}},{eventName:"mouseup",fn:function(e){var i=n();"DRAGGING"===i.type?(e.preventDefault(),i.actions.drop({shouldBlockNextClick:!0}),r()):t()}},{eventName:"mousedown",fn:function(e){"DRAGGING"===n().type&&e.preventDefault(),t()}},{eventName:"keydown",fn:function(e){if("PENDING"!==n().type)return 27===e.keyCode?(e.preventDefault(),void t()):void Hn(e);t()}},{eventName:"resize",fn:t},{eventName:"scroll",options:{passive:!0,capture:!1},fn:function(){"PENDING"===n().type&&t()}},{eventName:"webkitmouseforcedown",fn:function(e){var r=n();"IDLE"===r.type&&be(!1),r.actions.shouldRespectForcePress()?t():e.preventDefault()}},{eventName:Vn,fn:t}]}function Jn(){}var Xn=((qn={})[34]=!0,qn[33]=!0,qn[36]=!0,qn[35]=!0,qn);function Kn(e,t){function r(){t(),e.cancel()}return[{eventName:"keydown",fn:function(n){return 27===n.keyCode?(n.preventDefault(),void r()):32===n.keyCode?(n.preventDefault(),t(),void e.drop()):40===n.keyCode?(n.preventDefault(),void e.moveDown()):38===n.keyCode?(n.preventDefault(),void e.moveUp()):39===n.keyCode?(n.preventDefault(),void e.moveRight()):37===n.keyCode?(n.preventDefault(),void e.moveLeft()):void(Xn[n.keyCode]?n.preventDefault():Hn(n))}},{eventName:"mousedown",fn:r},{eventName:"mouseup",fn:r},{eventName:"click",fn:r},{eventName:"touchstart",fn:r},{eventName:"resize",fn:r},{eventName:"wheel",fn:r,options:{passive:!0}},{eventName:Vn,fn:r}]}var Qn={type:"IDLE"};var Zn={input:!0,button:!0,textarea:!0,select:!0,option:!0,optgroup:!0,video:!0,audio:!0};function $n(e,t){if(null==t)return!1;if(Boolean(Zn[t.tagName.toLowerCase()]))return!0;var r=t.getAttribute("contenteditable");return"true"===r||""===r||t!==e&&$n(e,t.parentElement)}function ei(e,t){var r=t.target;return!!Rn(r)&&$n(e,r)}var ti=function(e){return $(e.getBoundingClientRect()).center};var ri=function(){var e="matches";return"undefined"==typeof document?e:He([e,"msMatchesSelector","webkitMatchesSelector"],(function(e){return e in Element.prototype}))||e}();function ni(e,t){return null==e?null:e[ri](t)?e:ni(e.parentElement,t)}function ii(e,t){return e.closest?e.closest(t):ni(e,t)}function oi(e,t){var r,n=t.target;if(!((r=n)instanceof Bn(r).Element))return null;var i=function(e){return"["+In.contextId+'="'+e+'"]'}(e),o=ii(n,i);return o&&Rn(o)?o:null}function ai(e){e.preventDefault()}function li(e){var t=e.expected,r=e.phase,n=e.isLockActive;return e.shouldWarn,!!n()&&t===r}function ci(e){var t=e.lockAPI,r=e.store,n=e.registry,i=e.draggableId;if(t.isClaimed())return!1;var o=n.draggable.findById(i);return!!o&&(!!o.options.isEnabled&&!!Xr(r.getState(),i))}function ui(e){var t=e.lockAPI,r=e.contextId,n=e.store,i=e.registry,o=e.draggableId,a=e.forceSensorStop,l=e.sourceEvent;if(!ci({lockAPI:t,store:n,registry:i,draggableId:o}))return null;var c=i.draggable.getById(o),u=function(e,t){var r="["+xn.contextId+'="'+e+'"]',n=He(Ve(document.querySelectorAll(r)),(function(e){return e.getAttribute(xn.id)===t}));return n&&Rn(n)?n:null}(r,c.descriptor.id);if(!u)return null;if(l&&!c.options.canDragInteractiveElements&&ei(u,l))return null;var s=t.claim(a||ge),d="PRE_DRAG";function p(){return c.options.shouldRespectForcePress}function f(){return t.isActive(s)}var g=function(e,t){li({expected:e,phase:d,isLockActive:f,shouldWarn:!0})&&n.dispatch(t())}.bind(null,"DRAGGING");function m(e){function r(){t.release(),d="COMPLETED"}function i(t,i){if(void 0===i&&(i={shouldBlockNextClick:!1}),e.cleanup(),i.shouldBlockNextClick){var o=me(window,[{eventName:"click",fn:ai,options:{once:!0,passive:!1,capture:!0}}]);setTimeout(o)}r(),n.dispatch(gr({reason:t}))}return"PRE_DRAG"!==d&&(r(),"PRE_DRAG"!==d&&be(!1)),n.dispatch(function(e){return{type:"LIFT",payload:e}}(e.liftActionArgs)),d="DRAGGING",G({isActive:function(){return li({expected:"DRAGGING",phase:d,isLockActive:f,shouldWarn:!1})},shouldRespectForcePress:p,drop:function(e){return i("DROP",e)},cancel:function(e){return i("CANCEL",e)}},e.actions)}return{isActive:function(){return li({expected:"PRE_DRAG",phase:d,isLockActive:f,shouldWarn:!1})},shouldRespectForcePress:p,fluidLift:function(e){var t=pe((function(e){g((function(){return cr({client:e})}))}));return G({},m({liftActionArgs:{id:o,clientSelection:e,movementMode:"FLUID"},cleanup:function(){return t.cancel()},actions:{move:t}}),{move:t})},snapLift:function(){var e={moveUp:function(){return g(ur)},moveRight:function(){return g(dr)},moveDown:function(){return g(sr)},moveLeft:function(){return g(pr)}};return m({liftActionArgs:{id:o,clientSelection:ti(u),movementMode:"SNAP"},cleanup:ge,actions:e})},abort:function(){li({expected:"PRE_DRAG",phase:d,isLockActive:f,shouldWarn:!0})&&t.release()}}}var si=[function(e){var t=r(zn),n=r(ge),i=K((function(){return{eventName:"mousedown",fn:function(t){if(!t.defaultPrevented&&0===t.button&&!(t.ctrlKey||t.metaKey||t.shiftKey||t.altKey)){var r=e.findClosestDraggableId(t);if(r){var i=e.tryGetLock(r,l,{sourceEvent:t});if(i){t.preventDefault();var o={x:t.clientX,y:t.clientY};n.current(),s(i,o)}}}}}}),[e]),o=K((function(){return{eventName:"webkitmouseforcewillbegin",fn:function(t){if(!t.defaultPrevented){var r=e.findClosestDraggableId(t);if(r){var n=e.findOptionsForDraggable(r);n&&(n.shouldRespectForcePress||e.canGetLock(r)&&t.preventDefault())}}}}}),[e]),a=Q((function(){n.current=me(window,[o,i],{passive:!1,capture:!0})}),[o,i]),l=Q((function(){"IDLE"!==t.current.type&&(t.current=zn,n.current(),a())}),[a]),c=Q((function(){var e=t.current;l(),"DRAGGING"===e.type&&e.actions.cancel({shouldBlockNextClick:!0}),"PENDING"===e.type&&e.actions.abort()}),[l]),u=Q((function(){var e=Yn({cancel:c,completed:l,getPhase:function(){return t.current},setPhase:function(e){t.current=e}});n.current=me(window,e,{capture:!0,passive:!1})}),[c,l]),s=Q((function(e,r){"IDLE"!==t.current.type&&be(!1),t.current={type:"PENDING",point:r,actions:e},u()}),[u]);Cn((function(){return a(),function(){n.current()}}),[a])},function(e){var t=r(Jn),n=K((function(){return{eventName:"keydown",fn:function(r){if(!r.defaultPrevented&&32===r.keyCode){var n=e.findClosestDraggableId(r);if(n){var o=e.tryGetLock(n,c,{sourceEvent:r});if(o){r.preventDefault();var a=!0,l=o.snapLift();t.current(),t.current=me(window,Kn(l,c),{capture:!0,passive:!1})}}}function c(){a||be(!1),a=!1,t.current(),i()}}}}),[e]),i=Q((function(){t.current=me(window,[n],{passive:!1,capture:!0})}),[n]);Cn((function(){return i(),function(){t.current()}}),[i])},function(e){var t=r(Qn),n=r(ge),i=Q((function(){return t.current}),[]),o=Q((function(e){t.current=e}),[]),a=K((function(){return{eventName:"touchstart",fn:function(t){if(!t.defaultPrevented){var r=e.findClosestDraggableId(t);if(r){var i=e.tryGetLock(r,c,{sourceEvent:t});if(i){var o=t.touches[0],a={x:o.clientX,y:o.clientY};n.current(),p(i,a)}}}}}}),[e]),l=Q((function(){n.current=me(window,[a],{capture:!0,passive:!1})}),[a]),c=Q((function(){var e=t.current;"IDLE"!==e.type&&("PENDING"===e.type&&clearTimeout(e.longPressTimerId),o(Qn),n.current(),l())}),[l,o]),u=Q((function(){var e=t.current;c(),"DRAGGING"===e.type&&e.actions.cancel({shouldBlockNextClick:!0}),"PENDING"===e.type&&e.actions.abort()}),[c]),s=Q((function(){var e={capture:!0,passive:!1},t={cancel:u,completed:c,getPhase:i},r=me(window,function(e){var t=e.cancel,r=e.completed,n=e.getPhase;return[{eventName:"touchmove",options:{capture:!1},fn:function(e){var r=n();if("DRAGGING"===r.type){r.hasMoved=!0;var i=e.touches[0],o={x:i.clientX,y:i.clientY};e.preventDefault(),r.actions.move(o)}else t()}},{eventName:"touchend",fn:function(e){var i=n();"DRAGGING"===i.type?(e.preventDefault(),i.actions.drop({shouldBlockNextClick:!0}),r()):t()}},{eventName:"touchcancel",fn:function(e){"DRAGGING"===n().type?(e.preventDefault(),t()):t()}},{eventName:"touchforcechange",fn:function(e){var r=n();"IDLE"===r.type&&be(!1);var i=e.touches[0];if(i&&i.force>=.15){var o=r.actions.shouldRespectForcePress();if("PENDING"!==r.type)return o?r.hasMoved?void e.preventDefault():void t():void e.preventDefault();o&&t()}}},{eventName:Vn,fn:t}]}(t),e),o=me(window,function(e){var t=e.cancel,r=e.getPhase;return[{eventName:"orientationchange",fn:t},{eventName:"resize",fn:t},{eventName:"contextmenu",fn:function(e){e.preventDefault()}},{eventName:"keydown",fn:function(e){"DRAGGING"===r().type?(27===e.keyCode&&e.preventDefault(),t()):t()}},{eventName:Vn,fn:t}]}(t),e);n.current=function(){r(),o()}}),[u,i,c]),d=Q((function(){var e=i();"PENDING"!==e.type&&be(!1);var t=e.actions.fluidLift(e.point);o({type:"DRAGGING",actions:t,hasMoved:!1})}),[i,o]),p=Q((function(e,t){"IDLE"!==i().type&&be(!1);var r=setTimeout(d,120);o({type:"PENDING",point:t,actions:e,longPressTimerId:r}),s()}),[s,i,o,d]);Cn((function(){return l(),function(){n.current();var e=i();"PENDING"===e.type&&(clearTimeout(e.longPressTimerId),o(Qn))}}),[i,l,o]),Cn((function(){return me(window,[{eventName:"touchmove",fn:function(){},options:{capture:!1,passive:!1}}])}),[])}];function di(e){var r=e.contextId,n=e.store,i=e.registry,o=e.customSensors,a=e.enableDefaultSensors,l=[].concat(a?si:[],o||[]),c=t((function(){return function(){var e=null;function t(){e||be(!1),e=null}return{isClaimed:function(){return Boolean(e)},isActive:function(t){return t===e},claim:function(t){e&&be(!1);var r={abandon:t};return e=r,r},release:t,tryAbandon:function(){e&&(e.abandon(),t())}}}()}))[0],u=Q((function(e,t){e.isDragging&&!t.isDragging&&c.tryAbandon()}),[c]);Cn((function(){var e=n.getState();return n.subscribe((function(){var t=n.getState();u(e,t),e=t}))}),[c,n,u]),Cn((function(){return c.tryAbandon}),[c.tryAbandon]);for(var s=Q((function(e){return ci({lockAPI:c,registry:i,store:n,draggableId:e})}),[c,i,n]),d=Q((function(e,t,o){return ui({lockAPI:c,registry:i,contextId:r,store:n,draggableId:e,forceSensorStop:t,sourceEvent:o&&o.sourceEvent?o.sourceEvent:null})}),[r,c,i,n]),p=Q((function(e){return function(e,t){var r=oi(e,t);return r?r.getAttribute(In.draggableId):null}(r,e)}),[r]),f=Q((function(e){var t=i.draggable.findById(e);return t?t.options:null}),[i.draggable]),g=Q((function(){c.isClaimed()&&(c.tryAbandon(),"IDLE"!==n.getState().phase&&n.dispatch({type:"FLUSH",payload:null}))}),[c,n]),m=Q(c.isClaimed,[c]),v=K((function(){return{canGetLock:s,tryGetLock:d,findClosestDraggableId:p,findOptionsForDraggable:f,tryReleaseLock:g,isLockClaimed:m}}),[s,d,p,f,g,m]),b=0;b<l.length;b++)l[b](v)}function pi(e){return e.current||be(!1),e.current}function fi(e){var t=e.contextId,i=e.setCallbacks,o=e.sensors,l=e.nonce,c=e.dragHandleUsageInstructions,u=r(null),s=Un(e),d=Q((function(){return function(e){return{onBeforeCapture:e.onBeforeCapture,onBeforeDragStart:e.onBeforeDragStart,onDragStart:e.onDragStart,onDragEnd:e.onDragEnd,onDragUpdate:e.onDragUpdate}}(s.current)}),[s]),p=function(e){var t=K((function(){return function(e){return"rbd-announcement-"+e}(e)}),[e]),i=r(null);return n((function(){var e=document.createElement("div");return i.current=e,e.id=t,e.setAttribute("aria-live","assertive"),e.setAttribute("aria-atomic","true"),G(e.style,Mn),Ln().appendChild(e),function(){setTimeout((function(){var t=Ln();t.contains(e)&&t.removeChild(e),e===i.current&&(i.current=null)}))}}),[t]),Q((function(e){var t=i.current;t&&(t.textContent=e)}),[])}(t),f=function(e){var t=e.contextId,r=e.text,i=kn("hidden-text",{separator:"-"}),o=K((function(){return"rbd-hidden-text-"+(e={contextId:t,uniqueId:i}).contextId+"-"+e.uniqueId;var e}),[i,t]);return n((function(){var e=document.createElement("div");return e.id=o,e.textContent=r,e.style.display="none",Ln().appendChild(e),function(){var t=Ln();t.contains(e)&&t.removeChild(e)}}),[o,r]),o}({contextId:t,text:c}),g=Pn(t,l),m=Q((function(e){pi(u).dispatch(e)}),[]),v=K((function(){return Y({publishWhileDragging:nr,updateDroppableScroll:or,updateDroppableIsEnabled:ar,updateDroppableIsCombineEnabled:lr,collectionStarting:ir},m)}),[m]),b=function(){var e=K(Sn,[]);return n((function(){return function(){requestAnimationFrame(e.clean)}}),[e]),e}(),h=K((function(){return Jr(b,v)}),[b,v]),I=K((function(){return yn(G({scrollWindow:Kr,scrollDroppable:h.scrollDroppable},Y({move:cr},m)))}),[h.scrollDroppable,m]),x=Nn(t),D=K((function(){return Ur({announce:p,autoScroller:I,dimensionMarshal:h,focusMarshal:x,getResponders:d,styleMarshal:g})}),[p,I,h,x,d,g]);u.current=D;var E=Q((function(){var e=pi(u);"IDLE"!==e.getState().phase&&e.dispatch({type:"FLUSH",payload:null})}),[]),w=Q((function(){var e=pi(u).getState();return e.isDragging||"DROP_ANIMATING"===e.phase}),[]);i(K((function(){return{isDragging:w,tryAbort:E}}),[w,E]));var C=Q((function(e){return Xr(pi(u).getState(),e)}),[]),A=Q((function(){return kt(pi(u).getState())}),[]),O=K((function(){return{marshal:h,focus:x,contextId:t,canLift:C,isMovementAllowed:A,dragHandleUsageInstructionsId:f,registry:b}}),[t,h,f,x,C,A,b]);return di({contextId:t,store:D,registry:b,customSensors:o,enableDefaultSensors:!1!==e.enableDefaultSensors}),n((function(){return E}),[E]),a.createElement(Fn.Provider,{value:O},a.createElement(y,{context:Tn,store:D},e.children))}var gi=0;function mi(e){var t=K((function(){return""+gi++}),[]),r=e.dragHandleUsageInstructions||Ee;return a.createElement(he,null,(function(n){return a.createElement(fi,{nonce:e.nonce,contextId:t,setCallbacks:n,dragHandleUsageInstructions:r,enableDefaultSensors:e.enableDefaultSensors,sensors:e.sensors,onBeforeCapture:e.onBeforeCapture,onBeforeDragStart:e.onBeforeDragStart,onDragStart:e.onDragStart,onDragUpdate:e.onDragUpdate,onDragEnd:e.onDragEnd},e.children)}))}var vi=function(e){return function(t){return e===t}},bi=vi("scroll"),hi=vi("auto"),yi=function(e,t){return t(e.overflowX)||t(e.overflowY)},Ii=function e(t){return null==t||t===document.body||t===document.documentElement?null:function(e){var t=window.getComputedStyle(e),r={overflowX:t.overflowX,overflowY:t.overflowY};return yi(r,bi)||yi(r,hi)}(t)?t:e(t.parentElement)},xi=function(e){return{x:e.scrollLeft,y:e.scrollTop}},Di=function e(t){return!!t&&("fixed"===window.getComputedStyle(t).position||e(t.parentElement))},Ei=function(e){return{closestScrollable:Ii(e),isFixedOnPage:Di(e)}},wi=function(e){var t=e.ref,r=e.descriptor,n=e.env,i=e.windowScroll,o=e.direction,a=e.isDropDisabled,l=e.isCombineEnabled,c=e.shouldClipSubject,u=n.closestScrollable,s=function(e,t){var r=ce(e);if(!t)return r;if(e!==t)return r;var n=r.paddingBox.top-t.scrollTop,i=r.paddingBox.left-t.scrollLeft,o=n+t.scrollHeight,a=i+t.scrollWidth,l=ee({top:n,right:a,bottom:o,left:i},r.border);return ne({borderBox:l,margin:r.margin,border:r.border,padding:r.padding})}(t,u),d=ae(s,i),p=function(){if(!u)return null;var e=ce(u),t={scrollHeight:u.scrollHeight,scrollWidth:u.scrollWidth};return{client:e,page:ae(e,i),scroll:xi(u),scrollSize:t,shouldClipSubject:c}}(),f=function(e){var t=e.descriptor,r=e.isEnabled,n=e.isCombineEnabled,i=e.isFixedOnPage,o=e.direction,a=e.client,l=e.page,c=e.closest,u=function(){if(!c)return null;var e=c.scrollSize,t=c.client,r=jr({scrollHeight:e.scrollHeight,scrollWidth:e.scrollWidth,height:t.paddingBox.height,width:t.paddingBox.width});return{pageMarginBox:c.page.marginBox,frameClient:t,scrollSize:e,shouldClipSubject:c.shouldClipSubject,scroll:{initial:c.scroll,current:c.scroll,max:r,diff:{value:Oe,displacement:Oe}}}}(),s="vertical"===o?at:lt;return{descriptor:t,isCombineEnabled:n,isFixedOnPage:i,axis:s,isEnabled:r,client:a,page:l,frame:u,subject:Fe({page:l,withPlaceholder:null,axis:s,frame:u})}}({descriptor:r,isEnabled:!a,isCombineEnabled:l,isFixedOnPage:n.isFixedOnPage,direction:o,client:s,page:d,closest:p});return f},Ci={passive:!1},Ai={passive:!0},Oi=function(e){return e.shouldPublishImmediately?Ci:Ai};function Pi(e){var t=i(e);return t||be(!1),t}var Bi=function(e){return e&&e.env.closestScrollable||null};function Ri(){}var Ni={width:0,height:0,margin:{top:0,right:0,bottom:0,left:0}},Si=function(e){var t=e.isAnimatingOpenOnMount,r=e.placeholder,n=e.animate,i=function(e){var t=e.isAnimatingOpenOnMount,r=e.placeholder,n=e.animate;return t||"close"===n?Ni:{height:r.client.borderBox.height,width:r.client.borderBox.width,margin:r.client.margin}}({isAnimatingOpenOnMount:t,placeholder:r,animate:n});return{display:r.display,boxSizing:"border-box",width:i.width,height:i.height,marginTop:i.margin.top,marginRight:i.margin.right,marginBottom:i.margin.bottom,marginLeft:i.margin.left,flexShrink:"0",flexGrow:"0",pointerEvents:"none",transition:"none"!==n?Ir.placeholder:null}};var Ti=a.memo((function(e){var i=r(null),o=Q((function(){i.current&&(clearTimeout(i.current),i.current=null)}),[]),l=e.animate,c=e.onTransitionEnd,u=e.onClose,s=e.contextId,d=t("open"===e.animate),p=d[0],f=d[1];n((function(){return p?"open"!==l?(o(),f(!1),Ri):i.current?Ri:(i.current=setTimeout((function(){i.current=null,f(!1)})),o):Ri}),[l,p,o]);var g=Q((function(e){"height"===e.propertyName&&(c(),"close"===l&&u())}),[l,u,c]),m=Si({isAnimatingOpenOnMount:p,animate:e.animate,placeholder:e.placeholder});return a.createElement(e.placeholder.tagName,{style:m,"data-rbd-placeholder-context-id":s,onTransitionEnd:g,ref:e.innerRef})})),Li=a.createContext(null),Mi=function(e){function t(){for(var t,r=arguments.length,n=new Array(r),i=0;i<r;i++)n[i]=arguments[i];return(t=e.call.apply(e,[this].concat(n))||this).state={isVisible:Boolean(t.props.on),data:t.props.on,animate:t.props.shouldAnimate&&t.props.on?"open":"none"},t.onClose=function(){"close"===t.state.animate&&t.setState({isVisible:!1})},t}return M(t,e),t.getDerivedStateFromProps=function(e,t){return e.shouldAnimate?e.on?{isVisible:!0,data:e.on,animate:"open"}:t.isVisible?{isVisible:!0,data:t.data,animate:"close"}:{isVisible:!1,animate:"close",data:null}:{isVisible:Boolean(e.on),data:e.on,animate:"none"}},t.prototype.render=function(){if(!this.state.isVisible)return null;var e={onClose:this.onClose,data:this.state.data,animate:this.state.animate};return this.props.children(e)},t}(a.PureComponent),Gi=5e3,_i=4500,ki=function(e,t){return t?Ir.drop(t.duration):e?Ir.snap:Ir.fluid},Fi=function(e,t){return e?t?br.drop:br.combining:null};function Ui(e){return"DRAGGING"===e.type?function(e){var t=e.dimension.client,r=e.offset,n=e.combineWith,i=e.dropping,o=Boolean(n),a=function(e){return null!=e.forceShouldAnimate?e.forceShouldAnimate:"SNAP"===e.mode}(e),l=Boolean(i),c=l?Er(r,o):Dr(r);return{position:"fixed",top:t.marginBox.top,left:t.marginBox.left,boxSizing:"border-box",width:t.borderBox.width,height:t.borderBox.height,transition:ki(a,i),transform:c,opacity:Fi(o,l),zIndex:l?_i:Gi,pointerEvents:"none"}}(e):{transform:Dr((t=e).offset),transition:t.shouldAnimateDisplacement?null:"none"};var t}function ji(e){var t=kn("draggable"),n=e.descriptor,i=e.registry,o=e.getDraggableRef,a=e.canDragInteractiveElements,l=e.shouldRespectForcePress,c=e.isEnabled,u=K((function(){return{canDragInteractiveElements:a,shouldRespectForcePress:l,isEnabled:c}}),[a,c,l]),s=Q((function(e){var t=o();return t||be(!1),function(e,t,r){void 0===r&&(r=Oe);var n=window.getComputedStyle(t),i=t.getBoundingClientRect(),o=le(i,n),a=ae(o,r);return{descriptor:e,placeholder:{client:o,tagName:t.tagName.toLowerCase(),display:n.display},displaceBy:{x:o.marginBox.width,y:o.marginBox.height},client:o,page:a}}(n,t,e)}),[n,o]),d=K((function(){return{uniqueId:t,descriptor:n,options:u,getDimension:s}}),[n,s,u,t]),p=r(d),f=r(!0);Cn((function(){return i.draggable.register(p.current),function(){return i.draggable.unregister(p.current)}}),[i.draggable]),Cn((function(){if(f.current)f.current=!1;else{var e=p.current;p.current=d,i.draggable.update(d,e)}}),[d,i.draggable])}function Wi(e){e.preventDefault()}var Hi=function(e,t){return e===t},Vi=function(e){var t=e.combine,r=e.destination;return r?r.droppableId:t?t.droppableId:null};function qi(e){return{isDragging:!1,isDropAnimating:!1,isClone:!1,dropAnimation:null,mode:null,draggingOver:null,combineTargetFor:e,combineWith:null}}var zi={mapped:{type:"SECONDARY",offset:Oe,combineTargetFor:null,shouldAnimateDisplacement:!0,snapshot:qi(null)}};var Yi=h((function(){var e,t,r,n=(e=de((function(e,t){return{x:e,y:t}})),t=de((function(e,t,r,n,i){return{isDragging:!0,isClone:t,isDropAnimating:Boolean(i),dropAnimation:i,mode:e,draggingOver:r,combineWith:n,combineTargetFor:null}})),r=de((function(e,r,n,i,o,a,l){return{mapped:{type:"DRAGGING",dropping:null,draggingOver:o,combineWith:a,mode:r,offset:e,dimension:n,forceShouldAnimate:l,snapshot:t(r,i,o,a,null)}}})),function(n,i){if(n.isDragging){if(n.critical.draggable.id!==i.draggableId)return null;var o=n.current.client.offset,a=n.dimensions.draggables[i.draggableId],l=Gt(n.impact),c=(s=n.impact).at&&"COMBINE"===s.at.type?s.at.combine.draggableId:null,u=n.forceShouldAnimate;return r(e(o.x,o.y),n.movementMode,a,i.isClone,l,c,u)}var s;if("DROP_ANIMATING"===n.phase){var d=n.completed;if(d.result.draggableId!==i.draggableId)return null;var p=i.isClone,f=n.dimensions.draggables[i.draggableId],g=d.result,m=g.mode,v=Vi(g),b=function(e){return e.combine?e.combine.draggableId:null}(g),h={duration:n.dropDuration,curve:vr,moveTo:n.newHomeClientOffset,opacity:b?br.drop:null,scale:b?hr.drop:null};return{mapped:{type:"DRAGGING",offset:n.newHomeClientOffset,dimension:f,dropping:h,draggingOver:v,combineWith:b,mode:m,forceShouldAnimate:null,snapshot:t(m,p,v,b,h)}}}return null}),i=function(){var e=de((function(e,t){return{x:e,y:t}})),t=de(qi),r=de((function(e,r,n){return void 0===r&&(r=null),{mapped:{type:"SECONDARY",offset:e,combineTargetFor:r,shouldAnimateDisplacement:n,snapshot:t(r)}}})),n=function(e){return e?r(Oe,e,!0):null},i=function(t,i,o,a){var l=o.displaced.visible[t],c=Boolean(a.inVirtualList&&a.effected[t]),u=Qe(o),s=u&&u.draggableId===t?i:null;if(!l){if(!c)return n(s);if(o.displaced.invisible[t])return null;var d=Ne(a.displacedBy.point),p=e(d.x,d.y);return r(p,s,!0)}if(c)return n(s);var f=o.displacedBy.point,g=e(f.x,f.y);return r(g,s,l.shouldAnimate)};return function(e,t){if(e.isDragging)return e.critical.draggable.id===t.draggableId?null:i(t.draggableId,e.critical.draggable.id,e.impact,e.afterCritical);if("DROP_ANIMATING"===e.phase){var r=e.completed;return r.result.draggableId===t.draggableId?null:i(t.draggableId,r.result.draggableId,r.impact,r.afterCritical)}return null}}();return function(e,t){return n(e,t)||i(e,t)||zi}}),{dropAnimationFinished:mr},null,{context:Tn,pure:!0,areStatePropsEqual:Hi})((function(e){var t=r(null),n=Q((function(e){t.current=e}),[]),i=Q((function(){return t.current}),[]),o=Pi(Fn),a=o.contextId,l=o.dragHandleUsageInstructionsId,c=o.registry,u=Pi(Li),s=u.type,d=u.droppableId,p=K((function(){return{id:e.draggableId,index:e.index,type:s,droppableId:d}}),[e.draggableId,e.index,s,d]),f=e.children,g=e.draggableId,m=e.isEnabled,v=e.shouldRespectForcePress,b=e.canDragInteractiveElements,h=e.isClone,y=e.mapped,I=e.dropAnimationFinished;h||ji(K((function(){return{descriptor:p,registry:c,getDraggableRef:i,canDragInteractiveElements:b,shouldRespectForcePress:v,isEnabled:m}}),[p,c,i,b,v,m]));var x=K((function(){return m?{tabIndex:0,role:"button","aria-describedby":l,"data-rbd-drag-handle-draggable-id":g,"data-rbd-drag-handle-context-id":a,draggable:!1,onDragStart:Wi}:null}),[a,l,g,m]),D=Q((function(e){"DRAGGING"===y.type&&y.dropping&&"transform"===e.propertyName&&I()}),[I,y]),E=K((function(){var e=Ui(y),t="DRAGGING"===y.type&&y.dropping?D:null;return{innerRef:n,draggableProps:{"data-rbd-draggable-context-id":a,"data-rbd-draggable-id":g,style:e,onTransitionEnd:t},dragHandleProps:x}}),[a,x,g,y,D,n]),w=K((function(){return{draggableId:p.id,type:p.type,source:{index:p.index,droppableId:p.droppableId}}}),[p.droppableId,p.id,p.index,p.type]);return f(E,y.snapshot,w)}));function Ji(e){return Pi(Li).isUsingCloneFor!==e.draggableId||e.isClone?a.createElement(Yi,e):null}function Xi(e){var t="boolean"!=typeof e.isDragDisabled||!e.isDragDisabled,r=Boolean(e.disableInteractiveElementBlocking),n=Boolean(e.shouldRespectForcePress);return a.createElement(Ji,G({},e,{isClone:!1,isEnabled:t,canDragInteractiveElements:r,shouldRespectForcePress:n}))}var Ki=function(e,t){return e===t.droppable.type},Qi=function(e,t){return t.draggables[e.draggable.id]};var Zi={mode:"standard",type:"DEFAULT",direction:"vertical",isDropDisabled:!1,isCombineEnabled:!1,ignoreContainerClipping:!1,renderClone:null,getContainerForClone:function(){return document.body||be(!1),document.body}},$i=h((function(){var e={placeholder:null,shouldAnimatePlaceholder:!0,snapshot:{isDraggingOver:!1,draggingOverWith:null,draggingFromThisWith:null,isUsingPlaceholder:!1},useClone:null},t=G({},e,{shouldAnimatePlaceholder:!1}),r=de((function(e){return{draggableId:e.id,type:e.type,source:{index:e.index,droppableId:e.droppableId}}})),n=de((function(n,i,o,a,l,c){var u=l.descriptor.id;if(l.descriptor.droppableId===n){var s=c?{render:c,dragging:r(l.descriptor)}:null,d={isDraggingOver:o,draggingOverWith:o?u:null,draggingFromThisWith:u,isUsingPlaceholder:!0};return{placeholder:l.placeholder,shouldAnimatePlaceholder:!1,snapshot:d,useClone:s}}if(!i)return t;if(!a)return e;var p={isDraggingOver:o,draggingOverWith:u,draggingFromThisWith:null,isUsingPlaceholder:!0};return{placeholder:l.placeholder,shouldAnimatePlaceholder:!0,snapshot:p,useClone:null}}));return function(r,i){var o=i.droppableId,a=i.type,l=!i.isDropDisabled,c=i.renderClone;if(r.isDragging){var u=r.critical;if(!Ki(a,u))return t;var s=Qi(u,r.dimensions),d=Gt(r.impact)===o;return n(o,l,d,d,s,c)}if("DROP_ANIMATING"===r.phase){var p=r.completed;if(!Ki(a,p.critical))return t;var f=Qi(p.critical,r.dimensions);return n(o,l,Vi(p.result)===o,Gt(p.impact)===o,f,c)}if("IDLE"===r.phase&&r.completed&&!r.shouldFlush){var g=r.completed;if(!Ki(a,g.critical))return t;var m=Gt(g.impact)===o,v=Boolean(g.impact.at&&"COMBINE"===g.impact.at.type),b=g.critical.droppable.id===o;return m?v?e:t:b?e:t}return t}}),{updateViewportMaxScroll:function(e){return{type:"UPDATE_VIEWPORT_MAX_SCROLL",payload:e}}},null,{context:Tn,pure:!0,areStatePropsEqual:Hi})((function(e){var t=i(Fn);t||be(!1);var n=t.contextId,o=t.isMovementAllowed,l=r(null),c=r(null),u=e.children,s=e.droppableId,d=e.type,p=e.mode,f=e.direction,g=e.ignoreContainerClipping,m=e.isDropDisabled,v=e.isCombineEnabled,b=e.snapshot,h=e.useClone,y=e.updateViewportMaxScroll,I=e.getContainerForClone,x=Q((function(){return l.current}),[]),E=Q((function(e){l.current=e}),[]);Q((function(){return c.current}),[]);var w=Q((function(e){c.current=e}),[]),C=Q((function(){o()&&y({maxScroll:Hr()})}),[o,y]);!function(e){var t=r(null),n=Pi(Fn),i=kn("droppable"),o=n.registry,a=n.marshal,l=Un(e),c=K((function(){return{id:e.droppableId,type:e.type,mode:e.mode}}),[e.droppableId,e.mode,e.type]),u=r(c),s=K((function(){return de((function(e,r){t.current||be(!1);var n={x:e,y:r};a.updateDroppableScroll(c.id,n)}))}),[c.id,a]),d=Q((function(){var e=t.current;return e&&e.env.closestScrollable?xi(e.env.closestScrollable):Oe}),[]),p=Q((function(){var e=d();s(e.x,e.y)}),[d,s]),f=K((function(){return pe(p)}),[p]),g=Q((function(){var e=t.current,r=Bi(e);e&&r||be(!1),e.scrollOptions.shouldPublishImmediately?p():f()}),[f,p]),m=Q((function(e,r){t.current&&be(!1);var i=l.current,o=i.getDroppableRef();o||be(!1);var a=Ei(o),u={ref:o,descriptor:c,env:a,scrollOptions:r};t.current=u;var s=wi({ref:o,descriptor:c,env:a,windowScroll:e,direction:i.direction,isDropDisabled:i.isDropDisabled,isCombineEnabled:i.isCombineEnabled,shouldClipSubject:!i.ignoreContainerClipping}),d=a.closestScrollable;return d&&(d.setAttribute(En.contextId,n.contextId),d.addEventListener("scroll",g,Oi(u.scrollOptions))),s}),[n.contextId,c,g,l]),v=Q((function(){var e=t.current,r=Bi(e);return e&&r||be(!1),xi(r)}),[]),b=Q((function(){var e=t.current;e||be(!1);var r=Bi(e);t.current=null,r&&(f.cancel(),r.removeAttribute(En.contextId),r.removeEventListener("scroll",g,Oi(e.scrollOptions)))}),[g,f]),h=Q((function(e){var r=t.current;r||be(!1);var n=Bi(r);n||be(!1),n.scrollTop+=e.y,n.scrollLeft+=e.x}),[]),y=K((function(){return{getDimensionAndWatchScroll:m,getScrollWhileDragging:v,dragStopped:b,scroll:h}}),[b,m,v,h]),I=K((function(){return{uniqueId:i,descriptor:c,callbacks:y}}),[y,c,i]);Cn((function(){return u.current=I.descriptor,o.droppable.register(I),function(){t.current&&b(),o.droppable.unregister(I)}}),[y,c,b,I,a,o.droppable]),Cn((function(){t.current&&a.updateDroppableIsEnabled(u.current.id,!e.isDropDisabled)}),[e.isDropDisabled,a]),Cn((function(){t.current&&a.updateDroppableIsCombineEnabled(u.current.id,e.isCombineEnabled)}),[e.isCombineEnabled,a])}({droppableId:s,type:d,mode:p,direction:f,isDropDisabled:m,isCombineEnabled:v,ignoreContainerClipping:g,getDroppableRef:x});var A=a.createElement(Mi,{on:e.placeholder,shouldAnimate:e.shouldAnimatePlaceholder},(function(e){var t=e.onClose,r=e.data,i=e.animate;return a.createElement(Ti,{placeholder:r,onClose:t,innerRef:w,animate:i,contextId:n,onTransitionEnd:C})})),O=K((function(){return{innerRef:E,placeholder:A,droppableProps:{"data-rbd-droppable-id":s,"data-rbd-droppable-context-id":n}}}),[n,s,A,E]),P=h?h.dragging.draggableId:null,B=K((function(){return{droppableId:s,type:d,isUsingCloneFor:P}}),[s,P,d]);return a.createElement(Li.Provider,{value:B},u(O,b),function(){if(!h)return null;var e=h.dragging,t=h.render,r=a.createElement(Ji,{draggableId:e.draggableId,index:e.source.index,isClone:!0,isEnabled:!0,shouldRespectForcePress:!1,canDragInteractiveElements:!0},(function(r,n){return t(r,n,e)}));return D.createPortal(r,I())}())}));function eo(){return I((e=>e.sites.active))}$i.defaultProps=Zi;const to=B("SHOW_NEW_CONTENT_DIALOG"),ro=B("SHOW_EDIT_DIALOG"),no=B("SHOW_WIDGET_DIALOG"),io=I;var oo=function(t){var r=t.cardId,n=t.cardName;t.trelloCardUrl;var i=t.coverColor,o=t.description,a=t.attachmentCount,l=eo(),g=x(),m=e.useState(!1),v=m[0],b=m[1],h=e.useState(null),y=h[0],I=h[1],D=Boolean(y),w=e.createElement(e.Fragment,null);return(o||a>0)&&(w=e.createElement("div",null,e.createElement(c,{disableSpacing:!0},e.createElement("div",{onClick:function(){b(!v)},"aria-expanded":v,"aria-label":"show more"},e.createElement(C,null))),e.createElement(u,{in:v,timeout:"auto",unmountOnExit:!0},e.createElement(s,null,e.createElement(d,{paragraph:!0},o))))),e.createElement(p,{elevation:3,sx:{borderTop:i?"10px solid ".concat(i):""}},e.createElement(f,{action:e.createElement(N,{id:"long-button","aria-label":"settings","aria-controls":D?"long-menu":void 0,"aria-expanded":D?"true":void 0,"aria-haspopup":"true",onClick:function(e){I(e.currentTarget)}},e.createElement(A,null),e.createElement(O,{id:"long-menu",anchorEl:y,open:D,onClose:function(){I(null)},MenuListProps:{"aria-labelledby":"long-button"},PaperProps:{style:{maxHeight:216,width:"40ch"}}},e.createElement(P,{key:"createContent",onClick:function(){g(to({item:R("/",io((e=>e.content.itemsByPath))),onContentTypeSelected:ro({})})),I(null)}},"Create New Content"),e.createElement(P,{key:"attachContent",onClick:function(){!function(e,t,r,n){var i="/studio/api/2/plugin/script/plugins/org/rd/plugin/trellowf/trellowf/card/attach-content.json?siteId=".concat(t,"&name=").concat(e,"&cardId=").concat(r,"&contentId=").concat(n);E(i).subscribe({next:function(e){},error:function(e){}})}("test",l,r,"/site/website/index.xml"),I(null)}},"Attach Existing Content"),e.createElement(P,{key:"submitContent",onClick:function(){alert("Submit "+r),I(null)}},"Submit Content for Review"),e.createElement(P,{key:"rejectContent",onClick:function(){alert("Reject "+r),I(null)}},"Reject Content in Review"),e.createElement(P,{key:"publishContent",onClick:function(){alert("Publish "+r),I(null)}},"Approve Content for Publish"))),title:n,titleTypographyProps:{variant:"body1"}}),w)},ao=function(r){var i=r.boardId,o=eo(),a=t(),c=a[0],u=a[1],s=t({board:null,lists:null}),p=s[0],f=s[1],h=function(e,t){var r="/studio/api/2/plugin/script/plugins/org/rd/plugin/trellowf/trellowf/card/move.json?siteId=".concat(o,"&listId=").concat(e,"&cardId=").concat(t);E(r).subscribe({next:function(e){y()},error:function(e){var t,r;console.error(e),u(null!==(r=null===(t=e.response)||void 0===t?void 0:t.response)&&void 0!==r?r:{code:"?",message:"Unknown Error. Check browser console."})}})},y=function(){var e="/studio/api/2/plugin/script/plugins/org/rd/plugin/trellowf/trellowf/board/lists.json?siteId=".concat(o);i&&(e+="&boardId="+i),E(e).subscribe({next:function(e){f(T(T({},p),{board:T({},e.response.result.board),lists:T({},e.response.result.lists)}))},error:function(e){var t,r;console.error(e),u(null!==(r=null===(t=e.response)||void 0===t?void 0:t.response)&&void 0!==r?r:{code:"?",message:"Unknown Error. Check browser console."})}})};return n((function(){y();var e=setInterval((function(){y()}),1e4);return function(){clearInterval(e)}}),[]),e.createElement(mi,{onDragEnd:function(e){return function(e){h(e.destination.droppableId,e.draggableId)}(e)}},e.createElement(g,{sx:{backgroundImage:p.board?"url(".concat(p.board.prefs.backgroundImage,")"):null,flexDirection:"row",position:"relative",height:"100%"}},c&&e.createElement(w,{error:c}),p.board&&e.createElement(m,{href:p.board.url,target:"new","aria-label":"Edit in Trello",sx:{position:"absolute",bottom:20,right:20},color:"info"},e.createElement(l,null)),p.lists&&Object.values(p.lists).map((function(t){return e.createElement(v,{elevation:1,style:{},sx:function(e){return{width:"280px",display:"inline-table",margin:"5px",p:1,bgcolor:"dark"===e.palette.mode?"grey":"grey.A200"}}},e.createElement(d,{variant:"h6",component:"h2",sx:{mb:1}},t.name),e.createElement($i,{droppableId:t.id,key:t.id},(function(r,n){var i;return e.createElement(g,T({sx:(i={},i[".".concat(b.root,":not(:last-child)")]={mb:1},i)},r.droppableProps,{ref:r.innerRef}),t.cards&&Object.values(t.cards).map((function(t,r){return e.createElement(Xi,{key:t.id,draggableId:t.id,index:r},(function(r,n){return e.createElement("div",T({ref:r.innerRef},r.draggableProps,r.dragHandleProps),e.createElement("div",{style:{padding:"5px"}},e.createElement(oo,{cardId:t.id,cardName:t.name,trelloCardUrl:t.url,coverColor:t.cover.color,description:t.desc,attachmentCount:t.badges.attachments})),r.placeholder)}))})))})))}))))};function lo(t){var r=t.title?t.title:"Trello Board",n=t.icon&&t.icon.id?t.icon.id:"@mui/icons-material/ContentPasteOutlined",i=x();return e.createElement(S,{icon:{id:n},title:r,onClick:function(){return i(no({title:r,extraProps:t,widget:{id:"org.rd.plugin.trellowf.board"}}))}})}var co={locales:void 0,scripts:void 0,stylesheets:void 0,id:"org.rd.plugin.trellowf",widgets:{"org.rd.plugin.trellowf.openBoardButton":lo,"org.rd.plugin.trellowf.board":ao}};export{ao as Board,lo as OpenBoardDialogPanelButton,co as default};
+const React = craftercms.libs.React;
+const { useState, useRef, useEffect, useContext, useLayoutEffect, useMemo: useMemo$1 } = craftercms.libs.React;
+const React__default = craftercms.libs.React && Object.prototype.hasOwnProperty.call(craftercms.libs.React, 'default') ? craftercms.libs.React['default'] : craftercms.libs.React;
+const EditRoundedIcon = craftercms.utils.constants.components.get('@mui/icons-material/EditRounded') && Object.prototype.hasOwnProperty.call(craftercms.utils.constants.components.get('@mui/icons-material/EditRounded'), 'default') ? craftercms.utils.constants.components.get('@mui/icons-material/EditRounded')['default'] : craftercms.utils.constants.components.get('@mui/icons-material/EditRounded');
+const { Card, CardHeader, CardActions, Button, CardContent, Typography, Link, Box, Fab, Paper, cardClasses } = craftercms.libs.MaterialUI;
+const { connect, Provider, useSelector, useDispatch } = craftercms.libs.ReactRedux;
+const ReactDOM = craftercms.libs.ReactDOM && Object.prototype.hasOwnProperty.call(craftercms.libs.ReactDOM, 'default') ? craftercms.libs.ReactDOM['default'] : craftercms.libs.ReactDOM;
+const { get } = craftercms.utils.ajax;
+const { ApiResponseErrorState } = craftercms.components;
+const MoreVertRoundedIcon = craftercms.utils.constants.components.get('@mui/icons-material/MoreVertRounded') && Object.prototype.hasOwnProperty.call(craftercms.utils.constants.components.get('@mui/icons-material/MoreVertRounded'), 'default') ? craftercms.utils.constants.components.get('@mui/icons-material/MoreVertRounded')['default'] : craftercms.utils.constants.components.get('@mui/icons-material/MoreVertRounded');
+const Menu = craftercms.libs.MaterialUI.Menu && Object.prototype.hasOwnProperty.call(craftercms.libs.MaterialUI.Menu, 'default') ? craftercms.libs.MaterialUI.Menu['default'] : craftercms.libs.MaterialUI.Menu;
+const MenuItem = craftercms.libs.MaterialUI.MenuItem && Object.prototype.hasOwnProperty.call(craftercms.libs.MaterialUI.MenuItem, 'default') ? craftercms.libs.MaterialUI.MenuItem['default'] : craftercms.libs.MaterialUI.MenuItem;
+const { createAction } = craftercms.libs.ReduxToolkit;
+const { fetchItemsByPath, fetchSandboxItem } = craftercms.services.content;
+const { createCustomDocumentEventListener } = craftercms.utils.dom;
+const ItemDisplay = craftercms.components.ItemDisplay && Object.prototype.hasOwnProperty.call(craftercms.components.ItemDisplay, 'default') ? craftercms.components.ItemDisplay['default'] : craftercms.components.ItemDisplay;
+const IconButton = craftercms.libs.MaterialUI.IconButton && Object.prototype.hasOwnProperty.call(craftercms.libs.MaterialUI.IconButton, 'default') ? craftercms.libs.MaterialUI.IconButton['default'] : craftercms.libs.MaterialUI.IconButton;
+const ToolsPanelListItemButton = craftercms.components.ToolsPanelListItemButton && Object.prototype.hasOwnProperty.call(craftercms.components.ToolsPanelListItemButton, 'default') ? craftercms.components.ToolsPanelListItemButton['default'] : craftercms.components.ToolsPanelListItemButton;
+
+/******************************************************************************
+Copyright (c) Microsoft Corporation.
+
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+PERFORMANCE OF THIS SOFTWARE.
+***************************************************************************** */
+
+var __assign = function() {
+    __assign = Object.assign || function __assign(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+
+function _setPrototypeOf(o, p) {
+  _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf(o, p) {
+    o.__proto__ = p;
+    return o;
+  };
+  return _setPrototypeOf(o, p);
+}
+
+function _inheritsLoose(subClass, superClass) {
+  subClass.prototype = Object.create(superClass.prototype);
+  subClass.prototype.constructor = subClass;
+  _setPrototypeOf(subClass, superClass);
+}
+
+function _extends() {
+  _extends = Object.assign ? Object.assign.bind() : function (target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i];
+
+      for (var key in source) {
+        if (Object.prototype.hasOwnProperty.call(source, key)) {
+          target[key] = source[key];
+        }
+      }
+    }
+
+    return target;
+  };
+  return _extends.apply(this, arguments);
+}
+
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
+function ownKeys(object, enumerableOnly) {
+  var keys = Object.keys(object);
+
+  if (Object.getOwnPropertySymbols) {
+    var symbols = Object.getOwnPropertySymbols(object);
+    enumerableOnly && (symbols = symbols.filter(function (sym) {
+      return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+    })), keys.push.apply(keys, symbols);
+  }
+
+  return keys;
+}
+
+function _objectSpread2(target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = null != arguments[i] ? arguments[i] : {};
+    i % 2 ? ownKeys(Object(source), !0).forEach(function (key) {
+      _defineProperty(target, key, source[key]);
+    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) {
+      Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+    });
+  }
+
+  return target;
+}
+
+/**
+ * Adapted from React: https://github.com/facebook/react/blob/master/packages/shared/formatProdErrorMessage.js
+ *
+ * Do not require this module directly! Use normal throw error calls. These messages will be replaced with error codes
+ * during build.
+ * @param {number} code
+ */
+function formatProdErrorMessage(code) {
+  return "Minified Redux error #" + code + "; visit https://redux.js.org/Errors?code=" + code + " for the full message or " + 'use the non-minified dev environment for full errors. ';
+}
+
+// Inlined version of the `symbol-observable` polyfill
+var $$observable = (function () {
+  return typeof Symbol === 'function' && Symbol.observable || '@@observable';
+})();
+
+/**
+ * These are private action types reserved by Redux.
+ * For any unknown actions, you must return the current state.
+ * If the current state is undefined, you must return the initial state.
+ * Do not reference these action types directly in your code.
+ */
+var randomString = function randomString() {
+  return Math.random().toString(36).substring(7).split('').join('.');
+};
+
+var ActionTypes = {
+  INIT: "@@redux/INIT" + randomString(),
+  REPLACE: "@@redux/REPLACE" + randomString(),
+  PROBE_UNKNOWN_ACTION: function PROBE_UNKNOWN_ACTION() {
+    return "@@redux/PROBE_UNKNOWN_ACTION" + randomString();
+  }
+};
+
+/**
+ * @param {any} obj The object to inspect.
+ * @returns {boolean} True if the argument appears to be a plain object.
+ */
+function isPlainObject(obj) {
+  if (typeof obj !== 'object' || obj === null) return false;
+  var proto = obj;
+
+  while (Object.getPrototypeOf(proto) !== null) {
+    proto = Object.getPrototypeOf(proto);
+  }
+
+  return Object.getPrototypeOf(obj) === proto;
+}
+
+/**
+ * @deprecated
+ *
+ * **We recommend using the `configureStore` method
+ * of the `@reduxjs/toolkit` package**, which replaces `createStore`.
+ *
+ * Redux Toolkit is our recommended approach for writing Redux logic today,
+ * including store setup, reducers, data fetching, and more.
+ *
+ * **For more details, please read this Redux docs page:**
+ * **https://redux.js.org/introduction/why-rtk-is-redux-today**
+ *
+ * `configureStore` from Redux Toolkit is an improved version of `createStore` that
+ * simplifies setup and helps avoid common bugs.
+ *
+ * You should not be using the `redux` core package by itself today, except for learning purposes.
+ * The `createStore` method from the core `redux` package will not be removed, but we encourage
+ * all users to migrate to using Redux Toolkit for all Redux code.
+ *
+ * If you want to use `createStore` without this visual deprecation warning, use
+ * the `legacy_createStore` import instead:
+ *
+ * `import { legacy_createStore as createStore} from 'redux'`
+ *
+ */
+
+function createStore$1(reducer, preloadedState, enhancer) {
+  var _ref2;
+
+  if (typeof preloadedState === 'function' && typeof enhancer === 'function' || typeof enhancer === 'function' && typeof arguments[3] === 'function') {
+    throw new Error(formatProdErrorMessage(0) );
+  }
+
+  if (typeof preloadedState === 'function' && typeof enhancer === 'undefined') {
+    enhancer = preloadedState;
+    preloadedState = undefined;
+  }
+
+  if (typeof enhancer !== 'undefined') {
+    if (typeof enhancer !== 'function') {
+      throw new Error(formatProdErrorMessage(1) );
+    }
+
+    return enhancer(createStore$1)(reducer, preloadedState);
+  }
+
+  if (typeof reducer !== 'function') {
+    throw new Error(formatProdErrorMessage(2) );
+  }
+
+  var currentReducer = reducer;
+  var currentState = preloadedState;
+  var currentListeners = [];
+  var nextListeners = currentListeners;
+  var isDispatching = false;
+  /**
+   * This makes a shallow copy of currentListeners so we can use
+   * nextListeners as a temporary list while dispatching.
+   *
+   * This prevents any bugs around consumers calling
+   * subscribe/unsubscribe in the middle of a dispatch.
+   */
+
+  function ensureCanMutateNextListeners() {
+    if (nextListeners === currentListeners) {
+      nextListeners = currentListeners.slice();
+    }
+  }
+  /**
+   * Reads the state tree managed by the store.
+   *
+   * @returns {any} The current state tree of your application.
+   */
+
+
+  function getState() {
+    if (isDispatching) {
+      throw new Error(formatProdErrorMessage(3) );
+    }
+
+    return currentState;
+  }
+  /**
+   * Adds a change listener. It will be called any time an action is dispatched,
+   * and some part of the state tree may potentially have changed. You may then
+   * call `getState()` to read the current state tree inside the callback.
+   *
+   * You may call `dispatch()` from a change listener, with the following
+   * caveats:
+   *
+   * 1. The subscriptions are snapshotted just before every `dispatch()` call.
+   * If you subscribe or unsubscribe while the listeners are being invoked, this
+   * will not have any effect on the `dispatch()` that is currently in progress.
+   * However, the next `dispatch()` call, whether nested or not, will use a more
+   * recent snapshot of the subscription list.
+   *
+   * 2. The listener should not expect to see all state changes, as the state
+   * might have been updated multiple times during a nested `dispatch()` before
+   * the listener is called. It is, however, guaranteed that all subscribers
+   * registered before the `dispatch()` started will be called with the latest
+   * state by the time it exits.
+   *
+   * @param {Function} listener A callback to be invoked on every dispatch.
+   * @returns {Function} A function to remove this change listener.
+   */
+
+
+  function subscribe(listener) {
+    if (typeof listener !== 'function') {
+      throw new Error(formatProdErrorMessage(4) );
+    }
+
+    if (isDispatching) {
+      throw new Error(formatProdErrorMessage(5) );
+    }
+
+    var isSubscribed = true;
+    ensureCanMutateNextListeners();
+    nextListeners.push(listener);
+    return function unsubscribe() {
+      if (!isSubscribed) {
+        return;
+      }
+
+      if (isDispatching) {
+        throw new Error(formatProdErrorMessage(6) );
+      }
+
+      isSubscribed = false;
+      ensureCanMutateNextListeners();
+      var index = nextListeners.indexOf(listener);
+      nextListeners.splice(index, 1);
+      currentListeners = null;
+    };
+  }
+  /**
+   * Dispatches an action. It is the only way to trigger a state change.
+   *
+   * The `reducer` function, used to create the store, will be called with the
+   * current state tree and the given `action`. Its return value will
+   * be considered the **next** state of the tree, and the change listeners
+   * will be notified.
+   *
+   * The base implementation only supports plain object actions. If you want to
+   * dispatch a Promise, an Observable, a thunk, or something else, you need to
+   * wrap your store creating function into the corresponding middleware. For
+   * example, see the documentation for the `redux-thunk` package. Even the
+   * middleware will eventually dispatch plain object actions using this method.
+   *
+   * @param {Object} action A plain object representing “what changed”. It is
+   * a good idea to keep actions serializable so you can record and replay user
+   * sessions, or use the time travelling `redux-devtools`. An action must have
+   * a `type` property which may not be `undefined`. It is a good idea to use
+   * string constants for action types.
+   *
+   * @returns {Object} For convenience, the same action object you dispatched.
+   *
+   * Note that, if you use a custom middleware, it may wrap `dispatch()` to
+   * return something else (for example, a Promise you can await).
+   */
+
+
+  function dispatch(action) {
+    if (!isPlainObject(action)) {
+      throw new Error(formatProdErrorMessage(7) );
+    }
+
+    if (typeof action.type === 'undefined') {
+      throw new Error(formatProdErrorMessage(8) );
+    }
+
+    if (isDispatching) {
+      throw new Error(formatProdErrorMessage(9) );
+    }
+
+    try {
+      isDispatching = true;
+      currentState = currentReducer(currentState, action);
+    } finally {
+      isDispatching = false;
+    }
+
+    var listeners = currentListeners = nextListeners;
+
+    for (var i = 0; i < listeners.length; i++) {
+      var listener = listeners[i];
+      listener();
+    }
+
+    return action;
+  }
+  /**
+   * Replaces the reducer currently used by the store to calculate the state.
+   *
+   * You might need this if your app implements code splitting and you want to
+   * load some of the reducers dynamically. You might also need this if you
+   * implement a hot reloading mechanism for Redux.
+   *
+   * @param {Function} nextReducer The reducer for the store to use instead.
+   * @returns {void}
+   */
+
+
+  function replaceReducer(nextReducer) {
+    if (typeof nextReducer !== 'function') {
+      throw new Error(formatProdErrorMessage(10) );
+    }
+
+    currentReducer = nextReducer; // This action has a similiar effect to ActionTypes.INIT.
+    // Any reducers that existed in both the new and old rootReducer
+    // will receive the previous state. This effectively populates
+    // the new state tree with any relevant data from the old one.
+
+    dispatch({
+      type: ActionTypes.REPLACE
+    });
+  }
+  /**
+   * Interoperability point for observable/reactive libraries.
+   * @returns {observable} A minimal observable of state changes.
+   * For more information, see the observable proposal:
+   * https://github.com/tc39/proposal-observable
+   */
+
+
+  function observable() {
+    var _ref;
+
+    var outerSubscribe = subscribe;
+    return _ref = {
+      /**
+       * The minimal observable subscription method.
+       * @param {Object} observer Any object that can be used as an observer.
+       * The observer object should have a `next` method.
+       * @returns {subscription} An object with an `unsubscribe` method that can
+       * be used to unsubscribe the observable from the store, and prevent further
+       * emission of values from the observable.
+       */
+      subscribe: function subscribe(observer) {
+        if (typeof observer !== 'object' || observer === null) {
+          throw new Error(formatProdErrorMessage(11) );
+        }
+
+        function observeState() {
+          if (observer.next) {
+            observer.next(getState());
+          }
+        }
+
+        observeState();
+        var unsubscribe = outerSubscribe(observeState);
+        return {
+          unsubscribe: unsubscribe
+        };
+      }
+    }, _ref[$$observable] = function () {
+      return this;
+    }, _ref;
+  } // When a store is created, an "INIT" action is dispatched so that every
+  // reducer returns their initial state. This effectively populates
+  // the initial state tree.
+
+
+  dispatch({
+    type: ActionTypes.INIT
+  });
+  return _ref2 = {
+    dispatch: dispatch,
+    subscribe: subscribe,
+    getState: getState,
+    replaceReducer: replaceReducer
+  }, _ref2[$$observable] = observable, _ref2;
+}
+
+function bindActionCreator(actionCreator, dispatch) {
+  return function () {
+    return dispatch(actionCreator.apply(this, arguments));
+  };
+}
+/**
+ * Turns an object whose values are action creators, into an object with the
+ * same keys, but with every function wrapped into a `dispatch` call so they
+ * may be invoked directly. This is just a convenience method, as you can call
+ * `store.dispatch(MyActionCreators.doSomething())` yourself just fine.
+ *
+ * For convenience, you can also pass an action creator as the first argument,
+ * and get a dispatch wrapped function in return.
+ *
+ * @param {Function|Object} actionCreators An object whose values are action
+ * creator functions. One handy way to obtain it is to use ES6 `import * as`
+ * syntax. You may also pass a single function.
+ *
+ * @param {Function} dispatch The `dispatch` function available on your Redux
+ * store.
+ *
+ * @returns {Function|Object} The object mimicking the original object, but with
+ * every action creator wrapped into the `dispatch` call. If you passed a
+ * function as `actionCreators`, the return value will also be a single
+ * function.
+ */
+
+
+function bindActionCreators(actionCreators, dispatch) {
+  if (typeof actionCreators === 'function') {
+    return bindActionCreator(actionCreators, dispatch);
+  }
+
+  if (typeof actionCreators !== 'object' || actionCreators === null) {
+    throw new Error(formatProdErrorMessage(16) );
+  }
+
+  var boundActionCreators = {};
+
+  for (var key in actionCreators) {
+    var actionCreator = actionCreators[key];
+
+    if (typeof actionCreator === 'function') {
+      boundActionCreators[key] = bindActionCreator(actionCreator, dispatch);
+    }
+  }
+
+  return boundActionCreators;
+}
+
+/**
+ * Composes single-argument functions from right to left. The rightmost
+ * function can take multiple arguments as it provides the signature for
+ * the resulting composite function.
+ *
+ * @param {...Function} funcs The functions to compose.
+ * @returns {Function} A function obtained by composing the argument functions
+ * from right to left. For example, compose(f, g, h) is identical to doing
+ * (...args) => f(g(h(...args))).
+ */
+function compose() {
+  for (var _len = arguments.length, funcs = new Array(_len), _key = 0; _key < _len; _key++) {
+    funcs[_key] = arguments[_key];
+  }
+
+  if (funcs.length === 0) {
+    return function (arg) {
+      return arg;
+    };
+  }
+
+  if (funcs.length === 1) {
+    return funcs[0];
+  }
+
+  return funcs.reduce(function (a, b) {
+    return function () {
+      return a(b.apply(void 0, arguments));
+    };
+  });
+}
+
+/**
+ * Creates a store enhancer that applies middleware to the dispatch method
+ * of the Redux store. This is handy for a variety of tasks, such as expressing
+ * asynchronous actions in a concise manner, or logging every action payload.
+ *
+ * See `redux-thunk` package as an example of the Redux middleware.
+ *
+ * Because middleware is potentially asynchronous, this should be the first
+ * store enhancer in the composition chain.
+ *
+ * Note that each middleware will be given the `dispatch` and `getState` functions
+ * as named arguments.
+ *
+ * @param {...Function} middlewares The middleware chain to be applied.
+ * @returns {Function} A store enhancer applying the middleware.
+ */
+
+function applyMiddleware() {
+  for (var _len = arguments.length, middlewares = new Array(_len), _key = 0; _key < _len; _key++) {
+    middlewares[_key] = arguments[_key];
+  }
+
+  return function (createStore) {
+    return function () {
+      var store = createStore.apply(void 0, arguments);
+
+      var _dispatch = function dispatch() {
+        throw new Error(formatProdErrorMessage(15) );
+      };
+
+      var middlewareAPI = {
+        getState: store.getState,
+        dispatch: function dispatch() {
+          return _dispatch.apply(void 0, arguments);
+        }
+      };
+      var chain = middlewares.map(function (middleware) {
+        return middleware(middlewareAPI);
+      });
+      _dispatch = compose.apply(void 0, chain)(store.dispatch);
+      return _objectSpread2(_objectSpread2({}, store), {}, {
+        dispatch: _dispatch
+      });
+    };
+  };
+}
+
+function areInputsEqual$1(newInputs, lastInputs) {
+  if (newInputs.length !== lastInputs.length) {
+    return false;
+  }
+
+  for (var i = 0; i < newInputs.length; i++) {
+    if (newInputs[i] !== lastInputs[i]) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+function useMemoOne(getResult, inputs) {
+  var initial = useState(function () {
+    return {
+      inputs: inputs,
+      result: getResult()
+    };
+  })[0];
+  var isFirstRun = useRef(true);
+  var committed = useRef(initial);
+  var useCache = isFirstRun.current || Boolean(inputs && committed.current.inputs && areInputsEqual$1(inputs, committed.current.inputs));
+  var cache = useCache ? committed.current : {
+    inputs: inputs,
+    result: getResult()
+  };
+  useEffect(function () {
+    isFirstRun.current = false;
+    committed.current = cache;
+  }, [cache]);
+  return cache.result;
+}
+function useCallbackOne(callback, inputs) {
+  return useMemoOne(function () {
+    return callback;
+  }, inputs);
+}
+var useMemo = useMemoOne;
+var useCallback = useCallbackOne;
+
+var isProduction = "production" === 'production';
+var prefix$2 = 'Invariant failed';
+function invariant$1(condition, message) {
+    if (condition) {
+        return;
+    }
+    if (isProduction) {
+        throw new Error(prefix$2);
+    }
+    var provided = typeof message === 'function' ? message() : message;
+    var value = provided ? "".concat(prefix$2, ": ").concat(provided) : prefix$2;
+    throw new Error(value);
+}
+
+var getRect = function getRect(_ref) {
+  var top = _ref.top,
+      right = _ref.right,
+      bottom = _ref.bottom,
+      left = _ref.left;
+  var width = right - left;
+  var height = bottom - top;
+  var rect = {
+    top: top,
+    right: right,
+    bottom: bottom,
+    left: left,
+    width: width,
+    height: height,
+    x: left,
+    y: top,
+    center: {
+      x: (right + left) / 2,
+      y: (bottom + top) / 2
+    }
+  };
+  return rect;
+};
+var expand = function expand(target, expandBy) {
+  return {
+    top: target.top - expandBy.top,
+    left: target.left - expandBy.left,
+    bottom: target.bottom + expandBy.bottom,
+    right: target.right + expandBy.right
+  };
+};
+var shrink = function shrink(target, shrinkBy) {
+  return {
+    top: target.top + shrinkBy.top,
+    left: target.left + shrinkBy.left,
+    bottom: target.bottom - shrinkBy.bottom,
+    right: target.right - shrinkBy.right
+  };
+};
+
+var shift = function shift(target, shiftBy) {
+  return {
+    top: target.top + shiftBy.y,
+    left: target.left + shiftBy.x,
+    bottom: target.bottom + shiftBy.y,
+    right: target.right + shiftBy.x
+  };
+};
+
+var noSpacing$1 = {
+  top: 0,
+  right: 0,
+  bottom: 0,
+  left: 0
+};
+var createBox = function createBox(_ref2) {
+  var borderBox = _ref2.borderBox,
+      _ref2$margin = _ref2.margin,
+      margin = _ref2$margin === void 0 ? noSpacing$1 : _ref2$margin,
+      _ref2$border = _ref2.border,
+      border = _ref2$border === void 0 ? noSpacing$1 : _ref2$border,
+      _ref2$padding = _ref2.padding,
+      padding = _ref2$padding === void 0 ? noSpacing$1 : _ref2$padding;
+  var marginBox = getRect(expand(borderBox, margin));
+  var paddingBox = getRect(shrink(borderBox, border));
+  var contentBox = getRect(shrink(paddingBox, padding));
+  return {
+    marginBox: marginBox,
+    borderBox: getRect(borderBox),
+    paddingBox: paddingBox,
+    contentBox: contentBox,
+    margin: margin,
+    border: border,
+    padding: padding
+  };
+};
+
+var parse = function parse(raw) {
+  var value = raw.slice(0, -2);
+  var suffix = raw.slice(-2);
+
+  if (suffix !== 'px') {
+    return 0;
+  }
+
+  var result = Number(value);
+  !!isNaN(result) ? invariant$1(false) : void 0;
+  return result;
+};
+
+var getWindowScroll$1 = function getWindowScroll() {
+  return {
+    x: window.pageXOffset,
+    y: window.pageYOffset
+  };
+};
+
+var offset = function offset(original, change) {
+  var borderBox = original.borderBox,
+      border = original.border,
+      margin = original.margin,
+      padding = original.padding;
+  var shifted = shift(borderBox, change);
+  return createBox({
+    borderBox: shifted,
+    border: border,
+    margin: margin,
+    padding: padding
+  });
+};
+var withScroll = function withScroll(original, scroll) {
+  if (scroll === void 0) {
+    scroll = getWindowScroll$1();
+  }
+
+  return offset(original, scroll);
+};
+var calculateBox = function calculateBox(borderBox, styles) {
+  var margin = {
+    top: parse(styles.marginTop),
+    right: parse(styles.marginRight),
+    bottom: parse(styles.marginBottom),
+    left: parse(styles.marginLeft)
+  };
+  var padding = {
+    top: parse(styles.paddingTop),
+    right: parse(styles.paddingRight),
+    bottom: parse(styles.paddingBottom),
+    left: parse(styles.paddingLeft)
+  };
+  var border = {
+    top: parse(styles.borderTopWidth),
+    right: parse(styles.borderRightWidth),
+    bottom: parse(styles.borderBottomWidth),
+    left: parse(styles.borderLeftWidth)
+  };
+  return createBox({
+    borderBox: borderBox,
+    margin: margin,
+    padding: padding,
+    border: border
+  });
+};
+var getBox = function getBox(el) {
+  var borderBox = el.getBoundingClientRect();
+  var styles = window.getComputedStyle(el);
+  return calculateBox(borderBox, styles);
+};
+
+var safeIsNaN = Number.isNaN ||
+    function ponyfill(value) {
+        return typeof value === 'number' && value !== value;
+    };
+function isEqual$2(first, second) {
+    if (first === second) {
+        return true;
+    }
+    if (safeIsNaN(first) && safeIsNaN(second)) {
+        return true;
+    }
+    return false;
+}
+function areInputsEqual(newInputs, lastInputs) {
+    if (newInputs.length !== lastInputs.length) {
+        return false;
+    }
+    for (var i = 0; i < newInputs.length; i++) {
+        if (!isEqual$2(newInputs[i], lastInputs[i])) {
+            return false;
+        }
+    }
+    return true;
+}
+
+function memoizeOne(resultFn, isEqual) {
+    if (isEqual === void 0) { isEqual = areInputsEqual; }
+    var lastThis;
+    var lastArgs = [];
+    var lastResult;
+    var calledOnce = false;
+    function memoized() {
+        var newArgs = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            newArgs[_i] = arguments[_i];
+        }
+        if (calledOnce && lastThis === this && isEqual(newArgs, lastArgs)) {
+            return lastResult;
+        }
+        lastResult = resultFn.apply(this, newArgs);
+        calledOnce = true;
+        lastThis = this;
+        lastArgs = newArgs;
+        return lastResult;
+    }
+    return memoized;
+}
+
+var rafSchd = function rafSchd(fn) {
+  var lastArgs = [];
+  var frameId = null;
+
+  var wrapperFn = function wrapperFn() {
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    lastArgs = args;
+
+    if (frameId) {
+      return;
+    }
+
+    frameId = requestAnimationFrame(function () {
+      frameId = null;
+      fn.apply(void 0, lastArgs);
+    });
+  };
+
+  wrapperFn.cancel = function () {
+    if (!frameId) {
+      return;
+    }
+
+    cancelAnimationFrame(frameId);
+    frameId = null;
+  };
+
+  return wrapperFn;
+};
+
+var rafSchd$1 = rafSchd;
+
+function log(type, message) {
+
+  {
+    return;
+  }
+}
+log.bind(null, 'warn');
+log.bind(null, 'error');
+
+function noop() {}
+
+function getOptions(shared, fromBinding) {
+  return _extends({}, shared, {}, fromBinding);
+}
+
+function bindEvents(el, bindings, sharedOptions) {
+  var unbindings = bindings.map(function (binding) {
+    var options = getOptions(sharedOptions, binding.options);
+    el.addEventListener(binding.eventName, binding.fn, options);
+    return function unbind() {
+      el.removeEventListener(binding.eventName, binding.fn, options);
+    };
+  });
+  return function unbindAll() {
+    unbindings.forEach(function (unbind) {
+      unbind();
+    });
+  };
+}
+var prefix = 'Invariant failed';
+function RbdInvariant(message) {
+  this.message = message;
+}
+
+RbdInvariant.prototype.toString = function toString() {
+  return this.message;
+};
+
+function invariant(condition, message) {
+  if (condition) {
+    return;
+  }
+
+  {
+    throw new RbdInvariant(prefix);
+  }
+}
+
+var ErrorBoundary = function (_React$Component) {
+  _inheritsLoose(ErrorBoundary, _React$Component);
+
+  function ErrorBoundary() {
+    var _this;
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = _React$Component.call.apply(_React$Component, [this].concat(args)) || this;
+    _this.callbacks = null;
+    _this.unbind = noop;
+
+    _this.onWindowError = function (event) {
+      var callbacks = _this.getCallbacks();
+
+      if (callbacks.isDragging()) {
+        callbacks.tryAbort();
+      }
+
+      var err = event.error;
+
+      if (err instanceof RbdInvariant) {
+        event.preventDefault();
+      }
+    };
+
+    _this.getCallbacks = function () {
+      if (!_this.callbacks) {
+        throw new Error('Unable to find AppCallbacks in <ErrorBoundary/>');
+      }
+
+      return _this.callbacks;
+    };
+
+    _this.setCallbacks = function (callbacks) {
+      _this.callbacks = callbacks;
+    };
+
+    return _this;
+  }
+
+  var _proto = ErrorBoundary.prototype;
+
+  _proto.componentDidMount = function componentDidMount() {
+    this.unbind = bindEvents(window, [{
+      eventName: 'error',
+      fn: this.onWindowError
+    }]);
+  };
+
+  _proto.componentDidCatch = function componentDidCatch(err) {
+    if (err instanceof RbdInvariant) {
+
+      this.setState({});
+      return;
+    }
+
+    throw err;
+  };
+
+  _proto.componentWillUnmount = function componentWillUnmount() {
+    this.unbind();
+  };
+
+  _proto.render = function render() {
+    return this.props.children(this.setCallbacks);
+  };
+
+  return ErrorBoundary;
+}(React__default.Component);
+
+var dragHandleUsageInstructions = "\n  Press space bar to start a drag.\n  When dragging you can use the arrow keys to move the item around and escape to cancel.\n  Some screen readers may require you to be in focus mode or to use your pass through key\n";
+
+var position = function position(index) {
+  return index + 1;
+};
+
+var onDragStart = function onDragStart(start) {
+  return "\n  You have lifted an item in position " + position(start.source.index) + "\n";
+};
+
+var withLocation = function withLocation(source, destination) {
+  var isInHomeList = source.droppableId === destination.droppableId;
+  var startPosition = position(source.index);
+  var endPosition = position(destination.index);
+
+  if (isInHomeList) {
+    return "\n      You have moved the item from position " + startPosition + "\n      to position " + endPosition + "\n    ";
+  }
+
+  return "\n    You have moved the item from position " + startPosition + "\n    in list " + source.droppableId + "\n    to list " + destination.droppableId + "\n    in position " + endPosition + "\n  ";
+};
+
+var withCombine = function withCombine(id, source, combine) {
+  var inHomeList = source.droppableId === combine.droppableId;
+
+  if (inHomeList) {
+    return "\n      The item " + id + "\n      has been combined with " + combine.draggableId;
+  }
+
+  return "\n      The item " + id + "\n      in list " + source.droppableId + "\n      has been combined with " + combine.draggableId + "\n      in list " + combine.droppableId + "\n    ";
+};
+
+var onDragUpdate = function onDragUpdate(update) {
+  var location = update.destination;
+
+  if (location) {
+    return withLocation(update.source, location);
+  }
+
+  var combine = update.combine;
+
+  if (combine) {
+    return withCombine(update.draggableId, update.source, combine);
+  }
+
+  return 'You are over an area that cannot be dropped on';
+};
+
+var returnedToStart = function returnedToStart(source) {
+  return "\n  The item has returned to its starting position\n  of " + position(source.index) + "\n";
+};
+
+var onDragEnd = function onDragEnd(result) {
+  if (result.reason === 'CANCEL') {
+    return "\n      Movement cancelled.\n      " + returnedToStart(result.source) + "\n    ";
+  }
+
+  var location = result.destination;
+  var combine = result.combine;
+
+  if (location) {
+    return "\n      You have dropped the item.\n      " + withLocation(result.source, location) + "\n    ";
+  }
+
+  if (combine) {
+    return "\n      You have dropped the item.\n      " + withCombine(result.draggableId, result.source, combine) + "\n    ";
+  }
+
+  return "\n    The item has been dropped while not over a drop area.\n    " + returnedToStart(result.source) + "\n  ";
+};
+
+var preset = {
+  dragHandleUsageInstructions: dragHandleUsageInstructions,
+  onDragStart: onDragStart,
+  onDragUpdate: onDragUpdate,
+  onDragEnd: onDragEnd
+};
+
+var origin = {
+  x: 0,
+  y: 0
+};
+var add = function add(point1, point2) {
+  return {
+    x: point1.x + point2.x,
+    y: point1.y + point2.y
+  };
+};
+var subtract = function subtract(point1, point2) {
+  return {
+    x: point1.x - point2.x,
+    y: point1.y - point2.y
+  };
+};
+var isEqual = function isEqual(point1, point2) {
+  return point1.x === point2.x && point1.y === point2.y;
+};
+var negate = function negate(point) {
+  return {
+    x: point.x !== 0 ? -point.x : 0,
+    y: point.y !== 0 ? -point.y : 0
+  };
+};
+var patch = function patch(line, value, otherValue) {
+  var _ref;
+
+  if (otherValue === void 0) {
+    otherValue = 0;
+  }
+
+  return _ref = {}, _ref[line] = value, _ref[line === 'x' ? 'y' : 'x'] = otherValue, _ref;
+};
+var distance = function distance(point1, point2) {
+  return Math.sqrt(Math.pow(point2.x - point1.x, 2) + Math.pow(point2.y - point1.y, 2));
+};
+var closest = function closest(target, points) {
+  return Math.min.apply(Math, points.map(function (point) {
+    return distance(target, point);
+  }));
+};
+var apply = function apply(fn) {
+  return function (point) {
+    return {
+      x: fn(point.x),
+      y: fn(point.y)
+    };
+  };
+};
+
+var executeClip = (function (frame, subject) {
+  var result = getRect({
+    top: Math.max(subject.top, frame.top),
+    right: Math.min(subject.right, frame.right),
+    bottom: Math.min(subject.bottom, frame.bottom),
+    left: Math.max(subject.left, frame.left)
+  });
+
+  if (result.width <= 0 || result.height <= 0) {
+    return null;
+  }
+
+  return result;
+});
+
+var offsetByPosition = function offsetByPosition(spacing, point) {
+  return {
+    top: spacing.top + point.y,
+    left: spacing.left + point.x,
+    bottom: spacing.bottom + point.y,
+    right: spacing.right + point.x
+  };
+};
+var getCorners = function getCorners(spacing) {
+  return [{
+    x: spacing.left,
+    y: spacing.top
+  }, {
+    x: spacing.right,
+    y: spacing.top
+  }, {
+    x: spacing.left,
+    y: spacing.bottom
+  }, {
+    x: spacing.right,
+    y: spacing.bottom
+  }];
+};
+var noSpacing = {
+  top: 0,
+  right: 0,
+  bottom: 0,
+  left: 0
+};
+
+var scroll = function scroll(target, frame) {
+  if (!frame) {
+    return target;
+  }
+
+  return offsetByPosition(target, frame.scroll.diff.displacement);
+};
+
+var increase = function increase(target, axis, withPlaceholder) {
+  if (withPlaceholder && withPlaceholder.increasedBy) {
+    var _extends2;
+
+    return _extends({}, target, (_extends2 = {}, _extends2[axis.end] = target[axis.end] + withPlaceholder.increasedBy[axis.line], _extends2));
+  }
+
+  return target;
+};
+
+var clip = function clip(target, frame) {
+  if (frame && frame.shouldClipSubject) {
+    return executeClip(frame.pageMarginBox, target);
+  }
+
+  return getRect(target);
+};
+
+var getSubject = (function (_ref) {
+  var page = _ref.page,
+      withPlaceholder = _ref.withPlaceholder,
+      axis = _ref.axis,
+      frame = _ref.frame;
+  var scrolled = scroll(page.marginBox, frame);
+  var increased = increase(scrolled, axis, withPlaceholder);
+  var clipped = clip(increased, frame);
+  return {
+    page: page,
+    withPlaceholder: withPlaceholder,
+    active: clipped
+  };
+});
+
+var scrollDroppable = (function (droppable, newScroll) {
+  !droppable.frame ? invariant(false) : void 0;
+  var scrollable = droppable.frame;
+  var scrollDiff = subtract(newScroll, scrollable.scroll.initial);
+  var scrollDisplacement = negate(scrollDiff);
+
+  var frame = _extends({}, scrollable, {
+    scroll: {
+      initial: scrollable.scroll.initial,
+      current: newScroll,
+      diff: {
+        value: scrollDiff,
+        displacement: scrollDisplacement
+      },
+      max: scrollable.scroll.max
+    }
+  });
+
+  var subject = getSubject({
+    page: droppable.subject.page,
+    withPlaceholder: droppable.subject.withPlaceholder,
+    axis: droppable.axis,
+    frame: frame
+  });
+
+  var result = _extends({}, droppable, {
+    frame: frame,
+    subject: subject
+  });
+
+  return result;
+});
+function values(map) {
+  if (Object.values) {
+    return Object.values(map);
+  }
+
+  return Object.keys(map).map(function (key) {
+    return map[key];
+  });
+}
+function findIndex(list, predicate) {
+  if (list.findIndex) {
+    return list.findIndex(predicate);
+  }
+
+  for (var i = 0; i < list.length; i++) {
+    if (predicate(list[i])) {
+      return i;
+    }
+  }
+
+  return -1;
+}
+function find(list, predicate) {
+  if (list.find) {
+    return list.find(predicate);
+  }
+
+  var index = findIndex(list, predicate);
+
+  if (index !== -1) {
+    return list[index];
+  }
+
+  return undefined;
+}
+function toArray(list) {
+  return Array.prototype.slice.call(list);
+}
+
+var toDroppableMap = memoizeOne(function (droppables) {
+  return droppables.reduce(function (previous, current) {
+    previous[current.descriptor.id] = current;
+    return previous;
+  }, {});
+});
+var toDraggableMap = memoizeOne(function (draggables) {
+  return draggables.reduce(function (previous, current) {
+    previous[current.descriptor.id] = current;
+    return previous;
+  }, {});
+});
+var toDroppableList = memoizeOne(function (droppables) {
+  return values(droppables);
+});
+var toDraggableList = memoizeOne(function (draggables) {
+  return values(draggables);
+});
+
+var getDraggablesInsideDroppable = memoizeOne(function (droppableId, draggables) {
+  var result = toDraggableList(draggables).filter(function (draggable) {
+    return droppableId === draggable.descriptor.droppableId;
+  }).sort(function (a, b) {
+    return a.descriptor.index - b.descriptor.index;
+  });
+  return result;
+});
+
+function tryGetDestination(impact) {
+  if (impact.at && impact.at.type === 'REORDER') {
+    return impact.at.destination;
+  }
+
+  return null;
+}
+function tryGetCombine(impact) {
+  if (impact.at && impact.at.type === 'COMBINE') {
+    return impact.at.combine;
+  }
+
+  return null;
+}
+
+var removeDraggableFromList = memoizeOne(function (remove, list) {
+  return list.filter(function (item) {
+    return item.descriptor.id !== remove.descriptor.id;
+  });
+});
+
+var moveToNextCombine = (function (_ref) {
+  var isMovingForward = _ref.isMovingForward,
+      draggable = _ref.draggable,
+      destination = _ref.destination,
+      insideDestination = _ref.insideDestination,
+      previousImpact = _ref.previousImpact;
+
+  if (!destination.isCombineEnabled) {
+    return null;
+  }
+
+  var location = tryGetDestination(previousImpact);
+
+  if (!location) {
+    return null;
+  }
+
+  function getImpact(target) {
+    var at = {
+      type: 'COMBINE',
+      combine: {
+        draggableId: target,
+        droppableId: destination.descriptor.id
+      }
+    };
+    return _extends({}, previousImpact, {
+      at: at
+    });
+  }
+
+  var all = previousImpact.displaced.all;
+  var closestId = all.length ? all[0] : null;
+
+  if (isMovingForward) {
+    return closestId ? getImpact(closestId) : null;
+  }
+
+  var withoutDraggable = removeDraggableFromList(draggable, insideDestination);
+
+  if (!closestId) {
+    if (!withoutDraggable.length) {
+      return null;
+    }
+
+    var last = withoutDraggable[withoutDraggable.length - 1];
+    return getImpact(last.descriptor.id);
+  }
+
+  var indexOfClosest = findIndex(withoutDraggable, function (d) {
+    return d.descriptor.id === closestId;
+  });
+  !(indexOfClosest !== -1) ? invariant(false) : void 0;
+  var proposedIndex = indexOfClosest - 1;
+
+  if (proposedIndex < 0) {
+    return null;
+  }
+
+  var before = withoutDraggable[proposedIndex];
+  return getImpact(before.descriptor.id);
+});
+
+var isHomeOf = (function (draggable, destination) {
+  return draggable.descriptor.droppableId === destination.descriptor.id;
+});
+
+var noDisplacedBy = {
+  point: origin,
+  value: 0
+};
+var emptyGroups = {
+  invisible: {},
+  visible: {},
+  all: []
+};
+var noImpact = {
+  displaced: emptyGroups,
+  displacedBy: noDisplacedBy,
+  at: null
+};
+
+var isWithin = (function (lowerBound, upperBound) {
+  return function (value) {
+    return lowerBound <= value && value <= upperBound;
+  };
+});
+
+var isPartiallyVisibleThroughFrame = (function (frame) {
+  var isWithinVertical = isWithin(frame.top, frame.bottom);
+  var isWithinHorizontal = isWithin(frame.left, frame.right);
+  return function (subject) {
+    var isContained = isWithinVertical(subject.top) && isWithinVertical(subject.bottom) && isWithinHorizontal(subject.left) && isWithinHorizontal(subject.right);
+
+    if (isContained) {
+      return true;
+    }
+
+    var isPartiallyVisibleVertically = isWithinVertical(subject.top) || isWithinVertical(subject.bottom);
+    var isPartiallyVisibleHorizontally = isWithinHorizontal(subject.left) || isWithinHorizontal(subject.right);
+    var isPartiallyContained = isPartiallyVisibleVertically && isPartiallyVisibleHorizontally;
+
+    if (isPartiallyContained) {
+      return true;
+    }
+
+    var isBiggerVertically = subject.top < frame.top && subject.bottom > frame.bottom;
+    var isBiggerHorizontally = subject.left < frame.left && subject.right > frame.right;
+    var isTargetBiggerThanFrame = isBiggerVertically && isBiggerHorizontally;
+
+    if (isTargetBiggerThanFrame) {
+      return true;
+    }
+
+    var isTargetBiggerOnOneAxis = isBiggerVertically && isPartiallyVisibleHorizontally || isBiggerHorizontally && isPartiallyVisibleVertically;
+    return isTargetBiggerOnOneAxis;
+  };
+});
+
+var isTotallyVisibleThroughFrame = (function (frame) {
+  var isWithinVertical = isWithin(frame.top, frame.bottom);
+  var isWithinHorizontal = isWithin(frame.left, frame.right);
+  return function (subject) {
+    var isContained = isWithinVertical(subject.top) && isWithinVertical(subject.bottom) && isWithinHorizontal(subject.left) && isWithinHorizontal(subject.right);
+    return isContained;
+  };
+});
+
+var vertical = {
+  direction: 'vertical',
+  line: 'y',
+  crossAxisLine: 'x',
+  start: 'top',
+  end: 'bottom',
+  size: 'height',
+  crossAxisStart: 'left',
+  crossAxisEnd: 'right',
+  crossAxisSize: 'width'
+};
+var horizontal = {
+  direction: 'horizontal',
+  line: 'x',
+  crossAxisLine: 'y',
+  start: 'left',
+  end: 'right',
+  size: 'width',
+  crossAxisStart: 'top',
+  crossAxisEnd: 'bottom',
+  crossAxisSize: 'height'
+};
+
+var isTotallyVisibleThroughFrameOnAxis = (function (axis) {
+  return function (frame) {
+    var isWithinVertical = isWithin(frame.top, frame.bottom);
+    var isWithinHorizontal = isWithin(frame.left, frame.right);
+    return function (subject) {
+      if (axis === vertical) {
+        return isWithinVertical(subject.top) && isWithinVertical(subject.bottom);
+      }
+
+      return isWithinHorizontal(subject.left) && isWithinHorizontal(subject.right);
+    };
+  };
+});
+
+var getDroppableDisplaced = function getDroppableDisplaced(target, destination) {
+  var displacement = destination.frame ? destination.frame.scroll.diff.displacement : origin;
+  return offsetByPosition(target, displacement);
+};
+
+var isVisibleInDroppable = function isVisibleInDroppable(target, destination, isVisibleThroughFrameFn) {
+  if (!destination.subject.active) {
+    return false;
+  }
+
+  return isVisibleThroughFrameFn(destination.subject.active)(target);
+};
+
+var isVisibleInViewport = function isVisibleInViewport(target, viewport, isVisibleThroughFrameFn) {
+  return isVisibleThroughFrameFn(viewport)(target);
+};
+
+var isVisible = function isVisible(_ref) {
+  var toBeDisplaced = _ref.target,
+      destination = _ref.destination,
+      viewport = _ref.viewport,
+      withDroppableDisplacement = _ref.withDroppableDisplacement,
+      isVisibleThroughFrameFn = _ref.isVisibleThroughFrameFn;
+  var displacedTarget = withDroppableDisplacement ? getDroppableDisplaced(toBeDisplaced, destination) : toBeDisplaced;
+  return isVisibleInDroppable(displacedTarget, destination, isVisibleThroughFrameFn) && isVisibleInViewport(displacedTarget, viewport, isVisibleThroughFrameFn);
+};
+
+var isPartiallyVisible = function isPartiallyVisible(args) {
+  return isVisible(_extends({}, args, {
+    isVisibleThroughFrameFn: isPartiallyVisibleThroughFrame
+  }));
+};
+var isTotallyVisible = function isTotallyVisible(args) {
+  return isVisible(_extends({}, args, {
+    isVisibleThroughFrameFn: isTotallyVisibleThroughFrame
+  }));
+};
+var isTotallyVisibleOnAxis = function isTotallyVisibleOnAxis(args) {
+  return isVisible(_extends({}, args, {
+    isVisibleThroughFrameFn: isTotallyVisibleThroughFrameOnAxis(args.destination.axis)
+  }));
+};
+
+var getShouldAnimate = function getShouldAnimate(id, last, forceShouldAnimate) {
+  if (typeof forceShouldAnimate === 'boolean') {
+    return forceShouldAnimate;
+  }
+
+  if (!last) {
+    return true;
+  }
+
+  var invisible = last.invisible,
+      visible = last.visible;
+
+  if (invisible[id]) {
+    return false;
+  }
+
+  var previous = visible[id];
+  return previous ? previous.shouldAnimate : true;
+};
+
+function getTarget(draggable, displacedBy) {
+  var marginBox = draggable.page.marginBox;
+  var expandBy = {
+    top: displacedBy.point.y,
+    right: 0,
+    bottom: 0,
+    left: displacedBy.point.x
+  };
+  return getRect(expand(marginBox, expandBy));
+}
+
+function getDisplacementGroups(_ref) {
+  var afterDragging = _ref.afterDragging,
+      destination = _ref.destination,
+      displacedBy = _ref.displacedBy,
+      viewport = _ref.viewport,
+      forceShouldAnimate = _ref.forceShouldAnimate,
+      last = _ref.last;
+  return afterDragging.reduce(function process(groups, draggable) {
+    var target = getTarget(draggable, displacedBy);
+    var id = draggable.descriptor.id;
+    groups.all.push(id);
+    var isVisible = isPartiallyVisible({
+      target: target,
+      destination: destination,
+      viewport: viewport,
+      withDroppableDisplacement: true
+    });
+
+    if (!isVisible) {
+      groups.invisible[draggable.descriptor.id] = true;
+      return groups;
+    }
+
+    var shouldAnimate = getShouldAnimate(id, last, forceShouldAnimate);
+    var displacement = {
+      draggableId: id,
+      shouldAnimate: shouldAnimate
+    };
+    groups.visible[id] = displacement;
+    return groups;
+  }, {
+    all: [],
+    visible: {},
+    invisible: {}
+  });
+}
+
+function getIndexOfLastItem(draggables, options) {
+  if (!draggables.length) {
+    return 0;
+  }
+
+  var indexOfLastItem = draggables[draggables.length - 1].descriptor.index;
+  return options.inHomeList ? indexOfLastItem : indexOfLastItem + 1;
+}
+
+function goAtEnd(_ref) {
+  var insideDestination = _ref.insideDestination,
+      inHomeList = _ref.inHomeList,
+      displacedBy = _ref.displacedBy,
+      destination = _ref.destination;
+  var newIndex = getIndexOfLastItem(insideDestination, {
+    inHomeList: inHomeList
+  });
+  return {
+    displaced: emptyGroups,
+    displacedBy: displacedBy,
+    at: {
+      type: 'REORDER',
+      destination: {
+        droppableId: destination.descriptor.id,
+        index: newIndex
+      }
+    }
+  };
+}
+
+function calculateReorderImpact(_ref2) {
+  var draggable = _ref2.draggable,
+      insideDestination = _ref2.insideDestination,
+      destination = _ref2.destination,
+      viewport = _ref2.viewport,
+      displacedBy = _ref2.displacedBy,
+      last = _ref2.last,
+      index = _ref2.index,
+      forceShouldAnimate = _ref2.forceShouldAnimate;
+  var inHomeList = isHomeOf(draggable, destination);
+
+  if (index == null) {
+    return goAtEnd({
+      insideDestination: insideDestination,
+      inHomeList: inHomeList,
+      displacedBy: displacedBy,
+      destination: destination
+    });
+  }
+
+  var match = find(insideDestination, function (item) {
+    return item.descriptor.index === index;
+  });
+
+  if (!match) {
+    return goAtEnd({
+      insideDestination: insideDestination,
+      inHomeList: inHomeList,
+      displacedBy: displacedBy,
+      destination: destination
+    });
+  }
+
+  var withoutDragging = removeDraggableFromList(draggable, insideDestination);
+  var sliceFrom = insideDestination.indexOf(match);
+  var impacted = withoutDragging.slice(sliceFrom);
+  var displaced = getDisplacementGroups({
+    afterDragging: impacted,
+    destination: destination,
+    displacedBy: displacedBy,
+    last: last,
+    viewport: viewport.frame,
+    forceShouldAnimate: forceShouldAnimate
+  });
+  return {
+    displaced: displaced,
+    displacedBy: displacedBy,
+    at: {
+      type: 'REORDER',
+      destination: {
+        droppableId: destination.descriptor.id,
+        index: index
+      }
+    }
+  };
+}
+
+function didStartAfterCritical(draggableId, afterCritical) {
+  return Boolean(afterCritical.effected[draggableId]);
+}
+
+var fromCombine = (function (_ref) {
+  var isMovingForward = _ref.isMovingForward,
+      destination = _ref.destination,
+      draggables = _ref.draggables,
+      combine = _ref.combine,
+      afterCritical = _ref.afterCritical;
+
+  if (!destination.isCombineEnabled) {
+    return null;
+  }
+
+  var combineId = combine.draggableId;
+  var combineWith = draggables[combineId];
+  var combineWithIndex = combineWith.descriptor.index;
+  var didCombineWithStartAfterCritical = didStartAfterCritical(combineId, afterCritical);
+
+  if (didCombineWithStartAfterCritical) {
+    if (isMovingForward) {
+      return combineWithIndex;
+    }
+
+    return combineWithIndex - 1;
+  }
+
+  if (isMovingForward) {
+    return combineWithIndex + 1;
+  }
+
+  return combineWithIndex;
+});
+
+var fromReorder = (function (_ref) {
+  var isMovingForward = _ref.isMovingForward,
+      isInHomeList = _ref.isInHomeList,
+      insideDestination = _ref.insideDestination,
+      location = _ref.location;
+
+  if (!insideDestination.length) {
+    return null;
+  }
+
+  var currentIndex = location.index;
+  var proposedIndex = isMovingForward ? currentIndex + 1 : currentIndex - 1;
+  var firstIndex = insideDestination[0].descriptor.index;
+  var lastIndex = insideDestination[insideDestination.length - 1].descriptor.index;
+  var upperBound = isInHomeList ? lastIndex : lastIndex + 1;
+
+  if (proposedIndex < firstIndex) {
+    return null;
+  }
+
+  if (proposedIndex > upperBound) {
+    return null;
+  }
+
+  return proposedIndex;
+});
+
+var moveToNextIndex = (function (_ref) {
+  var isMovingForward = _ref.isMovingForward,
+      isInHomeList = _ref.isInHomeList,
+      draggable = _ref.draggable,
+      draggables = _ref.draggables,
+      destination = _ref.destination,
+      insideDestination = _ref.insideDestination,
+      previousImpact = _ref.previousImpact,
+      viewport = _ref.viewport,
+      afterCritical = _ref.afterCritical;
+  var wasAt = previousImpact.at;
+  !wasAt ? invariant(false) : void 0;
+
+  if (wasAt.type === 'REORDER') {
+    var _newIndex = fromReorder({
+      isMovingForward: isMovingForward,
+      isInHomeList: isInHomeList,
+      location: wasAt.destination,
+      insideDestination: insideDestination
+    });
+
+    if (_newIndex == null) {
+      return null;
+    }
+
+    return calculateReorderImpact({
+      draggable: draggable,
+      insideDestination: insideDestination,
+      destination: destination,
+      viewport: viewport,
+      last: previousImpact.displaced,
+      displacedBy: previousImpact.displacedBy,
+      index: _newIndex
+    });
+  }
+
+  var newIndex = fromCombine({
+    isMovingForward: isMovingForward,
+    destination: destination,
+    displaced: previousImpact.displaced,
+    draggables: draggables,
+    combine: wasAt.combine,
+    afterCritical: afterCritical
+  });
+
+  if (newIndex == null) {
+    return null;
+  }
+
+  return calculateReorderImpact({
+    draggable: draggable,
+    insideDestination: insideDestination,
+    destination: destination,
+    viewport: viewport,
+    last: previousImpact.displaced,
+    displacedBy: previousImpact.displacedBy,
+    index: newIndex
+  });
+});
+
+var getCombinedItemDisplacement = (function (_ref) {
+  var displaced = _ref.displaced,
+      afterCritical = _ref.afterCritical,
+      combineWith = _ref.combineWith,
+      displacedBy = _ref.displacedBy;
+  var isDisplaced = Boolean(displaced.visible[combineWith] || displaced.invisible[combineWith]);
+
+  if (didStartAfterCritical(combineWith, afterCritical)) {
+    return isDisplaced ? origin : negate(displacedBy.point);
+  }
+
+  return isDisplaced ? displacedBy.point : origin;
+});
+
+var whenCombining = (function (_ref) {
+  var afterCritical = _ref.afterCritical,
+      impact = _ref.impact,
+      draggables = _ref.draggables;
+  var combine = tryGetCombine(impact);
+  !combine ? invariant(false) : void 0;
+  var combineWith = combine.draggableId;
+  var center = draggables[combineWith].page.borderBox.center;
+  var displaceBy = getCombinedItemDisplacement({
+    displaced: impact.displaced,
+    afterCritical: afterCritical,
+    combineWith: combineWith,
+    displacedBy: impact.displacedBy
+  });
+  return add(center, displaceBy);
+});
+
+var distanceFromStartToBorderBoxCenter = function distanceFromStartToBorderBoxCenter(axis, box) {
+  return box.margin[axis.start] + box.borderBox[axis.size] / 2;
+};
+
+var distanceFromEndToBorderBoxCenter = function distanceFromEndToBorderBoxCenter(axis, box) {
+  return box.margin[axis.end] + box.borderBox[axis.size] / 2;
+};
+
+var getCrossAxisBorderBoxCenter = function getCrossAxisBorderBoxCenter(axis, target, isMoving) {
+  return target[axis.crossAxisStart] + isMoving.margin[axis.crossAxisStart] + isMoving.borderBox[axis.crossAxisSize] / 2;
+};
+
+var goAfter = function goAfter(_ref) {
+  var axis = _ref.axis,
+      moveRelativeTo = _ref.moveRelativeTo,
+      isMoving = _ref.isMoving;
+  return patch(axis.line, moveRelativeTo.marginBox[axis.end] + distanceFromStartToBorderBoxCenter(axis, isMoving), getCrossAxisBorderBoxCenter(axis, moveRelativeTo.marginBox, isMoving));
+};
+var goBefore = function goBefore(_ref2) {
+  var axis = _ref2.axis,
+      moveRelativeTo = _ref2.moveRelativeTo,
+      isMoving = _ref2.isMoving;
+  return patch(axis.line, moveRelativeTo.marginBox[axis.start] - distanceFromEndToBorderBoxCenter(axis, isMoving), getCrossAxisBorderBoxCenter(axis, moveRelativeTo.marginBox, isMoving));
+};
+var goIntoStart = function goIntoStart(_ref3) {
+  var axis = _ref3.axis,
+      moveInto = _ref3.moveInto,
+      isMoving = _ref3.isMoving;
+  return patch(axis.line, moveInto.contentBox[axis.start] + distanceFromStartToBorderBoxCenter(axis, isMoving), getCrossAxisBorderBoxCenter(axis, moveInto.contentBox, isMoving));
+};
+
+var whenReordering = (function (_ref) {
+  var impact = _ref.impact,
+      draggable = _ref.draggable,
+      draggables = _ref.draggables,
+      droppable = _ref.droppable,
+      afterCritical = _ref.afterCritical;
+  var insideDestination = getDraggablesInsideDroppable(droppable.descriptor.id, draggables);
+  var draggablePage = draggable.page;
+  var axis = droppable.axis;
+
+  if (!insideDestination.length) {
+    return goIntoStart({
+      axis: axis,
+      moveInto: droppable.page,
+      isMoving: draggablePage
+    });
+  }
+
+  var displaced = impact.displaced,
+      displacedBy = impact.displacedBy;
+  var closestAfter = displaced.all[0];
+
+  if (closestAfter) {
+    var closest = draggables[closestAfter];
+
+    if (didStartAfterCritical(closestAfter, afterCritical)) {
+      return goBefore({
+        axis: axis,
+        moveRelativeTo: closest.page,
+        isMoving: draggablePage
+      });
+    }
+
+    var withDisplacement = offset(closest.page, displacedBy.point);
+    return goBefore({
+      axis: axis,
+      moveRelativeTo: withDisplacement,
+      isMoving: draggablePage
+    });
+  }
+
+  var last = insideDestination[insideDestination.length - 1];
+
+  if (last.descriptor.id === draggable.descriptor.id) {
+    return draggablePage.borderBox.center;
+  }
+
+  if (didStartAfterCritical(last.descriptor.id, afterCritical)) {
+    var page = offset(last.page, negate(afterCritical.displacedBy.point));
+    return goAfter({
+      axis: axis,
+      moveRelativeTo: page,
+      isMoving: draggablePage
+    });
+  }
+
+  return goAfter({
+    axis: axis,
+    moveRelativeTo: last.page,
+    isMoving: draggablePage
+  });
+});
+
+var withDroppableDisplacement = (function (droppable, point) {
+  var frame = droppable.frame;
+
+  if (!frame) {
+    return point;
+  }
+
+  return add(point, frame.scroll.diff.displacement);
+});
+
+var getResultWithoutDroppableDisplacement = function getResultWithoutDroppableDisplacement(_ref) {
+  var impact = _ref.impact,
+      draggable = _ref.draggable,
+      droppable = _ref.droppable,
+      draggables = _ref.draggables,
+      afterCritical = _ref.afterCritical;
+  var original = draggable.page.borderBox.center;
+  var at = impact.at;
+
+  if (!droppable) {
+    return original;
+  }
+
+  if (!at) {
+    return original;
+  }
+
+  if (at.type === 'REORDER') {
+    return whenReordering({
+      impact: impact,
+      draggable: draggable,
+      draggables: draggables,
+      droppable: droppable,
+      afterCritical: afterCritical
+    });
+  }
+
+  return whenCombining({
+    impact: impact,
+    draggables: draggables,
+    afterCritical: afterCritical
+  });
+};
+
+var getPageBorderBoxCenterFromImpact = (function (args) {
+  var withoutDisplacement = getResultWithoutDroppableDisplacement(args);
+  var droppable = args.droppable;
+  var withDisplacement = droppable ? withDroppableDisplacement(droppable, withoutDisplacement) : withoutDisplacement;
+  return withDisplacement;
+});
+
+var scrollViewport = (function (viewport, newScroll) {
+  var diff = subtract(newScroll, viewport.scroll.initial);
+  var displacement = negate(diff);
+  var frame = getRect({
+    top: newScroll.y,
+    bottom: newScroll.y + viewport.frame.height,
+    left: newScroll.x,
+    right: newScroll.x + viewport.frame.width
+  });
+  var updated = {
+    frame: frame,
+    scroll: {
+      initial: viewport.scroll.initial,
+      max: viewport.scroll.max,
+      current: newScroll,
+      diff: {
+        value: diff,
+        displacement: displacement
+      }
+    }
+  };
+  return updated;
+});
+
+function getDraggables(ids, draggables) {
+  return ids.map(function (id) {
+    return draggables[id];
+  });
+}
+
+function tryGetVisible(id, groups) {
+  for (var i = 0; i < groups.length; i++) {
+    var displacement = groups[i].visible[id];
+
+    if (displacement) {
+      return displacement;
+    }
+  }
+
+  return null;
+}
+
+var speculativelyIncrease = (function (_ref) {
+  var impact = _ref.impact,
+      viewport = _ref.viewport,
+      destination = _ref.destination,
+      draggables = _ref.draggables,
+      maxScrollChange = _ref.maxScrollChange;
+  var scrolledViewport = scrollViewport(viewport, add(viewport.scroll.current, maxScrollChange));
+  var scrolledDroppable = destination.frame ? scrollDroppable(destination, add(destination.frame.scroll.current, maxScrollChange)) : destination;
+  var last = impact.displaced;
+  var withViewportScroll = getDisplacementGroups({
+    afterDragging: getDraggables(last.all, draggables),
+    destination: destination,
+    displacedBy: impact.displacedBy,
+    viewport: scrolledViewport.frame,
+    last: last,
+    forceShouldAnimate: false
+  });
+  var withDroppableScroll = getDisplacementGroups({
+    afterDragging: getDraggables(last.all, draggables),
+    destination: scrolledDroppable,
+    displacedBy: impact.displacedBy,
+    viewport: viewport.frame,
+    last: last,
+    forceShouldAnimate: false
+  });
+  var invisible = {};
+  var visible = {};
+  var groups = [last, withViewportScroll, withDroppableScroll];
+  last.all.forEach(function (id) {
+    var displacement = tryGetVisible(id, groups);
+
+    if (displacement) {
+      visible[id] = displacement;
+      return;
+    }
+
+    invisible[id] = true;
+  });
+
+  var newImpact = _extends({}, impact, {
+    displaced: {
+      all: last.all,
+      invisible: invisible,
+      visible: visible
+    }
+  });
+
+  return newImpact;
+});
+
+var withViewportDisplacement = (function (viewport, point) {
+  return add(viewport.scroll.diff.displacement, point);
+});
+
+var getClientFromPageBorderBoxCenter = (function (_ref) {
+  var pageBorderBoxCenter = _ref.pageBorderBoxCenter,
+      draggable = _ref.draggable,
+      viewport = _ref.viewport;
+  var withoutPageScrollChange = withViewportDisplacement(viewport, pageBorderBoxCenter);
+  var offset = subtract(withoutPageScrollChange, draggable.page.borderBox.center);
+  return add(draggable.client.borderBox.center, offset);
+});
+
+var isTotallyVisibleInNewLocation = (function (_ref) {
+  var draggable = _ref.draggable,
+      destination = _ref.destination,
+      newPageBorderBoxCenter = _ref.newPageBorderBoxCenter,
+      viewport = _ref.viewport,
+      withDroppableDisplacement = _ref.withDroppableDisplacement,
+      _ref$onlyOnMainAxis = _ref.onlyOnMainAxis,
+      onlyOnMainAxis = _ref$onlyOnMainAxis === void 0 ? false : _ref$onlyOnMainAxis;
+  var changeNeeded = subtract(newPageBorderBoxCenter, draggable.page.borderBox.center);
+  var shifted = offsetByPosition(draggable.page.borderBox, changeNeeded);
+  var args = {
+    target: shifted,
+    destination: destination,
+    withDroppableDisplacement: withDroppableDisplacement,
+    viewport: viewport
+  };
+  return onlyOnMainAxis ? isTotallyVisibleOnAxis(args) : isTotallyVisible(args);
+});
+
+var moveToNextPlace = (function (_ref) {
+  var isMovingForward = _ref.isMovingForward,
+      draggable = _ref.draggable,
+      destination = _ref.destination,
+      draggables = _ref.draggables,
+      previousImpact = _ref.previousImpact,
+      viewport = _ref.viewport,
+      previousPageBorderBoxCenter = _ref.previousPageBorderBoxCenter,
+      previousClientSelection = _ref.previousClientSelection,
+      afterCritical = _ref.afterCritical;
+
+  if (!destination.isEnabled) {
+    return null;
+  }
+
+  var insideDestination = getDraggablesInsideDroppable(destination.descriptor.id, draggables);
+  var isInHomeList = isHomeOf(draggable, destination);
+  var impact = moveToNextCombine({
+    isMovingForward: isMovingForward,
+    draggable: draggable,
+    destination: destination,
+    insideDestination: insideDestination,
+    previousImpact: previousImpact
+  }) || moveToNextIndex({
+    isMovingForward: isMovingForward,
+    isInHomeList: isInHomeList,
+    draggable: draggable,
+    draggables: draggables,
+    destination: destination,
+    insideDestination: insideDestination,
+    previousImpact: previousImpact,
+    viewport: viewport,
+    afterCritical: afterCritical
+  });
+
+  if (!impact) {
+    return null;
+  }
+
+  var pageBorderBoxCenter = getPageBorderBoxCenterFromImpact({
+    impact: impact,
+    draggable: draggable,
+    droppable: destination,
+    draggables: draggables,
+    afterCritical: afterCritical
+  });
+  var isVisibleInNewLocation = isTotallyVisibleInNewLocation({
+    draggable: draggable,
+    destination: destination,
+    newPageBorderBoxCenter: pageBorderBoxCenter,
+    viewport: viewport.frame,
+    withDroppableDisplacement: false,
+    onlyOnMainAxis: true
+  });
+
+  if (isVisibleInNewLocation) {
+    var clientSelection = getClientFromPageBorderBoxCenter({
+      pageBorderBoxCenter: pageBorderBoxCenter,
+      draggable: draggable,
+      viewport: viewport
+    });
+    return {
+      clientSelection: clientSelection,
+      impact: impact,
+      scrollJumpRequest: null
+    };
+  }
+
+  var distance = subtract(pageBorderBoxCenter, previousPageBorderBoxCenter);
+  var cautious = speculativelyIncrease({
+    impact: impact,
+    viewport: viewport,
+    destination: destination,
+    draggables: draggables,
+    maxScrollChange: distance
+  });
+  return {
+    clientSelection: previousClientSelection,
+    impact: cautious,
+    scrollJumpRequest: distance
+  };
+});
+
+var getKnownActive = function getKnownActive(droppable) {
+  var rect = droppable.subject.active;
+  !rect ? invariant(false) : void 0;
+  return rect;
+};
+
+var getBestCrossAxisDroppable = (function (_ref) {
+  var isMovingForward = _ref.isMovingForward,
+      pageBorderBoxCenter = _ref.pageBorderBoxCenter,
+      source = _ref.source,
+      droppables = _ref.droppables,
+      viewport = _ref.viewport;
+  var active = source.subject.active;
+
+  if (!active) {
+    return null;
+  }
+
+  var axis = source.axis;
+  var isBetweenSourceClipped = isWithin(active[axis.start], active[axis.end]);
+  var candidates = toDroppableList(droppables).filter(function (droppable) {
+    return droppable !== source;
+  }).filter(function (droppable) {
+    return droppable.isEnabled;
+  }).filter(function (droppable) {
+    return Boolean(droppable.subject.active);
+  }).filter(function (droppable) {
+    return isPartiallyVisibleThroughFrame(viewport.frame)(getKnownActive(droppable));
+  }).filter(function (droppable) {
+    var activeOfTarget = getKnownActive(droppable);
+
+    if (isMovingForward) {
+      return active[axis.crossAxisEnd] < activeOfTarget[axis.crossAxisEnd];
+    }
+
+    return activeOfTarget[axis.crossAxisStart] < active[axis.crossAxisStart];
+  }).filter(function (droppable) {
+    var activeOfTarget = getKnownActive(droppable);
+    var isBetweenDestinationClipped = isWithin(activeOfTarget[axis.start], activeOfTarget[axis.end]);
+    return isBetweenSourceClipped(activeOfTarget[axis.start]) || isBetweenSourceClipped(activeOfTarget[axis.end]) || isBetweenDestinationClipped(active[axis.start]) || isBetweenDestinationClipped(active[axis.end]);
+  }).sort(function (a, b) {
+    var first = getKnownActive(a)[axis.crossAxisStart];
+    var second = getKnownActive(b)[axis.crossAxisStart];
+
+    if (isMovingForward) {
+      return first - second;
+    }
+
+    return second - first;
+  }).filter(function (droppable, index, array) {
+    return getKnownActive(droppable)[axis.crossAxisStart] === getKnownActive(array[0])[axis.crossAxisStart];
+  });
+
+  if (!candidates.length) {
+    return null;
+  }
+
+  if (candidates.length === 1) {
+    return candidates[0];
+  }
+
+  var contains = candidates.filter(function (droppable) {
+    var isWithinDroppable = isWithin(getKnownActive(droppable)[axis.start], getKnownActive(droppable)[axis.end]);
+    return isWithinDroppable(pageBorderBoxCenter[axis.line]);
+  });
+
+  if (contains.length === 1) {
+    return contains[0];
+  }
+
+  if (contains.length > 1) {
+    return contains.sort(function (a, b) {
+      return getKnownActive(a)[axis.start] - getKnownActive(b)[axis.start];
+    })[0];
+  }
+
+  return candidates.sort(function (a, b) {
+    var first = closest(pageBorderBoxCenter, getCorners(getKnownActive(a)));
+    var second = closest(pageBorderBoxCenter, getCorners(getKnownActive(b)));
+
+    if (first !== second) {
+      return first - second;
+    }
+
+    return getKnownActive(a)[axis.start] - getKnownActive(b)[axis.start];
+  })[0];
+});
+
+var getCurrentPageBorderBoxCenter = function getCurrentPageBorderBoxCenter(draggable, afterCritical) {
+  var original = draggable.page.borderBox.center;
+  return didStartAfterCritical(draggable.descriptor.id, afterCritical) ? subtract(original, afterCritical.displacedBy.point) : original;
+};
+var getCurrentPageBorderBox = function getCurrentPageBorderBox(draggable, afterCritical) {
+  var original = draggable.page.borderBox;
+  return didStartAfterCritical(draggable.descriptor.id, afterCritical) ? offsetByPosition(original, negate(afterCritical.displacedBy.point)) : original;
+};
+
+var getClosestDraggable = (function (_ref) {
+  var pageBorderBoxCenter = _ref.pageBorderBoxCenter,
+      viewport = _ref.viewport,
+      destination = _ref.destination,
+      insideDestination = _ref.insideDestination,
+      afterCritical = _ref.afterCritical;
+  var sorted = insideDestination.filter(function (draggable) {
+    return isTotallyVisible({
+      target: getCurrentPageBorderBox(draggable, afterCritical),
+      destination: destination,
+      viewport: viewport.frame,
+      withDroppableDisplacement: true
+    });
+  }).sort(function (a, b) {
+    var distanceToA = distance(pageBorderBoxCenter, withDroppableDisplacement(destination, getCurrentPageBorderBoxCenter(a, afterCritical)));
+    var distanceToB = distance(pageBorderBoxCenter, withDroppableDisplacement(destination, getCurrentPageBorderBoxCenter(b, afterCritical)));
+
+    if (distanceToA < distanceToB) {
+      return -1;
+    }
+
+    if (distanceToB < distanceToA) {
+      return 1;
+    }
+
+    return a.descriptor.index - b.descriptor.index;
+  });
+  return sorted[0] || null;
+});
+
+var getDisplacedBy = memoizeOne(function getDisplacedBy(axis, displaceBy) {
+  var displacement = displaceBy[axis.line];
+  return {
+    value: displacement,
+    point: patch(axis.line, displacement)
+  };
+});
+
+var getRequiredGrowthForPlaceholder = function getRequiredGrowthForPlaceholder(droppable, placeholderSize, draggables) {
+  var axis = droppable.axis;
+
+  if (droppable.descriptor.mode === 'virtual') {
+    return patch(axis.line, placeholderSize[axis.line]);
+  }
+
+  var availableSpace = droppable.subject.page.contentBox[axis.size];
+  var insideDroppable = getDraggablesInsideDroppable(droppable.descriptor.id, draggables);
+  var spaceUsed = insideDroppable.reduce(function (sum, dimension) {
+    return sum + dimension.client.marginBox[axis.size];
+  }, 0);
+  var requiredSpace = spaceUsed + placeholderSize[axis.line];
+  var needsToGrowBy = requiredSpace - availableSpace;
+
+  if (needsToGrowBy <= 0) {
+    return null;
+  }
+
+  return patch(axis.line, needsToGrowBy);
+};
+
+var withMaxScroll = function withMaxScroll(frame, max) {
+  return _extends({}, frame, {
+    scroll: _extends({}, frame.scroll, {
+      max: max
+    })
+  });
+};
+
+var addPlaceholder = function addPlaceholder(droppable, draggable, draggables) {
+  var frame = droppable.frame;
+  !!isHomeOf(draggable, droppable) ? invariant(false) : void 0;
+  !!droppable.subject.withPlaceholder ? invariant(false) : void 0;
+  var placeholderSize = getDisplacedBy(droppable.axis, draggable.displaceBy).point;
+  var requiredGrowth = getRequiredGrowthForPlaceholder(droppable, placeholderSize, draggables);
+  var added = {
+    placeholderSize: placeholderSize,
+    increasedBy: requiredGrowth,
+    oldFrameMaxScroll: droppable.frame ? droppable.frame.scroll.max : null
+  };
+
+  if (!frame) {
+    var _subject = getSubject({
+      page: droppable.subject.page,
+      withPlaceholder: added,
+      axis: droppable.axis,
+      frame: droppable.frame
+    });
+
+    return _extends({}, droppable, {
+      subject: _subject
+    });
+  }
+
+  var maxScroll = requiredGrowth ? add(frame.scroll.max, requiredGrowth) : frame.scroll.max;
+  var newFrame = withMaxScroll(frame, maxScroll);
+  var subject = getSubject({
+    page: droppable.subject.page,
+    withPlaceholder: added,
+    axis: droppable.axis,
+    frame: newFrame
+  });
+  return _extends({}, droppable, {
+    subject: subject,
+    frame: newFrame
+  });
+};
+var removePlaceholder = function removePlaceholder(droppable) {
+  var added = droppable.subject.withPlaceholder;
+  !added ? invariant(false) : void 0;
+  var frame = droppable.frame;
+
+  if (!frame) {
+    var _subject2 = getSubject({
+      page: droppable.subject.page,
+      axis: droppable.axis,
+      frame: null,
+      withPlaceholder: null
+    });
+
+    return _extends({}, droppable, {
+      subject: _subject2
+    });
+  }
+
+  var oldMaxScroll = added.oldFrameMaxScroll;
+  !oldMaxScroll ? invariant(false) : void 0;
+  var newFrame = withMaxScroll(frame, oldMaxScroll);
+  var subject = getSubject({
+    page: droppable.subject.page,
+    axis: droppable.axis,
+    frame: newFrame,
+    withPlaceholder: null
+  });
+  return _extends({}, droppable, {
+    subject: subject,
+    frame: newFrame
+  });
+};
+
+var moveToNewDroppable = (function (_ref) {
+  var previousPageBorderBoxCenter = _ref.previousPageBorderBoxCenter,
+      moveRelativeTo = _ref.moveRelativeTo,
+      insideDestination = _ref.insideDestination,
+      draggable = _ref.draggable,
+      draggables = _ref.draggables,
+      destination = _ref.destination,
+      viewport = _ref.viewport,
+      afterCritical = _ref.afterCritical;
+
+  if (!moveRelativeTo) {
+    if (insideDestination.length) {
+      return null;
+    }
+
+    var proposed = {
+      displaced: emptyGroups,
+      displacedBy: noDisplacedBy,
+      at: {
+        type: 'REORDER',
+        destination: {
+          droppableId: destination.descriptor.id,
+          index: 0
+        }
+      }
+    };
+    var proposedPageBorderBoxCenter = getPageBorderBoxCenterFromImpact({
+      impact: proposed,
+      draggable: draggable,
+      droppable: destination,
+      draggables: draggables,
+      afterCritical: afterCritical
+    });
+    var withPlaceholder = isHomeOf(draggable, destination) ? destination : addPlaceholder(destination, draggable, draggables);
+    var isVisibleInNewLocation = isTotallyVisibleInNewLocation({
+      draggable: draggable,
+      destination: withPlaceholder,
+      newPageBorderBoxCenter: proposedPageBorderBoxCenter,
+      viewport: viewport.frame,
+      withDroppableDisplacement: false,
+      onlyOnMainAxis: true
+    });
+    return isVisibleInNewLocation ? proposed : null;
+  }
+
+  var isGoingBeforeTarget = Boolean(previousPageBorderBoxCenter[destination.axis.line] <= moveRelativeTo.page.borderBox.center[destination.axis.line]);
+
+  var proposedIndex = function () {
+    var relativeTo = moveRelativeTo.descriptor.index;
+
+    if (moveRelativeTo.descriptor.id === draggable.descriptor.id) {
+      return relativeTo;
+    }
+
+    if (isGoingBeforeTarget) {
+      return relativeTo;
+    }
+
+    return relativeTo + 1;
+  }();
+
+  var displacedBy = getDisplacedBy(destination.axis, draggable.displaceBy);
+  return calculateReorderImpact({
+    draggable: draggable,
+    insideDestination: insideDestination,
+    destination: destination,
+    viewport: viewport,
+    displacedBy: displacedBy,
+    last: emptyGroups,
+    index: proposedIndex
+  });
+});
+
+var moveCrossAxis = (function (_ref) {
+  var isMovingForward = _ref.isMovingForward,
+      previousPageBorderBoxCenter = _ref.previousPageBorderBoxCenter,
+      draggable = _ref.draggable,
+      isOver = _ref.isOver,
+      draggables = _ref.draggables,
+      droppables = _ref.droppables,
+      viewport = _ref.viewport,
+      afterCritical = _ref.afterCritical;
+  var destination = getBestCrossAxisDroppable({
+    isMovingForward: isMovingForward,
+    pageBorderBoxCenter: previousPageBorderBoxCenter,
+    source: isOver,
+    droppables: droppables,
+    viewport: viewport
+  });
+
+  if (!destination) {
+    return null;
+  }
+
+  var insideDestination = getDraggablesInsideDroppable(destination.descriptor.id, draggables);
+  var moveRelativeTo = getClosestDraggable({
+    pageBorderBoxCenter: previousPageBorderBoxCenter,
+    viewport: viewport,
+    destination: destination,
+    insideDestination: insideDestination,
+    afterCritical: afterCritical
+  });
+  var impact = moveToNewDroppable({
+    previousPageBorderBoxCenter: previousPageBorderBoxCenter,
+    destination: destination,
+    draggable: draggable,
+    draggables: draggables,
+    moveRelativeTo: moveRelativeTo,
+    insideDestination: insideDestination,
+    viewport: viewport,
+    afterCritical: afterCritical
+  });
+
+  if (!impact) {
+    return null;
+  }
+
+  var pageBorderBoxCenter = getPageBorderBoxCenterFromImpact({
+    impact: impact,
+    draggable: draggable,
+    droppable: destination,
+    draggables: draggables,
+    afterCritical: afterCritical
+  });
+  var clientSelection = getClientFromPageBorderBoxCenter({
+    pageBorderBoxCenter: pageBorderBoxCenter,
+    draggable: draggable,
+    viewport: viewport
+  });
+  return {
+    clientSelection: clientSelection,
+    impact: impact,
+    scrollJumpRequest: null
+  };
+});
+
+var whatIsDraggedOver = (function (impact) {
+  var at = impact.at;
+
+  if (!at) {
+    return null;
+  }
+
+  if (at.type === 'REORDER') {
+    return at.destination.droppableId;
+  }
+
+  return at.combine.droppableId;
+});
+
+var getDroppableOver = function getDroppableOver(impact, droppables) {
+  var id = whatIsDraggedOver(impact);
+  return id ? droppables[id] : null;
+};
+
+var moveInDirection = (function (_ref) {
+  var state = _ref.state,
+      type = _ref.type;
+  var isActuallyOver = getDroppableOver(state.impact, state.dimensions.droppables);
+  var isMainAxisMovementAllowed = Boolean(isActuallyOver);
+  var home = state.dimensions.droppables[state.critical.droppable.id];
+  var isOver = isActuallyOver || home;
+  var direction = isOver.axis.direction;
+  var isMovingOnMainAxis = direction === 'vertical' && (type === 'MOVE_UP' || type === 'MOVE_DOWN') || direction === 'horizontal' && (type === 'MOVE_LEFT' || type === 'MOVE_RIGHT');
+
+  if (isMovingOnMainAxis && !isMainAxisMovementAllowed) {
+    return null;
+  }
+
+  var isMovingForward = type === 'MOVE_DOWN' || type === 'MOVE_RIGHT';
+  var draggable = state.dimensions.draggables[state.critical.draggable.id];
+  var previousPageBorderBoxCenter = state.current.page.borderBoxCenter;
+  var _state$dimensions = state.dimensions,
+      draggables = _state$dimensions.draggables,
+      droppables = _state$dimensions.droppables;
+  return isMovingOnMainAxis ? moveToNextPlace({
+    isMovingForward: isMovingForward,
+    previousPageBorderBoxCenter: previousPageBorderBoxCenter,
+    draggable: draggable,
+    destination: isOver,
+    draggables: draggables,
+    viewport: state.viewport,
+    previousClientSelection: state.current.client.selection,
+    previousImpact: state.impact,
+    afterCritical: state.afterCritical
+  }) : moveCrossAxis({
+    isMovingForward: isMovingForward,
+    previousPageBorderBoxCenter: previousPageBorderBoxCenter,
+    draggable: draggable,
+    isOver: isOver,
+    draggables: draggables,
+    droppables: droppables,
+    viewport: state.viewport,
+    afterCritical: state.afterCritical
+  });
+});
+
+function isMovementAllowed(state) {
+  return state.phase === 'DRAGGING' || state.phase === 'COLLECTING';
+}
+
+function isPositionInFrame(frame) {
+  var isWithinVertical = isWithin(frame.top, frame.bottom);
+  var isWithinHorizontal = isWithin(frame.left, frame.right);
+  return function run(point) {
+    return isWithinVertical(point.y) && isWithinHorizontal(point.x);
+  };
+}
+
+function getHasOverlap(first, second) {
+  return first.left < second.right && first.right > second.left && first.top < second.bottom && first.bottom > second.top;
+}
+
+function getFurthestAway(_ref) {
+  var pageBorderBox = _ref.pageBorderBox,
+      draggable = _ref.draggable,
+      candidates = _ref.candidates;
+  var startCenter = draggable.page.borderBox.center;
+  var sorted = candidates.map(function (candidate) {
+    var axis = candidate.axis;
+    var target = patch(candidate.axis.line, pageBorderBox.center[axis.line], candidate.page.borderBox.center[axis.crossAxisLine]);
+    return {
+      id: candidate.descriptor.id,
+      distance: distance(startCenter, target)
+    };
+  }).sort(function (a, b) {
+    return b.distance - a.distance;
+  });
+  return sorted[0] ? sorted[0].id : null;
+}
+
+function getDroppableOver$1(_ref2) {
+  var pageBorderBox = _ref2.pageBorderBox,
+      draggable = _ref2.draggable,
+      droppables = _ref2.droppables;
+  var candidates = toDroppableList(droppables).filter(function (item) {
+    if (!item.isEnabled) {
+      return false;
+    }
+
+    var active = item.subject.active;
+
+    if (!active) {
+      return false;
+    }
+
+    if (!getHasOverlap(pageBorderBox, active)) {
+      return false;
+    }
+
+    if (isPositionInFrame(active)(pageBorderBox.center)) {
+      return true;
+    }
+
+    var axis = item.axis;
+    var childCenter = active.center[axis.crossAxisLine];
+    var crossAxisStart = pageBorderBox[axis.crossAxisStart];
+    var crossAxisEnd = pageBorderBox[axis.crossAxisEnd];
+    var isContained = isWithin(active[axis.crossAxisStart], active[axis.crossAxisEnd]);
+    var isStartContained = isContained(crossAxisStart);
+    var isEndContained = isContained(crossAxisEnd);
+
+    if (!isStartContained && !isEndContained) {
+      return true;
+    }
+
+    if (isStartContained) {
+      return crossAxisStart < childCenter;
+    }
+
+    return crossAxisEnd > childCenter;
+  });
+
+  if (!candidates.length) {
+    return null;
+  }
+
+  if (candidates.length === 1) {
+    return candidates[0].descriptor.id;
+  }
+
+  return getFurthestAway({
+    pageBorderBox: pageBorderBox,
+    draggable: draggable,
+    candidates: candidates
+  });
+}
+
+var offsetRectByPosition = function offsetRectByPosition(rect, point) {
+  return getRect(offsetByPosition(rect, point));
+};
+
+var withDroppableScroll = (function (droppable, area) {
+  var frame = droppable.frame;
+
+  if (!frame) {
+    return area;
+  }
+
+  return offsetRectByPosition(area, frame.scroll.diff.value);
+});
+
+function getIsDisplaced(_ref) {
+  var displaced = _ref.displaced,
+      id = _ref.id;
+  return Boolean(displaced.visible[id] || displaced.invisible[id]);
+}
+
+function atIndex(_ref) {
+  var draggable = _ref.draggable,
+      closest = _ref.closest,
+      inHomeList = _ref.inHomeList;
+
+  if (!closest) {
+    return null;
+  }
+
+  if (!inHomeList) {
+    return closest.descriptor.index;
+  }
+
+  if (closest.descriptor.index > draggable.descriptor.index) {
+    return closest.descriptor.index - 1;
+  }
+
+  return closest.descriptor.index;
+}
+
+var getReorderImpact = (function (_ref2) {
+  var targetRect = _ref2.pageBorderBoxWithDroppableScroll,
+      draggable = _ref2.draggable,
+      destination = _ref2.destination,
+      insideDestination = _ref2.insideDestination,
+      last = _ref2.last,
+      viewport = _ref2.viewport,
+      afterCritical = _ref2.afterCritical;
+  var axis = destination.axis;
+  var displacedBy = getDisplacedBy(destination.axis, draggable.displaceBy);
+  var displacement = displacedBy.value;
+  var targetStart = targetRect[axis.start];
+  var targetEnd = targetRect[axis.end];
+  var withoutDragging = removeDraggableFromList(draggable, insideDestination);
+  var closest = find(withoutDragging, function (child) {
+    var id = child.descriptor.id;
+    var childCenter = child.page.borderBox.center[axis.line];
+    var didStartAfterCritical$1 = didStartAfterCritical(id, afterCritical);
+    var isDisplaced = getIsDisplaced({
+      displaced: last,
+      id: id
+    });
+
+    if (didStartAfterCritical$1) {
+      if (isDisplaced) {
+        return targetEnd <= childCenter;
+      }
+
+      return targetStart < childCenter - displacement;
+    }
+
+    if (isDisplaced) {
+      return targetEnd <= childCenter + displacement;
+    }
+
+    return targetStart < childCenter;
+  });
+  var newIndex = atIndex({
+    draggable: draggable,
+    closest: closest,
+    inHomeList: isHomeOf(draggable, destination)
+  });
+  return calculateReorderImpact({
+    draggable: draggable,
+    insideDestination: insideDestination,
+    destination: destination,
+    viewport: viewport,
+    last: last,
+    displacedBy: displacedBy,
+    index: newIndex
+  });
+});
+
+var combineThresholdDivisor = 4;
+var getCombineImpact = (function (_ref) {
+  var draggable = _ref.draggable,
+      targetRect = _ref.pageBorderBoxWithDroppableScroll,
+      previousImpact = _ref.previousImpact,
+      destination = _ref.destination,
+      insideDestination = _ref.insideDestination,
+      afterCritical = _ref.afterCritical;
+
+  if (!destination.isCombineEnabled) {
+    return null;
+  }
+
+  var axis = destination.axis;
+  var displacedBy = getDisplacedBy(destination.axis, draggable.displaceBy);
+  var displacement = displacedBy.value;
+  var targetStart = targetRect[axis.start];
+  var targetEnd = targetRect[axis.end];
+  var withoutDragging = removeDraggableFromList(draggable, insideDestination);
+  var combineWith = find(withoutDragging, function (child) {
+    var id = child.descriptor.id;
+    var childRect = child.page.borderBox;
+    var childSize = childRect[axis.size];
+    var threshold = childSize / combineThresholdDivisor;
+    var didStartAfterCritical$1 = didStartAfterCritical(id, afterCritical);
+    var isDisplaced = getIsDisplaced({
+      displaced: previousImpact.displaced,
+      id: id
+    });
+
+    if (didStartAfterCritical$1) {
+      if (isDisplaced) {
+        return targetEnd > childRect[axis.start] + threshold && targetEnd < childRect[axis.end] - threshold;
+      }
+
+      return targetStart > childRect[axis.start] - displacement + threshold && targetStart < childRect[axis.end] - displacement - threshold;
+    }
+
+    if (isDisplaced) {
+      return targetEnd > childRect[axis.start] + displacement + threshold && targetEnd < childRect[axis.end] + displacement - threshold;
+    }
+
+    return targetStart > childRect[axis.start] + threshold && targetStart < childRect[axis.end] - threshold;
+  });
+
+  if (!combineWith) {
+    return null;
+  }
+
+  var impact = {
+    displacedBy: displacedBy,
+    displaced: previousImpact.displaced,
+    at: {
+      type: 'COMBINE',
+      combine: {
+        draggableId: combineWith.descriptor.id,
+        droppableId: destination.descriptor.id
+      }
+    }
+  };
+  return impact;
+});
+
+var getDragImpact = (function (_ref) {
+  var pageOffset = _ref.pageOffset,
+      draggable = _ref.draggable,
+      draggables = _ref.draggables,
+      droppables = _ref.droppables,
+      previousImpact = _ref.previousImpact,
+      viewport = _ref.viewport,
+      afterCritical = _ref.afterCritical;
+  var pageBorderBox = offsetRectByPosition(draggable.page.borderBox, pageOffset);
+  var destinationId = getDroppableOver$1({
+    pageBorderBox: pageBorderBox,
+    draggable: draggable,
+    droppables: droppables
+  });
+
+  if (!destinationId) {
+    return noImpact;
+  }
+
+  var destination = droppables[destinationId];
+  var insideDestination = getDraggablesInsideDroppable(destination.descriptor.id, draggables);
+  var pageBorderBoxWithDroppableScroll = withDroppableScroll(destination, pageBorderBox);
+  return getCombineImpact({
+    pageBorderBoxWithDroppableScroll: pageBorderBoxWithDroppableScroll,
+    draggable: draggable,
+    previousImpact: previousImpact,
+    destination: destination,
+    insideDestination: insideDestination,
+    afterCritical: afterCritical
+  }) || getReorderImpact({
+    pageBorderBoxWithDroppableScroll: pageBorderBoxWithDroppableScroll,
+    draggable: draggable,
+    destination: destination,
+    insideDestination: insideDestination,
+    last: previousImpact.displaced,
+    viewport: viewport,
+    afterCritical: afterCritical
+  });
+});
+
+var patchDroppableMap = (function (droppables, updated) {
+  var _extends2;
+
+  return _extends({}, droppables, (_extends2 = {}, _extends2[updated.descriptor.id] = updated, _extends2));
+});
+
+var clearUnusedPlaceholder = function clearUnusedPlaceholder(_ref) {
+  var previousImpact = _ref.previousImpact,
+      impact = _ref.impact,
+      droppables = _ref.droppables;
+  var last = whatIsDraggedOver(previousImpact);
+  var now = whatIsDraggedOver(impact);
+
+  if (!last) {
+    return droppables;
+  }
+
+  if (last === now) {
+    return droppables;
+  }
+
+  var lastDroppable = droppables[last];
+
+  if (!lastDroppable.subject.withPlaceholder) {
+    return droppables;
+  }
+
+  var updated = removePlaceholder(lastDroppable);
+  return patchDroppableMap(droppables, updated);
+};
+
+var recomputePlaceholders = (function (_ref2) {
+  var draggable = _ref2.draggable,
+      draggables = _ref2.draggables,
+      droppables = _ref2.droppables,
+      previousImpact = _ref2.previousImpact,
+      impact = _ref2.impact;
+  var cleaned = clearUnusedPlaceholder({
+    previousImpact: previousImpact,
+    impact: impact,
+    droppables: droppables
+  });
+  var isOver = whatIsDraggedOver(impact);
+
+  if (!isOver) {
+    return cleaned;
+  }
+
+  var droppable = droppables[isOver];
+
+  if (isHomeOf(draggable, droppable)) {
+    return cleaned;
+  }
+
+  if (droppable.subject.withPlaceholder) {
+    return cleaned;
+  }
+
+  var patched = addPlaceholder(droppable, draggable, draggables);
+  return patchDroppableMap(cleaned, patched);
+});
+
+var update = (function (_ref) {
+  var state = _ref.state,
+      forcedClientSelection = _ref.clientSelection,
+      forcedDimensions = _ref.dimensions,
+      forcedViewport = _ref.viewport,
+      forcedImpact = _ref.impact,
+      scrollJumpRequest = _ref.scrollJumpRequest;
+  var viewport = forcedViewport || state.viewport;
+  var dimensions = forcedDimensions || state.dimensions;
+  var clientSelection = forcedClientSelection || state.current.client.selection;
+  var offset = subtract(clientSelection, state.initial.client.selection);
+  var client = {
+    offset: offset,
+    selection: clientSelection,
+    borderBoxCenter: add(state.initial.client.borderBoxCenter, offset)
+  };
+  var page = {
+    selection: add(client.selection, viewport.scroll.current),
+    borderBoxCenter: add(client.borderBoxCenter, viewport.scroll.current),
+    offset: add(client.offset, viewport.scroll.diff.value)
+  };
+  var current = {
+    client: client,
+    page: page
+  };
+
+  if (state.phase === 'COLLECTING') {
+    return _extends({
+      phase: 'COLLECTING'
+    }, state, {
+      dimensions: dimensions,
+      viewport: viewport,
+      current: current
+    });
+  }
+
+  var draggable = dimensions.draggables[state.critical.draggable.id];
+  var newImpact = forcedImpact || getDragImpact({
+    pageOffset: page.offset,
+    draggable: draggable,
+    draggables: dimensions.draggables,
+    droppables: dimensions.droppables,
+    previousImpact: state.impact,
+    viewport: viewport,
+    afterCritical: state.afterCritical
+  });
+  var withUpdatedPlaceholders = recomputePlaceholders({
+    draggable: draggable,
+    impact: newImpact,
+    previousImpact: state.impact,
+    draggables: dimensions.draggables,
+    droppables: dimensions.droppables
+  });
+
+  var result = _extends({}, state, {
+    current: current,
+    dimensions: {
+      draggables: dimensions.draggables,
+      droppables: withUpdatedPlaceholders
+    },
+    impact: newImpact,
+    viewport: viewport,
+    scrollJumpRequest: scrollJumpRequest || null,
+    forceShouldAnimate: scrollJumpRequest ? false : null
+  });
+
+  return result;
+});
+
+function getDraggables$1(ids, draggables) {
+  return ids.map(function (id) {
+    return draggables[id];
+  });
+}
+
+var recompute = (function (_ref) {
+  var impact = _ref.impact,
+      viewport = _ref.viewport,
+      draggables = _ref.draggables,
+      destination = _ref.destination,
+      forceShouldAnimate = _ref.forceShouldAnimate;
+  var last = impact.displaced;
+  var afterDragging = getDraggables$1(last.all, draggables);
+  var displaced = getDisplacementGroups({
+    afterDragging: afterDragging,
+    destination: destination,
+    displacedBy: impact.displacedBy,
+    viewport: viewport.frame,
+    forceShouldAnimate: forceShouldAnimate,
+    last: last
+  });
+  return _extends({}, impact, {
+    displaced: displaced
+  });
+});
+
+var getClientBorderBoxCenter = (function (_ref) {
+  var impact = _ref.impact,
+      draggable = _ref.draggable,
+      droppable = _ref.droppable,
+      draggables = _ref.draggables,
+      viewport = _ref.viewport,
+      afterCritical = _ref.afterCritical;
+  var pageBorderBoxCenter = getPageBorderBoxCenterFromImpact({
+    impact: impact,
+    draggable: draggable,
+    draggables: draggables,
+    droppable: droppable,
+    afterCritical: afterCritical
+  });
+  return getClientFromPageBorderBoxCenter({
+    pageBorderBoxCenter: pageBorderBoxCenter,
+    draggable: draggable,
+    viewport: viewport
+  });
+});
+
+var refreshSnap = (function (_ref) {
+  var state = _ref.state,
+      forcedDimensions = _ref.dimensions,
+      forcedViewport = _ref.viewport;
+  !(state.movementMode === 'SNAP') ? invariant(false) : void 0;
+  var needsVisibilityCheck = state.impact;
+  var viewport = forcedViewport || state.viewport;
+  var dimensions = forcedDimensions || state.dimensions;
+  var draggables = dimensions.draggables,
+      droppables = dimensions.droppables;
+  var draggable = draggables[state.critical.draggable.id];
+  var isOver = whatIsDraggedOver(needsVisibilityCheck);
+  !isOver ? invariant(false) : void 0;
+  var destination = droppables[isOver];
+  var impact = recompute({
+    impact: needsVisibilityCheck,
+    viewport: viewport,
+    destination: destination,
+    draggables: draggables
+  });
+  var clientSelection = getClientBorderBoxCenter({
+    impact: impact,
+    draggable: draggable,
+    droppable: destination,
+    draggables: draggables,
+    viewport: viewport,
+    afterCritical: state.afterCritical
+  });
+  return update({
+    impact: impact,
+    clientSelection: clientSelection,
+    state: state,
+    dimensions: dimensions,
+    viewport: viewport
+  });
+});
+
+var getHomeLocation = (function (descriptor) {
+  return {
+    index: descriptor.index,
+    droppableId: descriptor.droppableId
+  };
+});
+
+var getLiftEffect = (function (_ref) {
+  var draggable = _ref.draggable,
+      home = _ref.home,
+      draggables = _ref.draggables,
+      viewport = _ref.viewport;
+  var displacedBy = getDisplacedBy(home.axis, draggable.displaceBy);
+  var insideHome = getDraggablesInsideDroppable(home.descriptor.id, draggables);
+  var rawIndex = insideHome.indexOf(draggable);
+  !(rawIndex !== -1) ? invariant(false) : void 0;
+  var afterDragging = insideHome.slice(rawIndex + 1);
+  var effected = afterDragging.reduce(function (previous, item) {
+    previous[item.descriptor.id] = true;
+    return previous;
+  }, {});
+  var afterCritical = {
+    inVirtualList: home.descriptor.mode === 'virtual',
+    displacedBy: displacedBy,
+    effected: effected
+  };
+  var displaced = getDisplacementGroups({
+    afterDragging: afterDragging,
+    destination: home,
+    displacedBy: displacedBy,
+    last: null,
+    viewport: viewport.frame,
+    forceShouldAnimate: false
+  });
+  var impact = {
+    displaced: displaced,
+    displacedBy: displacedBy,
+    at: {
+      type: 'REORDER',
+      destination: getHomeLocation(draggable.descriptor)
+    }
+  };
+  return {
+    impact: impact,
+    afterCritical: afterCritical
+  };
+});
+
+var patchDimensionMap = (function (dimensions, updated) {
+  return {
+    draggables: dimensions.draggables,
+    droppables: patchDroppableMap(dimensions.droppables, updated)
+  };
+});
+
+var offsetDraggable = (function (_ref) {
+  var draggable = _ref.draggable,
+      offset$1 = _ref.offset,
+      initialWindowScroll = _ref.initialWindowScroll;
+  var client = offset(draggable.client, offset$1);
+  var page = withScroll(client, initialWindowScroll);
+
+  var moved = _extends({}, draggable, {
+    placeholder: _extends({}, draggable.placeholder, {
+      client: client
+    }),
+    client: client,
+    page: page
+  });
+
+  return moved;
+});
+
+var getFrame = (function (droppable) {
+  var frame = droppable.frame;
+  !frame ? invariant(false) : void 0;
+  return frame;
+});
+
+var adjustAdditionsForScrollChanges = (function (_ref) {
+  var additions = _ref.additions,
+      updatedDroppables = _ref.updatedDroppables,
+      viewport = _ref.viewport;
+  var windowScrollChange = viewport.scroll.diff.value;
+  return additions.map(function (draggable) {
+    var droppableId = draggable.descriptor.droppableId;
+    var modified = updatedDroppables[droppableId];
+    var frame = getFrame(modified);
+    var droppableScrollChange = frame.scroll.diff.value;
+    var totalChange = add(windowScrollChange, droppableScrollChange);
+    var moved = offsetDraggable({
+      draggable: draggable,
+      offset: totalChange,
+      initialWindowScroll: viewport.scroll.initial
+    });
+    return moved;
+  });
+});
+
+var publishWhileDraggingInVirtual = (function (_ref) {
+  var state = _ref.state,
+      published = _ref.published;
+  var withScrollChange = published.modified.map(function (update) {
+    var existing = state.dimensions.droppables[update.droppableId];
+    var scrolled = scrollDroppable(existing, update.scroll);
+    return scrolled;
+  });
+
+  var droppables = _extends({}, state.dimensions.droppables, {}, toDroppableMap(withScrollChange));
+
+  var updatedAdditions = toDraggableMap(adjustAdditionsForScrollChanges({
+    additions: published.additions,
+    updatedDroppables: droppables,
+    viewport: state.viewport
+  }));
+
+  var draggables = _extends({}, state.dimensions.draggables, {}, updatedAdditions);
+
+  published.removals.forEach(function (id) {
+    delete draggables[id];
+  });
+  var dimensions = {
+    droppables: droppables,
+    draggables: draggables
+  };
+  var wasOverId = whatIsDraggedOver(state.impact);
+  var wasOver = wasOverId ? dimensions.droppables[wasOverId] : null;
+  var draggable = dimensions.draggables[state.critical.draggable.id];
+  var home = dimensions.droppables[state.critical.droppable.id];
+
+  var _getLiftEffect = getLiftEffect({
+    draggable: draggable,
+    home: home,
+    draggables: draggables,
+    viewport: state.viewport
+  }),
+      onLiftImpact = _getLiftEffect.impact,
+      afterCritical = _getLiftEffect.afterCritical;
+
+  var previousImpact = wasOver && wasOver.isCombineEnabled ? state.impact : onLiftImpact;
+  var impact = getDragImpact({
+    pageOffset: state.current.page.offset,
+    draggable: dimensions.draggables[state.critical.draggable.id],
+    draggables: dimensions.draggables,
+    droppables: dimensions.droppables,
+    previousImpact: previousImpact,
+    viewport: state.viewport,
+    afterCritical: afterCritical
+  });
+
+  var draggingState = _extends({
+    phase: 'DRAGGING'
+  }, state, {
+    phase: 'DRAGGING',
+    impact: impact,
+    onLiftImpact: onLiftImpact,
+    dimensions: dimensions,
+    afterCritical: afterCritical,
+    forceShouldAnimate: false
+  });
+
+  if (state.phase === 'COLLECTING') {
+    return draggingState;
+  }
+
+  var dropPending = _extends({
+    phase: 'DROP_PENDING'
+  }, draggingState, {
+    phase: 'DROP_PENDING',
+    reason: state.reason,
+    isWaiting: false
+  });
+
+  return dropPending;
+});
+
+var isSnapping = function isSnapping(state) {
+  return state.movementMode === 'SNAP';
+};
+
+var postDroppableChange = function postDroppableChange(state, updated, isEnabledChanging) {
+  var dimensions = patchDimensionMap(state.dimensions, updated);
+
+  if (!isSnapping(state) || isEnabledChanging) {
+    return update({
+      state: state,
+      dimensions: dimensions
+    });
+  }
+
+  return refreshSnap({
+    state: state,
+    dimensions: dimensions
+  });
+};
+
+function removeScrollJumpRequest(state) {
+  if (state.isDragging && state.movementMode === 'SNAP') {
+    return _extends({
+      phase: 'DRAGGING'
+    }, state, {
+      scrollJumpRequest: null
+    });
+  }
+
+  return state;
+}
+
+var idle = {
+  phase: 'IDLE',
+  completed: null,
+  shouldFlush: false
+};
+var reducer = (function (state, action) {
+  if (state === void 0) {
+    state = idle;
+  }
+
+  if (action.type === 'FLUSH') {
+    return _extends({}, idle, {
+      shouldFlush: true
+    });
+  }
+
+  if (action.type === 'INITIAL_PUBLISH') {
+    !(state.phase === 'IDLE') ? invariant(false) : void 0;
+    var _action$payload = action.payload,
+        critical = _action$payload.critical,
+        clientSelection = _action$payload.clientSelection,
+        viewport = _action$payload.viewport,
+        dimensions = _action$payload.dimensions,
+        movementMode = _action$payload.movementMode;
+    var draggable = dimensions.draggables[critical.draggable.id];
+    var home = dimensions.droppables[critical.droppable.id];
+    var client = {
+      selection: clientSelection,
+      borderBoxCenter: draggable.client.borderBox.center,
+      offset: origin
+    };
+    var initial = {
+      client: client,
+      page: {
+        selection: add(client.selection, viewport.scroll.initial),
+        borderBoxCenter: add(client.selection, viewport.scroll.initial),
+        offset: add(client.selection, viewport.scroll.diff.value)
+      }
+    };
+    var isWindowScrollAllowed = toDroppableList(dimensions.droppables).every(function (item) {
+      return !item.isFixedOnPage;
+    });
+
+    var _getLiftEffect = getLiftEffect({
+      draggable: draggable,
+      home: home,
+      draggables: dimensions.draggables,
+      viewport: viewport
+    }),
+        impact = _getLiftEffect.impact,
+        afterCritical = _getLiftEffect.afterCritical;
+
+    var result = {
+      phase: 'DRAGGING',
+      isDragging: true,
+      critical: critical,
+      movementMode: movementMode,
+      dimensions: dimensions,
+      initial: initial,
+      current: initial,
+      isWindowScrollAllowed: isWindowScrollAllowed,
+      impact: impact,
+      afterCritical: afterCritical,
+      onLiftImpact: impact,
+      viewport: viewport,
+      scrollJumpRequest: null,
+      forceShouldAnimate: null
+    };
+    return result;
+  }
+
+  if (action.type === 'COLLECTION_STARTING') {
+    if (state.phase === 'COLLECTING' || state.phase === 'DROP_PENDING') {
+      return state;
+    }
+
+    !(state.phase === 'DRAGGING') ? invariant(false) : void 0;
+
+    var _result = _extends({
+      phase: 'COLLECTING'
+    }, state, {
+      phase: 'COLLECTING'
+    });
+
+    return _result;
+  }
+
+  if (action.type === 'PUBLISH_WHILE_DRAGGING') {
+    !(state.phase === 'COLLECTING' || state.phase === 'DROP_PENDING') ? invariant(false) : void 0;
+    return publishWhileDraggingInVirtual({
+      state: state,
+      published: action.payload
+    });
+  }
+
+  if (action.type === 'MOVE') {
+    if (state.phase === 'DROP_PENDING') {
+      return state;
+    }
+
+    !isMovementAllowed(state) ? invariant(false) : void 0;
+    var _clientSelection = action.payload.client;
+
+    if (isEqual(_clientSelection, state.current.client.selection)) {
+      return state;
+    }
+
+    return update({
+      state: state,
+      clientSelection: _clientSelection,
+      impact: isSnapping(state) ? state.impact : null
+    });
+  }
+
+  if (action.type === 'UPDATE_DROPPABLE_SCROLL') {
+    if (state.phase === 'DROP_PENDING') {
+      return removeScrollJumpRequest(state);
+    }
+
+    if (state.phase === 'COLLECTING') {
+      return removeScrollJumpRequest(state);
+    }
+
+    !isMovementAllowed(state) ? invariant(false) : void 0;
+    var _action$payload2 = action.payload,
+        id = _action$payload2.id,
+        newScroll = _action$payload2.newScroll;
+    var target = state.dimensions.droppables[id];
+
+    if (!target) {
+      return state;
+    }
+
+    var scrolled = scrollDroppable(target, newScroll);
+    return postDroppableChange(state, scrolled, false);
+  }
+
+  if (action.type === 'UPDATE_DROPPABLE_IS_ENABLED') {
+    if (state.phase === 'DROP_PENDING') {
+      return state;
+    }
+
+    !isMovementAllowed(state) ? invariant(false) : void 0;
+    var _action$payload3 = action.payload,
+        _id = _action$payload3.id,
+        isEnabled = _action$payload3.isEnabled;
+    var _target = state.dimensions.droppables[_id];
+    !_target ? invariant(false) : void 0;
+    !(_target.isEnabled !== isEnabled) ? invariant(false) : void 0;
+
+    var updated = _extends({}, _target, {
+      isEnabled: isEnabled
+    });
+
+    return postDroppableChange(state, updated, true);
+  }
+
+  if (action.type === 'UPDATE_DROPPABLE_IS_COMBINE_ENABLED') {
+    if (state.phase === 'DROP_PENDING') {
+      return state;
+    }
+
+    !isMovementAllowed(state) ? invariant(false) : void 0;
+    var _action$payload4 = action.payload,
+        _id2 = _action$payload4.id,
+        isCombineEnabled = _action$payload4.isCombineEnabled;
+    var _target2 = state.dimensions.droppables[_id2];
+    !_target2 ? invariant(false) : void 0;
+    !(_target2.isCombineEnabled !== isCombineEnabled) ? invariant(false) : void 0;
+
+    var _updated = _extends({}, _target2, {
+      isCombineEnabled: isCombineEnabled
+    });
+
+    return postDroppableChange(state, _updated, true);
+  }
+
+  if (action.type === 'MOVE_BY_WINDOW_SCROLL') {
+    if (state.phase === 'DROP_PENDING' || state.phase === 'DROP_ANIMATING') {
+      return state;
+    }
+
+    !isMovementAllowed(state) ? invariant(false) : void 0;
+    !state.isWindowScrollAllowed ? invariant(false) : void 0;
+    var _newScroll = action.payload.newScroll;
+
+    if (isEqual(state.viewport.scroll.current, _newScroll)) {
+      return removeScrollJumpRequest(state);
+    }
+
+    var _viewport = scrollViewport(state.viewport, _newScroll);
+
+    if (isSnapping(state)) {
+      return refreshSnap({
+        state: state,
+        viewport: _viewport
+      });
+    }
+
+    return update({
+      state: state,
+      viewport: _viewport
+    });
+  }
+
+  if (action.type === 'UPDATE_VIEWPORT_MAX_SCROLL') {
+    if (!isMovementAllowed(state)) {
+      return state;
+    }
+
+    var maxScroll = action.payload.maxScroll;
+
+    if (isEqual(maxScroll, state.viewport.scroll.max)) {
+      return state;
+    }
+
+    var withMaxScroll = _extends({}, state.viewport, {
+      scroll: _extends({}, state.viewport.scroll, {
+        max: maxScroll
+      })
+    });
+
+    return _extends({
+      phase: 'DRAGGING'
+    }, state, {
+      viewport: withMaxScroll
+    });
+  }
+
+  if (action.type === 'MOVE_UP' || action.type === 'MOVE_DOWN' || action.type === 'MOVE_LEFT' || action.type === 'MOVE_RIGHT') {
+    if (state.phase === 'COLLECTING' || state.phase === 'DROP_PENDING') {
+      return state;
+    }
+
+    !(state.phase === 'DRAGGING') ? invariant(false) : void 0;
+
+    var _result2 = moveInDirection({
+      state: state,
+      type: action.type
+    });
+
+    if (!_result2) {
+      return state;
+    }
+
+    return update({
+      state: state,
+      impact: _result2.impact,
+      clientSelection: _result2.clientSelection,
+      scrollJumpRequest: _result2.scrollJumpRequest
+    });
+  }
+
+  if (action.type === 'DROP_PENDING') {
+    var reason = action.payload.reason;
+    !(state.phase === 'COLLECTING') ? invariant(false) : void 0;
+
+    var newState = _extends({
+      phase: 'DROP_PENDING'
+    }, state, {
+      phase: 'DROP_PENDING',
+      isWaiting: true,
+      reason: reason
+    });
+
+    return newState;
+  }
+
+  if (action.type === 'DROP_ANIMATE') {
+    var _action$payload5 = action.payload,
+        completed = _action$payload5.completed,
+        dropDuration = _action$payload5.dropDuration,
+        newHomeClientOffset = _action$payload5.newHomeClientOffset;
+    !(state.phase === 'DRAGGING' || state.phase === 'DROP_PENDING') ? invariant(false) : void 0;
+    var _result3 = {
+      phase: 'DROP_ANIMATING',
+      completed: completed,
+      dropDuration: dropDuration,
+      newHomeClientOffset: newHomeClientOffset,
+      dimensions: state.dimensions
+    };
+    return _result3;
+  }
+
+  if (action.type === 'DROP_COMPLETE') {
+    var _completed = action.payload.completed;
+    return {
+      phase: 'IDLE',
+      completed: _completed,
+      shouldFlush: false
+    };
+  }
+
+  return state;
+});
+
+var beforeInitialCapture = function beforeInitialCapture(args) {
+  return {
+    type: 'BEFORE_INITIAL_CAPTURE',
+    payload: args
+  };
+};
+var lift = function lift(args) {
+  return {
+    type: 'LIFT',
+    payload: args
+  };
+};
+var initialPublish = function initialPublish(args) {
+  return {
+    type: 'INITIAL_PUBLISH',
+    payload: args
+  };
+};
+var publishWhileDragging = function publishWhileDragging(args) {
+  return {
+    type: 'PUBLISH_WHILE_DRAGGING',
+    payload: args
+  };
+};
+var collectionStarting = function collectionStarting() {
+  return {
+    type: 'COLLECTION_STARTING',
+    payload: null
+  };
+};
+var updateDroppableScroll = function updateDroppableScroll(args) {
+  return {
+    type: 'UPDATE_DROPPABLE_SCROLL',
+    payload: args
+  };
+};
+var updateDroppableIsEnabled = function updateDroppableIsEnabled(args) {
+  return {
+    type: 'UPDATE_DROPPABLE_IS_ENABLED',
+    payload: args
+  };
+};
+var updateDroppableIsCombineEnabled = function updateDroppableIsCombineEnabled(args) {
+  return {
+    type: 'UPDATE_DROPPABLE_IS_COMBINE_ENABLED',
+    payload: args
+  };
+};
+var move = function move(args) {
+  return {
+    type: 'MOVE',
+    payload: args
+  };
+};
+var moveByWindowScroll = function moveByWindowScroll(args) {
+  return {
+    type: 'MOVE_BY_WINDOW_SCROLL',
+    payload: args
+  };
+};
+var updateViewportMaxScroll = function updateViewportMaxScroll(args) {
+  return {
+    type: 'UPDATE_VIEWPORT_MAX_SCROLL',
+    payload: args
+  };
+};
+var moveUp = function moveUp() {
+  return {
+    type: 'MOVE_UP',
+    payload: null
+  };
+};
+var moveDown = function moveDown() {
+  return {
+    type: 'MOVE_DOWN',
+    payload: null
+  };
+};
+var moveRight = function moveRight() {
+  return {
+    type: 'MOVE_RIGHT',
+    payload: null
+  };
+};
+var moveLeft = function moveLeft() {
+  return {
+    type: 'MOVE_LEFT',
+    payload: null
+  };
+};
+var flush = function flush() {
+  return {
+    type: 'FLUSH',
+    payload: null
+  };
+};
+var animateDrop = function animateDrop(args) {
+  return {
+    type: 'DROP_ANIMATE',
+    payload: args
+  };
+};
+var completeDrop = function completeDrop(args) {
+  return {
+    type: 'DROP_COMPLETE',
+    payload: args
+  };
+};
+var drop = function drop(args) {
+  return {
+    type: 'DROP',
+    payload: args
+  };
+};
+var dropPending = function dropPending(args) {
+  return {
+    type: 'DROP_PENDING',
+    payload: args
+  };
+};
+var dropAnimationFinished = function dropAnimationFinished() {
+  return {
+    type: 'DROP_ANIMATION_FINISHED',
+    payload: null
+  };
+};
+
+var lift$1 = (function (marshal) {
+  return function (_ref) {
+    var getState = _ref.getState,
+        dispatch = _ref.dispatch;
+    return function (next) {
+      return function (action) {
+        if (action.type !== 'LIFT') {
+          next(action);
+          return;
+        }
+
+        var _action$payload = action.payload,
+            id = _action$payload.id,
+            clientSelection = _action$payload.clientSelection,
+            movementMode = _action$payload.movementMode;
+        var initial = getState();
+
+        if (initial.phase === 'DROP_ANIMATING') {
+          dispatch(completeDrop({
+            completed: initial.completed
+          }));
+        }
+
+        !(getState().phase === 'IDLE') ? invariant(false) : void 0;
+        dispatch(flush());
+        dispatch(beforeInitialCapture({
+          draggableId: id,
+          movementMode: movementMode
+        }));
+        var scrollOptions = {
+          shouldPublishImmediately: movementMode === 'SNAP'
+        };
+        var request = {
+          draggableId: id,
+          scrollOptions: scrollOptions
+        };
+
+        var _marshal$startPublish = marshal.startPublishing(request),
+            critical = _marshal$startPublish.critical,
+            dimensions = _marshal$startPublish.dimensions,
+            viewport = _marshal$startPublish.viewport;
+        dispatch(initialPublish({
+          critical: critical,
+          dimensions: dimensions,
+          clientSelection: clientSelection,
+          movementMode: movementMode,
+          viewport: viewport
+        }));
+      };
+    };
+  };
+});
+
+var style = (function (marshal) {
+  return function () {
+    return function (next) {
+      return function (action) {
+        if (action.type === 'INITIAL_PUBLISH') {
+          marshal.dragging();
+        }
+
+        if (action.type === 'DROP_ANIMATE') {
+          marshal.dropping(action.payload.completed.result.reason);
+        }
+
+        if (action.type === 'FLUSH' || action.type === 'DROP_COMPLETE') {
+          marshal.resting();
+        }
+
+        next(action);
+      };
+    };
+  };
+});
+
+var curves = {
+  outOfTheWay: 'cubic-bezier(0.2, 0, 0, 1)',
+  drop: 'cubic-bezier(.2,1,.1,1)'
+};
+var combine = {
+  opacity: {
+    drop: 0,
+    combining: 0.7
+  },
+  scale: {
+    drop: 0.75
+  }
+};
+var timings = {
+  outOfTheWay: 0.2,
+  minDropTime: 0.33,
+  maxDropTime: 0.55
+};
+var outOfTheWayTiming = timings.outOfTheWay + "s " + curves.outOfTheWay;
+var transitions = {
+  fluid: "opacity " + outOfTheWayTiming,
+  snap: "transform " + outOfTheWayTiming + ", opacity " + outOfTheWayTiming,
+  drop: function drop(duration) {
+    var timing = duration + "s " + curves.drop;
+    return "transform " + timing + ", opacity " + timing;
+  },
+  outOfTheWay: "transform " + outOfTheWayTiming,
+  placeholder: "height " + outOfTheWayTiming + ", width " + outOfTheWayTiming + ", margin " + outOfTheWayTiming
+};
+
+var moveTo = function moveTo(offset) {
+  return isEqual(offset, origin) ? null : "translate(" + offset.x + "px, " + offset.y + "px)";
+};
+
+var transforms = {
+  moveTo: moveTo,
+  drop: function drop(offset, isCombining) {
+    var translate = moveTo(offset);
+
+    if (!translate) {
+      return null;
+    }
+
+    if (!isCombining) {
+      return translate;
+    }
+
+    return translate + " scale(" + combine.scale.drop + ")";
+  }
+};
+
+var minDropTime = timings.minDropTime,
+    maxDropTime = timings.maxDropTime;
+var dropTimeRange = maxDropTime - minDropTime;
+var maxDropTimeAtDistance = 1500;
+var cancelDropModifier = 0.6;
+var getDropDuration = (function (_ref) {
+  var current = _ref.current,
+      destination = _ref.destination,
+      reason = _ref.reason;
+  var distance$1 = distance(current, destination);
+
+  if (distance$1 <= 0) {
+    return minDropTime;
+  }
+
+  if (distance$1 >= maxDropTimeAtDistance) {
+    return maxDropTime;
+  }
+
+  var percentage = distance$1 / maxDropTimeAtDistance;
+  var duration = minDropTime + dropTimeRange * percentage;
+  var withDuration = reason === 'CANCEL' ? duration * cancelDropModifier : duration;
+  return Number(withDuration.toFixed(2));
+});
+
+var getNewHomeClientOffset = (function (_ref) {
+  var impact = _ref.impact,
+      draggable = _ref.draggable,
+      dimensions = _ref.dimensions,
+      viewport = _ref.viewport,
+      afterCritical = _ref.afterCritical;
+  var draggables = dimensions.draggables,
+      droppables = dimensions.droppables;
+  var droppableId = whatIsDraggedOver(impact);
+  var destination = droppableId ? droppables[droppableId] : null;
+  var home = droppables[draggable.descriptor.droppableId];
+  var newClientCenter = getClientBorderBoxCenter({
+    impact: impact,
+    draggable: draggable,
+    draggables: draggables,
+    afterCritical: afterCritical,
+    droppable: destination || home,
+    viewport: viewport
+  });
+  var offset = subtract(newClientCenter, draggable.client.borderBox.center);
+  return offset;
+});
+
+var getDropImpact = (function (_ref) {
+  var draggables = _ref.draggables,
+      reason = _ref.reason,
+      lastImpact = _ref.lastImpact,
+      home = _ref.home,
+      viewport = _ref.viewport,
+      onLiftImpact = _ref.onLiftImpact;
+
+  if (!lastImpact.at || reason !== 'DROP') {
+    var recomputedHomeImpact = recompute({
+      draggables: draggables,
+      impact: onLiftImpact,
+      destination: home,
+      viewport: viewport,
+      forceShouldAnimate: true
+    });
+    return {
+      impact: recomputedHomeImpact,
+      didDropInsideDroppable: false
+    };
+  }
+
+  if (lastImpact.at.type === 'REORDER') {
+    return {
+      impact: lastImpact,
+      didDropInsideDroppable: true
+    };
+  }
+
+  var withoutMovement = _extends({}, lastImpact, {
+    displaced: emptyGroups
+  });
+
+  return {
+    impact: withoutMovement,
+    didDropInsideDroppable: true
+  };
+});
+
+var drop$1 = (function (_ref) {
+  var getState = _ref.getState,
+      dispatch = _ref.dispatch;
+  return function (next) {
+    return function (action) {
+      if (action.type !== 'DROP') {
+        next(action);
+        return;
+      }
+
+      var state = getState();
+      var reason = action.payload.reason;
+
+      if (state.phase === 'COLLECTING') {
+        dispatch(dropPending({
+          reason: reason
+        }));
+        return;
+      }
+
+      if (state.phase === 'IDLE') {
+        return;
+      }
+
+      var isWaitingForDrop = state.phase === 'DROP_PENDING' && state.isWaiting;
+      !!isWaitingForDrop ? invariant(false) : void 0;
+      !(state.phase === 'DRAGGING' || state.phase === 'DROP_PENDING') ? invariant(false) : void 0;
+      var critical = state.critical;
+      var dimensions = state.dimensions;
+      var draggable = dimensions.draggables[state.critical.draggable.id];
+
+      var _getDropImpact = getDropImpact({
+        reason: reason,
+        lastImpact: state.impact,
+        afterCritical: state.afterCritical,
+        onLiftImpact: state.onLiftImpact,
+        home: state.dimensions.droppables[state.critical.droppable.id],
+        viewport: state.viewport,
+        draggables: state.dimensions.draggables
+      }),
+          impact = _getDropImpact.impact,
+          didDropInsideDroppable = _getDropImpact.didDropInsideDroppable;
+
+      var destination = didDropInsideDroppable ? tryGetDestination(impact) : null;
+      var combine = didDropInsideDroppable ? tryGetCombine(impact) : null;
+      var source = {
+        index: critical.draggable.index,
+        droppableId: critical.droppable.id
+      };
+      var result = {
+        draggableId: draggable.descriptor.id,
+        type: draggable.descriptor.type,
+        source: source,
+        reason: reason,
+        mode: state.movementMode,
+        destination: destination,
+        combine: combine
+      };
+      var newHomeClientOffset = getNewHomeClientOffset({
+        impact: impact,
+        draggable: draggable,
+        dimensions: dimensions,
+        viewport: state.viewport,
+        afterCritical: state.afterCritical
+      });
+      var completed = {
+        critical: state.critical,
+        afterCritical: state.afterCritical,
+        result: result,
+        impact: impact
+      };
+      var isAnimationRequired = !isEqual(state.current.client.offset, newHomeClientOffset) || Boolean(result.combine);
+
+      if (!isAnimationRequired) {
+        dispatch(completeDrop({
+          completed: completed
+        }));
+        return;
+      }
+
+      var dropDuration = getDropDuration({
+        current: state.current.client.offset,
+        destination: newHomeClientOffset,
+        reason: reason
+      });
+      var args = {
+        newHomeClientOffset: newHomeClientOffset,
+        dropDuration: dropDuration,
+        completed: completed
+      };
+      dispatch(animateDrop(args));
+    };
+  };
+});
+
+var getWindowScroll = (function () {
+  return {
+    x: window.pageXOffset,
+    y: window.pageYOffset
+  };
+});
+
+function getWindowScrollBinding(update) {
+  return {
+    eventName: 'scroll',
+    options: {
+      passive: true,
+      capture: false
+    },
+    fn: function fn(event) {
+      if (event.target !== window && event.target !== window.document) {
+        return;
+      }
+
+      update();
+    }
+  };
+}
+
+function getScrollListener(_ref) {
+  var onWindowScroll = _ref.onWindowScroll;
+
+  function updateScroll() {
+    onWindowScroll(getWindowScroll());
+  }
+
+  var scheduled = rafSchd$1(updateScroll);
+  var binding = getWindowScrollBinding(scheduled);
+  var unbind = noop;
+
+  function isActive() {
+    return unbind !== noop;
+  }
+
+  function start() {
+    !!isActive() ? invariant(false) : void 0;
+    unbind = bindEvents(window, [binding]);
+  }
+
+  function stop() {
+    !isActive() ? invariant(false) : void 0;
+    scheduled.cancel();
+    unbind();
+    unbind = noop;
+  }
+
+  return {
+    start: start,
+    stop: stop,
+    isActive: isActive
+  };
+}
+
+var shouldEnd = function shouldEnd(action) {
+  return action.type === 'DROP_COMPLETE' || action.type === 'DROP_ANIMATE' || action.type === 'FLUSH';
+};
+
+var scrollListener = (function (store) {
+  var listener = getScrollListener({
+    onWindowScroll: function onWindowScroll(newScroll) {
+      store.dispatch(moveByWindowScroll({
+        newScroll: newScroll
+      }));
+    }
+  });
+  return function (next) {
+    return function (action) {
+      if (!listener.isActive() && action.type === 'INITIAL_PUBLISH') {
+        listener.start();
+      }
+
+      if (listener.isActive() && shouldEnd(action)) {
+        listener.stop();
+      }
+
+      next(action);
+    };
+  };
+});
+
+var getExpiringAnnounce = (function (announce) {
+  var wasCalled = false;
+  var isExpired = false;
+  var timeoutId = setTimeout(function () {
+    isExpired = true;
+  });
+
+  var result = function result(message) {
+    if (wasCalled) {
+      return;
+    }
+
+    if (isExpired) {
+      return;
+    }
+
+    wasCalled = true;
+    announce(message);
+    clearTimeout(timeoutId);
+  };
+
+  result.wasCalled = function () {
+    return wasCalled;
+  };
+
+  return result;
+});
+
+var getAsyncMarshal = (function () {
+  var entries = [];
+
+  var execute = function execute(timerId) {
+    var index = findIndex(entries, function (item) {
+      return item.timerId === timerId;
+    });
+    !(index !== -1) ? invariant(false) : void 0;
+
+    var _entries$splice = entries.splice(index, 1),
+        entry = _entries$splice[0];
+
+    entry.callback();
+  };
+
+  var add = function add(fn) {
+    var timerId = setTimeout(function () {
+      return execute(timerId);
+    });
+    var entry = {
+      timerId: timerId,
+      callback: fn
+    };
+    entries.push(entry);
+  };
+
+  var flush = function flush() {
+    if (!entries.length) {
+      return;
+    }
+
+    var shallow = [].concat(entries);
+    entries.length = 0;
+    shallow.forEach(function (entry) {
+      clearTimeout(entry.timerId);
+      entry.callback();
+    });
+  };
+
+  return {
+    add: add,
+    flush: flush
+  };
+});
+
+var areLocationsEqual = function areLocationsEqual(first, second) {
+  if (first == null && second == null) {
+    return true;
+  }
+
+  if (first == null || second == null) {
+    return false;
+  }
+
+  return first.droppableId === second.droppableId && first.index === second.index;
+};
+var isCombineEqual = function isCombineEqual(first, second) {
+  if (first == null && second == null) {
+    return true;
+  }
+
+  if (first == null || second == null) {
+    return false;
+  }
+
+  return first.draggableId === second.draggableId && first.droppableId === second.droppableId;
+};
+var isCriticalEqual = function isCriticalEqual(first, second) {
+  if (first === second) {
+    return true;
+  }
+
+  var isDraggableEqual = first.draggable.id === second.draggable.id && first.draggable.droppableId === second.draggable.droppableId && first.draggable.type === second.draggable.type && first.draggable.index === second.draggable.index;
+  var isDroppableEqual = first.droppable.id === second.droppable.id && first.droppable.type === second.droppable.type;
+  return isDraggableEqual && isDroppableEqual;
+};
+
+var withTimings = function withTimings(key, fn) {
+  fn();
+};
+
+var getDragStart = function getDragStart(critical, mode) {
+  return {
+    draggableId: critical.draggable.id,
+    type: critical.droppable.type,
+    source: {
+      droppableId: critical.droppable.id,
+      index: critical.draggable.index
+    },
+    mode: mode
+  };
+};
+
+var execute = function execute(responder, data, announce, getDefaultMessage) {
+  if (!responder) {
+    announce(getDefaultMessage(data));
+    return;
+  }
+
+  var willExpire = getExpiringAnnounce(announce);
+  var provided = {
+    announce: willExpire
+  };
+  responder(data, provided);
+
+  if (!willExpire.wasCalled()) {
+    announce(getDefaultMessage(data));
+  }
+};
+
+var getPublisher = (function (getResponders, announce) {
+  var asyncMarshal = getAsyncMarshal();
+  var dragging = null;
+
+  var beforeCapture = function beforeCapture(draggableId, mode) {
+    !!dragging ? invariant(false) : void 0;
+    withTimings('onBeforeCapture', function () {
+      var fn = getResponders().onBeforeCapture;
+
+      if (fn) {
+        var before = {
+          draggableId: draggableId,
+          mode: mode
+        };
+        fn(before);
+      }
+    });
+  };
+
+  var beforeStart = function beforeStart(critical, mode) {
+    !!dragging ? invariant(false) : void 0;
+    withTimings('onBeforeDragStart', function () {
+      var fn = getResponders().onBeforeDragStart;
+
+      if (fn) {
+        fn(getDragStart(critical, mode));
+      }
+    });
+  };
+
+  var start = function start(critical, mode) {
+    !!dragging ? invariant(false) : void 0;
+    var data = getDragStart(critical, mode);
+    dragging = {
+      mode: mode,
+      lastCritical: critical,
+      lastLocation: data.source,
+      lastCombine: null
+    };
+    asyncMarshal.add(function () {
+      withTimings('onDragStart', function () {
+        return execute(getResponders().onDragStart, data, announce, preset.onDragStart);
+      });
+    });
+  };
+
+  var update = function update(critical, impact) {
+    var location = tryGetDestination(impact);
+    var combine = tryGetCombine(impact);
+    !dragging ? invariant(false) : void 0;
+    var hasCriticalChanged = !isCriticalEqual(critical, dragging.lastCritical);
+
+    if (hasCriticalChanged) {
+      dragging.lastCritical = critical;
+    }
+
+    var hasLocationChanged = !areLocationsEqual(dragging.lastLocation, location);
+
+    if (hasLocationChanged) {
+      dragging.lastLocation = location;
+    }
+
+    var hasGroupingChanged = !isCombineEqual(dragging.lastCombine, combine);
+
+    if (hasGroupingChanged) {
+      dragging.lastCombine = combine;
+    }
+
+    if (!hasCriticalChanged && !hasLocationChanged && !hasGroupingChanged) {
+      return;
+    }
+
+    var data = _extends({}, getDragStart(critical, dragging.mode), {
+      combine: combine,
+      destination: location
+    });
+
+    asyncMarshal.add(function () {
+      withTimings('onDragUpdate', function () {
+        return execute(getResponders().onDragUpdate, data, announce, preset.onDragUpdate);
+      });
+    });
+  };
+
+  var flush = function flush() {
+    !dragging ? invariant(false) : void 0;
+    asyncMarshal.flush();
+  };
+
+  var drop = function drop(result) {
+    !dragging ? invariant(false) : void 0;
+    dragging = null;
+    withTimings('onDragEnd', function () {
+      return execute(getResponders().onDragEnd, result, announce, preset.onDragEnd);
+    });
+  };
+
+  var abort = function abort() {
+    if (!dragging) {
+      return;
+    }
+
+    var result = _extends({}, getDragStart(dragging.lastCritical, dragging.mode), {
+      combine: null,
+      destination: null,
+      reason: 'CANCEL'
+    });
+
+    drop(result);
+  };
+
+  return {
+    beforeCapture: beforeCapture,
+    beforeStart: beforeStart,
+    start: start,
+    update: update,
+    flush: flush,
+    drop: drop,
+    abort: abort
+  };
+});
+
+var responders = (function (getResponders, announce) {
+  var publisher = getPublisher(getResponders, announce);
+  return function (store) {
+    return function (next) {
+      return function (action) {
+        if (action.type === 'BEFORE_INITIAL_CAPTURE') {
+          publisher.beforeCapture(action.payload.draggableId, action.payload.movementMode);
+          return;
+        }
+
+        if (action.type === 'INITIAL_PUBLISH') {
+          var critical = action.payload.critical;
+          publisher.beforeStart(critical, action.payload.movementMode);
+          next(action);
+          publisher.start(critical, action.payload.movementMode);
+          return;
+        }
+
+        if (action.type === 'DROP_COMPLETE') {
+          var result = action.payload.completed.result;
+          publisher.flush();
+          next(action);
+          publisher.drop(result);
+          return;
+        }
+
+        next(action);
+
+        if (action.type === 'FLUSH') {
+          publisher.abort();
+          return;
+        }
+
+        var state = store.getState();
+
+        if (state.phase === 'DRAGGING') {
+          publisher.update(state.critical, state.impact);
+        }
+      };
+    };
+  };
+});
+
+var dropAnimationFinish = (function (store) {
+  return function (next) {
+    return function (action) {
+      if (action.type !== 'DROP_ANIMATION_FINISHED') {
+        next(action);
+        return;
+      }
+
+      var state = store.getState();
+      !(state.phase === 'DROP_ANIMATING') ? invariant(false) : void 0;
+      store.dispatch(completeDrop({
+        completed: state.completed
+      }));
+    };
+  };
+});
+
+var dropAnimationFlushOnScroll = (function (store) {
+  var unbind = null;
+  var frameId = null;
+
+  function clear() {
+    if (frameId) {
+      cancelAnimationFrame(frameId);
+      frameId = null;
+    }
+
+    if (unbind) {
+      unbind();
+      unbind = null;
+    }
+  }
+
+  return function (next) {
+    return function (action) {
+      if (action.type === 'FLUSH' || action.type === 'DROP_COMPLETE' || action.type === 'DROP_ANIMATION_FINISHED') {
+        clear();
+      }
+
+      next(action);
+
+      if (action.type !== 'DROP_ANIMATE') {
+        return;
+      }
+
+      var binding = {
+        eventName: 'scroll',
+        options: {
+          capture: true,
+          passive: false,
+          once: true
+        },
+        fn: function flushDropAnimation() {
+          var state = store.getState();
+
+          if (state.phase === 'DROP_ANIMATING') {
+            store.dispatch(dropAnimationFinished());
+          }
+        }
+      };
+      frameId = requestAnimationFrame(function () {
+        frameId = null;
+        unbind = bindEvents(window, [binding]);
+      });
+    };
+  };
+});
+
+var dimensionMarshalStopper = (function (marshal) {
+  return function () {
+    return function (next) {
+      return function (action) {
+        if (action.type === 'DROP_COMPLETE' || action.type === 'FLUSH' || action.type === 'DROP_ANIMATE') {
+          marshal.stopPublishing();
+        }
+
+        next(action);
+      };
+    };
+  };
+});
+
+var focus = (function (marshal) {
+  var isWatching = false;
+  return function () {
+    return function (next) {
+      return function (action) {
+        if (action.type === 'INITIAL_PUBLISH') {
+          isWatching = true;
+          marshal.tryRecordFocus(action.payload.critical.draggable.id);
+          next(action);
+          marshal.tryRestoreFocusRecorded();
+          return;
+        }
+
+        next(action);
+
+        if (!isWatching) {
+          return;
+        }
+
+        if (action.type === 'FLUSH') {
+          isWatching = false;
+          marshal.tryRestoreFocusRecorded();
+          return;
+        }
+
+        if (action.type === 'DROP_COMPLETE') {
+          isWatching = false;
+          var result = action.payload.completed.result;
+
+          if (result.combine) {
+            marshal.tryShiftRecord(result.draggableId, result.combine.draggableId);
+          }
+
+          marshal.tryRestoreFocusRecorded();
+        }
+      };
+    };
+  };
+});
+
+var shouldStop = function shouldStop(action) {
+  return action.type === 'DROP_COMPLETE' || action.type === 'DROP_ANIMATE' || action.type === 'FLUSH';
+};
+
+var autoScroll = (function (autoScroller) {
+  return function (store) {
+    return function (next) {
+      return function (action) {
+        if (shouldStop(action)) {
+          autoScroller.stop();
+          next(action);
+          return;
+        }
+
+        if (action.type === 'INITIAL_PUBLISH') {
+          next(action);
+          var state = store.getState();
+          !(state.phase === 'DRAGGING') ? invariant(false) : void 0;
+          autoScroller.start(state);
+          return;
+        }
+
+        next(action);
+        autoScroller.scroll(store.getState());
+      };
+    };
+  };
+});
+
+var pendingDrop = (function (store) {
+  return function (next) {
+    return function (action) {
+      next(action);
+
+      if (action.type !== 'PUBLISH_WHILE_DRAGGING') {
+        return;
+      }
+
+      var postActionState = store.getState();
+
+      if (postActionState.phase !== 'DROP_PENDING') {
+        return;
+      }
+
+      if (postActionState.isWaiting) {
+        return;
+      }
+
+      store.dispatch(drop({
+        reason: postActionState.reason
+      }));
+    };
+  };
+});
+
+var composeEnhancers = compose;
+var createStore = (function (_ref) {
+  var dimensionMarshal = _ref.dimensionMarshal,
+      focusMarshal = _ref.focusMarshal,
+      styleMarshal = _ref.styleMarshal,
+      getResponders = _ref.getResponders,
+      announce = _ref.announce,
+      autoScroller = _ref.autoScroller;
+  return createStore$1(reducer, composeEnhancers(applyMiddleware(style(styleMarshal), dimensionMarshalStopper(dimensionMarshal), lift$1(dimensionMarshal), drop$1, dropAnimationFinish, dropAnimationFlushOnScroll, pendingDrop, autoScroll(autoScroller), scrollListener, focus(focusMarshal), responders(getResponders, announce))));
+});
+
+var clean$1 = function clean() {
+  return {
+    additions: {},
+    removals: {},
+    modified: {}
+  };
+};
+function createPublisher(_ref) {
+  var registry = _ref.registry,
+      callbacks = _ref.callbacks;
+  var staging = clean$1();
+  var frameId = null;
+
+  var collect = function collect() {
+    if (frameId) {
+      return;
+    }
+
+    callbacks.collectionStarting();
+    frameId = requestAnimationFrame(function () {
+      frameId = null;
+      var _staging = staging,
+          additions = _staging.additions,
+          removals = _staging.removals,
+          modified = _staging.modified;
+      var added = Object.keys(additions).map(function (id) {
+        return registry.draggable.getById(id).getDimension(origin);
+      }).sort(function (a, b) {
+        return a.descriptor.index - b.descriptor.index;
+      });
+      var updated = Object.keys(modified).map(function (id) {
+        var entry = registry.droppable.getById(id);
+        var scroll = entry.callbacks.getScrollWhileDragging();
+        return {
+          droppableId: id,
+          scroll: scroll
+        };
+      });
+      var result = {
+        additions: added,
+        removals: Object.keys(removals),
+        modified: updated
+      };
+      staging = clean$1();
+      callbacks.publish(result);
+    });
+  };
+
+  var add = function add(entry) {
+    var id = entry.descriptor.id;
+    staging.additions[id] = entry;
+    staging.modified[entry.descriptor.droppableId] = true;
+
+    if (staging.removals[id]) {
+      delete staging.removals[id];
+    }
+
+    collect();
+  };
+
+  var remove = function remove(entry) {
+    var descriptor = entry.descriptor;
+    staging.removals[descriptor.id] = true;
+    staging.modified[descriptor.droppableId] = true;
+
+    if (staging.additions[descriptor.id]) {
+      delete staging.additions[descriptor.id];
+    }
+
+    collect();
+  };
+
+  var stop = function stop() {
+    if (!frameId) {
+      return;
+    }
+
+    cancelAnimationFrame(frameId);
+    frameId = null;
+    staging = clean$1();
+  };
+
+  return {
+    add: add,
+    remove: remove,
+    stop: stop
+  };
+}
+
+var getMaxScroll = (function (_ref) {
+  var scrollHeight = _ref.scrollHeight,
+      scrollWidth = _ref.scrollWidth,
+      height = _ref.height,
+      width = _ref.width;
+  var maxScroll = subtract({
+    x: scrollWidth,
+    y: scrollHeight
+  }, {
+    x: width,
+    y: height
+  });
+  var adjustedMaxScroll = {
+    x: Math.max(0, maxScroll.x),
+    y: Math.max(0, maxScroll.y)
+  };
+  return adjustedMaxScroll;
+});
+
+var getDocumentElement = (function () {
+  var doc = document.documentElement;
+  !doc ? invariant(false) : void 0;
+  return doc;
+});
+
+var getMaxWindowScroll = (function () {
+  var doc = getDocumentElement();
+  var maxScroll = getMaxScroll({
+    scrollHeight: doc.scrollHeight,
+    scrollWidth: doc.scrollWidth,
+    width: doc.clientWidth,
+    height: doc.clientHeight
+  });
+  return maxScroll;
+});
+
+var getViewport = (function () {
+  var scroll = getWindowScroll();
+  var maxScroll = getMaxWindowScroll();
+  var top = scroll.y;
+  var left = scroll.x;
+  var doc = getDocumentElement();
+  var width = doc.clientWidth;
+  var height = doc.clientHeight;
+  var right = left + width;
+  var bottom = top + height;
+  var frame = getRect({
+    top: top,
+    left: left,
+    right: right,
+    bottom: bottom
+  });
+  var viewport = {
+    frame: frame,
+    scroll: {
+      initial: scroll,
+      current: scroll,
+      max: maxScroll,
+      diff: {
+        value: origin,
+        displacement: origin
+      }
+    }
+  };
+  return viewport;
+});
+
+var getInitialPublish = (function (_ref) {
+  var critical = _ref.critical,
+      scrollOptions = _ref.scrollOptions,
+      registry = _ref.registry;
+  var viewport = getViewport();
+  var windowScroll = viewport.scroll.current;
+  var home = critical.droppable;
+  var droppables = registry.droppable.getAllByType(home.type).map(function (entry) {
+    return entry.callbacks.getDimensionAndWatchScroll(windowScroll, scrollOptions);
+  });
+  var draggables = registry.draggable.getAllByType(critical.draggable.type).map(function (entry) {
+    return entry.getDimension(windowScroll);
+  });
+  var dimensions = {
+    draggables: toDraggableMap(draggables),
+    droppables: toDroppableMap(droppables)
+  };
+  var result = {
+    dimensions: dimensions,
+    critical: critical,
+    viewport: viewport
+  };
+  return result;
+});
+
+function shouldPublishUpdate(registry, dragging, entry) {
+  if (entry.descriptor.id === dragging.id) {
+    return false;
+  }
+
+  if (entry.descriptor.type !== dragging.type) {
+    return false;
+  }
+
+  var home = registry.droppable.getById(entry.descriptor.droppableId);
+
+  if (home.descriptor.mode !== 'virtual') {
+    return false;
+  }
+
+  return true;
+}
+
+var createDimensionMarshal = (function (registry, callbacks) {
+  var collection = null;
+  var publisher = createPublisher({
+    callbacks: {
+      publish: callbacks.publishWhileDragging,
+      collectionStarting: callbacks.collectionStarting
+    },
+    registry: registry
+  });
+
+  var updateDroppableIsEnabled = function updateDroppableIsEnabled(id, isEnabled) {
+    !registry.droppable.exists(id) ? invariant(false) : void 0;
+
+    if (!collection) {
+      return;
+    }
+
+    callbacks.updateDroppableIsEnabled({
+      id: id,
+      isEnabled: isEnabled
+    });
+  };
+
+  var updateDroppableIsCombineEnabled = function updateDroppableIsCombineEnabled(id, isCombineEnabled) {
+    if (!collection) {
+      return;
+    }
+
+    !registry.droppable.exists(id) ? invariant(false) : void 0;
+    callbacks.updateDroppableIsCombineEnabled({
+      id: id,
+      isCombineEnabled: isCombineEnabled
+    });
+  };
+
+  var updateDroppableScroll = function updateDroppableScroll(id, newScroll) {
+    if (!collection) {
+      return;
+    }
+
+    !registry.droppable.exists(id) ? invariant(false) : void 0;
+    callbacks.updateDroppableScroll({
+      id: id,
+      newScroll: newScroll
+    });
+  };
+
+  var scrollDroppable = function scrollDroppable(id, change) {
+    if (!collection) {
+      return;
+    }
+
+    registry.droppable.getById(id).callbacks.scroll(change);
+  };
+
+  var stopPublishing = function stopPublishing() {
+    if (!collection) {
+      return;
+    }
+
+    publisher.stop();
+    var home = collection.critical.droppable;
+    registry.droppable.getAllByType(home.type).forEach(function (entry) {
+      return entry.callbacks.dragStopped();
+    });
+    collection.unsubscribe();
+    collection = null;
+  };
+
+  var subscriber = function subscriber(event) {
+    !collection ? invariant(false) : void 0;
+    var dragging = collection.critical.draggable;
+
+    if (event.type === 'ADDITION') {
+      if (shouldPublishUpdate(registry, dragging, event.value)) {
+        publisher.add(event.value);
+      }
+    }
+
+    if (event.type === 'REMOVAL') {
+      if (shouldPublishUpdate(registry, dragging, event.value)) {
+        publisher.remove(event.value);
+      }
+    }
+  };
+
+  var startPublishing = function startPublishing(request) {
+    !!collection ? invariant(false) : void 0;
+    var entry = registry.draggable.getById(request.draggableId);
+    var home = registry.droppable.getById(entry.descriptor.droppableId);
+    var critical = {
+      draggable: entry.descriptor,
+      droppable: home.descriptor
+    };
+    var unsubscribe = registry.subscribe(subscriber);
+    collection = {
+      critical: critical,
+      unsubscribe: unsubscribe
+    };
+    return getInitialPublish({
+      critical: critical,
+      registry: registry,
+      scrollOptions: request.scrollOptions
+    });
+  };
+
+  var marshal = {
+    updateDroppableIsEnabled: updateDroppableIsEnabled,
+    updateDroppableIsCombineEnabled: updateDroppableIsCombineEnabled,
+    scrollDroppable: scrollDroppable,
+    updateDroppableScroll: updateDroppableScroll,
+    startPublishing: startPublishing,
+    stopPublishing: stopPublishing
+  };
+  return marshal;
+});
+
+var canStartDrag = (function (state, id) {
+  if (state.phase === 'IDLE') {
+    return true;
+  }
+
+  if (state.phase !== 'DROP_ANIMATING') {
+    return false;
+  }
+
+  if (state.completed.result.draggableId === id) {
+    return false;
+  }
+
+  return state.completed.result.reason === 'DROP';
+});
+
+var scrollWindow = (function (change) {
+  window.scrollBy(change.x, change.y);
+});
+
+var getScrollableDroppables = memoizeOne(function (droppables) {
+  return toDroppableList(droppables).filter(function (droppable) {
+    if (!droppable.isEnabled) {
+      return false;
+    }
+
+    if (!droppable.frame) {
+      return false;
+    }
+
+    return true;
+  });
+});
+
+var getScrollableDroppableOver = function getScrollableDroppableOver(target, droppables) {
+  var maybe = find(getScrollableDroppables(droppables), function (droppable) {
+    !droppable.frame ? invariant(false) : void 0;
+    return isPositionInFrame(droppable.frame.pageMarginBox)(target);
+  });
+  return maybe;
+};
+
+var getBestScrollableDroppable = (function (_ref) {
+  var center = _ref.center,
+      destination = _ref.destination,
+      droppables = _ref.droppables;
+
+  if (destination) {
+    var _dimension = droppables[destination];
+
+    if (!_dimension.frame) {
+      return null;
+    }
+
+    return _dimension;
+  }
+
+  var dimension = getScrollableDroppableOver(center, droppables);
+  return dimension;
+});
+
+var config = {
+  startFromPercentage: 0.25,
+  maxScrollAtPercentage: 0.05,
+  maxPixelScroll: 28,
+  ease: function ease(percentage) {
+    return Math.pow(percentage, 2);
+  },
+  durationDampening: {
+    stopDampeningAt: 1200,
+    accelerateAt: 360
+  }
+};
+
+var getDistanceThresholds = (function (container, axis) {
+  var startScrollingFrom = container[axis.size] * config.startFromPercentage;
+  var maxScrollValueAt = container[axis.size] * config.maxScrollAtPercentage;
+  var thresholds = {
+    startScrollingFrom: startScrollingFrom,
+    maxScrollValueAt: maxScrollValueAt
+  };
+  return thresholds;
+});
+
+var getPercentage = (function (_ref) {
+  var startOfRange = _ref.startOfRange,
+      endOfRange = _ref.endOfRange,
+      current = _ref.current;
+  var range = endOfRange - startOfRange;
+
+  if (range === 0) {
+    return 0;
+  }
+
+  var currentInRange = current - startOfRange;
+  var percentage = currentInRange / range;
+  return percentage;
+});
+
+var minScroll = 1;
+
+var getValueFromDistance = (function (distanceToEdge, thresholds) {
+  if (distanceToEdge > thresholds.startScrollingFrom) {
+    return 0;
+  }
+
+  if (distanceToEdge <= thresholds.maxScrollValueAt) {
+    return config.maxPixelScroll;
+  }
+
+  if (distanceToEdge === thresholds.startScrollingFrom) {
+    return minScroll;
+  }
+
+  var percentageFromMaxScrollValueAt = getPercentage({
+    startOfRange: thresholds.maxScrollValueAt,
+    endOfRange: thresholds.startScrollingFrom,
+    current: distanceToEdge
+  });
+  var percentageFromStartScrollingFrom = 1 - percentageFromMaxScrollValueAt;
+  var scroll = config.maxPixelScroll * config.ease(percentageFromStartScrollingFrom);
+  return Math.ceil(scroll);
+});
+
+var accelerateAt = config.durationDampening.accelerateAt;
+var stopAt = config.durationDampening.stopDampeningAt;
+var dampenValueByTime = (function (proposedScroll, dragStartTime) {
+  var startOfRange = dragStartTime;
+  var endOfRange = stopAt;
+  var now = Date.now();
+  var runTime = now - startOfRange;
+
+  if (runTime >= stopAt) {
+    return proposedScroll;
+  }
+
+  if (runTime < accelerateAt) {
+    return minScroll;
+  }
+
+  var betweenAccelerateAtAndStopAtPercentage = getPercentage({
+    startOfRange: accelerateAt,
+    endOfRange: endOfRange,
+    current: runTime
+  });
+  var scroll = proposedScroll * config.ease(betweenAccelerateAtAndStopAtPercentage);
+  return Math.ceil(scroll);
+});
+
+var getValue = (function (_ref) {
+  var distanceToEdge = _ref.distanceToEdge,
+      thresholds = _ref.thresholds,
+      dragStartTime = _ref.dragStartTime,
+      shouldUseTimeDampening = _ref.shouldUseTimeDampening;
+  var scroll = getValueFromDistance(distanceToEdge, thresholds);
+
+  if (scroll === 0) {
+    return 0;
+  }
+
+  if (!shouldUseTimeDampening) {
+    return scroll;
+  }
+
+  return Math.max(dampenValueByTime(scroll, dragStartTime), minScroll);
+});
+
+var getScrollOnAxis = (function (_ref) {
+  var container = _ref.container,
+      distanceToEdges = _ref.distanceToEdges,
+      dragStartTime = _ref.dragStartTime,
+      axis = _ref.axis,
+      shouldUseTimeDampening = _ref.shouldUseTimeDampening;
+  var thresholds = getDistanceThresholds(container, axis);
+  var isCloserToEnd = distanceToEdges[axis.end] < distanceToEdges[axis.start];
+
+  if (isCloserToEnd) {
+    return getValue({
+      distanceToEdge: distanceToEdges[axis.end],
+      thresholds: thresholds,
+      dragStartTime: dragStartTime,
+      shouldUseTimeDampening: shouldUseTimeDampening
+    });
+  }
+
+  return -1 * getValue({
+    distanceToEdge: distanceToEdges[axis.start],
+    thresholds: thresholds,
+    dragStartTime: dragStartTime,
+    shouldUseTimeDampening: shouldUseTimeDampening
+  });
+});
+
+var adjustForSizeLimits = (function (_ref) {
+  var container = _ref.container,
+      subject = _ref.subject,
+      proposedScroll = _ref.proposedScroll;
+  var isTooBigVertically = subject.height > container.height;
+  var isTooBigHorizontally = subject.width > container.width;
+
+  if (!isTooBigHorizontally && !isTooBigVertically) {
+    return proposedScroll;
+  }
+
+  if (isTooBigHorizontally && isTooBigVertically) {
+    return null;
+  }
+
+  return {
+    x: isTooBigHorizontally ? 0 : proposedScroll.x,
+    y: isTooBigVertically ? 0 : proposedScroll.y
+  };
+});
+
+var clean$2 = apply(function (value) {
+  return value === 0 ? 0 : value;
+});
+var getScroll = (function (_ref) {
+  var dragStartTime = _ref.dragStartTime,
+      container = _ref.container,
+      subject = _ref.subject,
+      center = _ref.center,
+      shouldUseTimeDampening = _ref.shouldUseTimeDampening;
+  var distanceToEdges = {
+    top: center.y - container.top,
+    right: container.right - center.x,
+    bottom: container.bottom - center.y,
+    left: center.x - container.left
+  };
+  var y = getScrollOnAxis({
+    container: container,
+    distanceToEdges: distanceToEdges,
+    dragStartTime: dragStartTime,
+    axis: vertical,
+    shouldUseTimeDampening: shouldUseTimeDampening
+  });
+  var x = getScrollOnAxis({
+    container: container,
+    distanceToEdges: distanceToEdges,
+    dragStartTime: dragStartTime,
+    axis: horizontal,
+    shouldUseTimeDampening: shouldUseTimeDampening
+  });
+  var required = clean$2({
+    x: x,
+    y: y
+  });
+
+  if (isEqual(required, origin)) {
+    return null;
+  }
+
+  var limited = adjustForSizeLimits({
+    container: container,
+    subject: subject,
+    proposedScroll: required
+  });
+
+  if (!limited) {
+    return null;
+  }
+
+  return isEqual(limited, origin) ? null : limited;
+});
+
+var smallestSigned = apply(function (value) {
+  if (value === 0) {
+    return 0;
+  }
+
+  return value > 0 ? 1 : -1;
+});
+var getOverlap = function () {
+  var getRemainder = function getRemainder(target, max) {
+    if (target < 0) {
+      return target;
+    }
+
+    if (target > max) {
+      return target - max;
+    }
+
+    return 0;
+  };
+
+  return function (_ref) {
+    var current = _ref.current,
+        max = _ref.max,
+        change = _ref.change;
+    var targetScroll = add(current, change);
+    var overlap = {
+      x: getRemainder(targetScroll.x, max.x),
+      y: getRemainder(targetScroll.y, max.y)
+    };
+
+    if (isEqual(overlap, origin)) {
+      return null;
+    }
+
+    return overlap;
+  };
+}();
+var canPartiallyScroll = function canPartiallyScroll(_ref2) {
+  var rawMax = _ref2.max,
+      current = _ref2.current,
+      change = _ref2.change;
+  var max = {
+    x: Math.max(current.x, rawMax.x),
+    y: Math.max(current.y, rawMax.y)
+  };
+  var smallestChange = smallestSigned(change);
+  var overlap = getOverlap({
+    max: max,
+    current: current,
+    change: smallestChange
+  });
+
+  if (!overlap) {
+    return true;
+  }
+
+  if (smallestChange.x !== 0 && overlap.x === 0) {
+    return true;
+  }
+
+  if (smallestChange.y !== 0 && overlap.y === 0) {
+    return true;
+  }
+
+  return false;
+};
+var canScrollWindow = function canScrollWindow(viewport, change) {
+  return canPartiallyScroll({
+    current: viewport.scroll.current,
+    max: viewport.scroll.max,
+    change: change
+  });
+};
+var getWindowOverlap = function getWindowOverlap(viewport, change) {
+  if (!canScrollWindow(viewport, change)) {
+    return null;
+  }
+
+  var max = viewport.scroll.max;
+  var current = viewport.scroll.current;
+  return getOverlap({
+    current: current,
+    max: max,
+    change: change
+  });
+};
+var canScrollDroppable = function canScrollDroppable(droppable, change) {
+  var frame = droppable.frame;
+
+  if (!frame) {
+    return false;
+  }
+
+  return canPartiallyScroll({
+    current: frame.scroll.current,
+    max: frame.scroll.max,
+    change: change
+  });
+};
+var getDroppableOverlap = function getDroppableOverlap(droppable, change) {
+  var frame = droppable.frame;
+
+  if (!frame) {
+    return null;
+  }
+
+  if (!canScrollDroppable(droppable, change)) {
+    return null;
+  }
+
+  return getOverlap({
+    current: frame.scroll.current,
+    max: frame.scroll.max,
+    change: change
+  });
+};
+
+var getWindowScrollChange = (function (_ref) {
+  var viewport = _ref.viewport,
+      subject = _ref.subject,
+      center = _ref.center,
+      dragStartTime = _ref.dragStartTime,
+      shouldUseTimeDampening = _ref.shouldUseTimeDampening;
+  var scroll = getScroll({
+    dragStartTime: dragStartTime,
+    container: viewport.frame,
+    subject: subject,
+    center: center,
+    shouldUseTimeDampening: shouldUseTimeDampening
+  });
+  return scroll && canScrollWindow(viewport, scroll) ? scroll : null;
+});
+
+var getDroppableScrollChange = (function (_ref) {
+  var droppable = _ref.droppable,
+      subject = _ref.subject,
+      center = _ref.center,
+      dragStartTime = _ref.dragStartTime,
+      shouldUseTimeDampening = _ref.shouldUseTimeDampening;
+  var frame = droppable.frame;
+
+  if (!frame) {
+    return null;
+  }
+
+  var scroll = getScroll({
+    dragStartTime: dragStartTime,
+    container: frame.pageMarginBox,
+    subject: subject,
+    center: center,
+    shouldUseTimeDampening: shouldUseTimeDampening
+  });
+  return scroll && canScrollDroppable(droppable, scroll) ? scroll : null;
+});
+
+var scroll$1 = (function (_ref) {
+  var state = _ref.state,
+      dragStartTime = _ref.dragStartTime,
+      shouldUseTimeDampening = _ref.shouldUseTimeDampening,
+      scrollWindow = _ref.scrollWindow,
+      scrollDroppable = _ref.scrollDroppable;
+  var center = state.current.page.borderBoxCenter;
+  var draggable = state.dimensions.draggables[state.critical.draggable.id];
+  var subject = draggable.page.marginBox;
+
+  if (state.isWindowScrollAllowed) {
+    var viewport = state.viewport;
+
+    var _change = getWindowScrollChange({
+      dragStartTime: dragStartTime,
+      viewport: viewport,
+      subject: subject,
+      center: center,
+      shouldUseTimeDampening: shouldUseTimeDampening
+    });
+
+    if (_change) {
+      scrollWindow(_change);
+      return;
+    }
+  }
+
+  var droppable = getBestScrollableDroppable({
+    center: center,
+    destination: whatIsDraggedOver(state.impact),
+    droppables: state.dimensions.droppables
+  });
+
+  if (!droppable) {
+    return;
+  }
+
+  var change = getDroppableScrollChange({
+    dragStartTime: dragStartTime,
+    droppable: droppable,
+    subject: subject,
+    center: center,
+    shouldUseTimeDampening: shouldUseTimeDampening
+  });
+
+  if (change) {
+    scrollDroppable(droppable.descriptor.id, change);
+  }
+});
+
+var createFluidScroller = (function (_ref) {
+  var scrollWindow = _ref.scrollWindow,
+      scrollDroppable = _ref.scrollDroppable;
+  var scheduleWindowScroll = rafSchd$1(scrollWindow);
+  var scheduleDroppableScroll = rafSchd$1(scrollDroppable);
+  var dragging = null;
+
+  var tryScroll = function tryScroll(state) {
+    !dragging ? invariant(false) : void 0;
+    var _dragging = dragging,
+        shouldUseTimeDampening = _dragging.shouldUseTimeDampening,
+        dragStartTime = _dragging.dragStartTime;
+    scroll$1({
+      state: state,
+      scrollWindow: scheduleWindowScroll,
+      scrollDroppable: scheduleDroppableScroll,
+      dragStartTime: dragStartTime,
+      shouldUseTimeDampening: shouldUseTimeDampening
+    });
+  };
+
+  var start$1 = function start$1(state) {
+    !!dragging ? invariant(false) : void 0;
+    var dragStartTime = Date.now();
+    var wasScrollNeeded = false;
+
+    var fakeScrollCallback = function fakeScrollCallback() {
+      wasScrollNeeded = true;
+    };
+
+    scroll$1({
+      state: state,
+      dragStartTime: 0,
+      shouldUseTimeDampening: false,
+      scrollWindow: fakeScrollCallback,
+      scrollDroppable: fakeScrollCallback
+    });
+    dragging = {
+      dragStartTime: dragStartTime,
+      shouldUseTimeDampening: wasScrollNeeded
+    };
+
+    if (wasScrollNeeded) {
+      tryScroll(state);
+    }
+  };
+
+  var stop = function stop() {
+    if (!dragging) {
+      return;
+    }
+
+    scheduleWindowScroll.cancel();
+    scheduleDroppableScroll.cancel();
+    dragging = null;
+  };
+
+  return {
+    start: start$1,
+    stop: stop,
+    scroll: tryScroll
+  };
+});
+
+var createJumpScroller = (function (_ref) {
+  var move = _ref.move,
+      scrollDroppable = _ref.scrollDroppable,
+      scrollWindow = _ref.scrollWindow;
+
+  var moveByOffset = function moveByOffset(state, offset) {
+    var client = add(state.current.client.selection, offset);
+    move({
+      client: client
+    });
+  };
+
+  var scrollDroppableAsMuchAsItCan = function scrollDroppableAsMuchAsItCan(droppable, change) {
+    if (!canScrollDroppable(droppable, change)) {
+      return change;
+    }
+
+    var overlap = getDroppableOverlap(droppable, change);
+
+    if (!overlap) {
+      scrollDroppable(droppable.descriptor.id, change);
+      return null;
+    }
+
+    var whatTheDroppableCanScroll = subtract(change, overlap);
+    scrollDroppable(droppable.descriptor.id, whatTheDroppableCanScroll);
+    var remainder = subtract(change, whatTheDroppableCanScroll);
+    return remainder;
+  };
+
+  var scrollWindowAsMuchAsItCan = function scrollWindowAsMuchAsItCan(isWindowScrollAllowed, viewport, change) {
+    if (!isWindowScrollAllowed) {
+      return change;
+    }
+
+    if (!canScrollWindow(viewport, change)) {
+      return change;
+    }
+
+    var overlap = getWindowOverlap(viewport, change);
+
+    if (!overlap) {
+      scrollWindow(change);
+      return null;
+    }
+
+    var whatTheWindowCanScroll = subtract(change, overlap);
+    scrollWindow(whatTheWindowCanScroll);
+    var remainder = subtract(change, whatTheWindowCanScroll);
+    return remainder;
+  };
+
+  var jumpScroller = function jumpScroller(state) {
+    var request = state.scrollJumpRequest;
+
+    if (!request) {
+      return;
+    }
+
+    var destination = whatIsDraggedOver(state.impact);
+    !destination ? invariant(false) : void 0;
+    var droppableRemainder = scrollDroppableAsMuchAsItCan(state.dimensions.droppables[destination], request);
+
+    if (!droppableRemainder) {
+      return;
+    }
+
+    var viewport = state.viewport;
+    var windowRemainder = scrollWindowAsMuchAsItCan(state.isWindowScrollAllowed, viewport, droppableRemainder);
+
+    if (!windowRemainder) {
+      return;
+    }
+
+    moveByOffset(state, windowRemainder);
+  };
+
+  return jumpScroller;
+});
+
+var createAutoScroller = (function (_ref) {
+  var scrollDroppable = _ref.scrollDroppable,
+      scrollWindow = _ref.scrollWindow,
+      move = _ref.move;
+  var fluidScroller = createFluidScroller({
+    scrollWindow: scrollWindow,
+    scrollDroppable: scrollDroppable
+  });
+  var jumpScroll = createJumpScroller({
+    move: move,
+    scrollWindow: scrollWindow,
+    scrollDroppable: scrollDroppable
+  });
+
+  var scroll = function scroll(state) {
+    if (state.phase !== 'DRAGGING') {
+      return;
+    }
+
+    if (state.movementMode === 'FLUID') {
+      fluidScroller.scroll(state);
+      return;
+    }
+
+    if (!state.scrollJumpRequest) {
+      return;
+    }
+
+    jumpScroll(state);
+  };
+
+  var scroller = {
+    scroll: scroll,
+    start: fluidScroller.start,
+    stop: fluidScroller.stop
+  };
+  return scroller;
+});
+
+var prefix$1 = 'data-rbd';
+var dragHandle = function () {
+  var base = prefix$1 + "-drag-handle";
+  return {
+    base: base,
+    draggableId: base + "-draggable-id",
+    contextId: base + "-context-id"
+  };
+}();
+var draggable = function () {
+  var base = prefix$1 + "-draggable";
+  return {
+    base: base,
+    contextId: base + "-context-id",
+    id: base + "-id"
+  };
+}();
+var droppable = function () {
+  var base = prefix$1 + "-droppable";
+  return {
+    base: base,
+    contextId: base + "-context-id",
+    id: base + "-id"
+  };
+}();
+var scrollContainer = {
+  contextId: prefix$1 + "-scroll-container-context-id"
+};
+
+var makeGetSelector = function makeGetSelector(context) {
+  return function (attribute) {
+    return "[" + attribute + "=\"" + context + "\"]";
+  };
+};
+
+var getStyles = function getStyles(rules, property) {
+  return rules.map(function (rule) {
+    var value = rule.styles[property];
+
+    if (!value) {
+      return '';
+    }
+
+    return rule.selector + " { " + value + " }";
+  }).join(' ');
+};
+
+var noPointerEvents = 'pointer-events: none;';
+var getStyles$1 = (function (contextId) {
+  var getSelector = makeGetSelector(contextId);
+
+  var dragHandle$1 = function () {
+    var grabCursor = "\n      cursor: -webkit-grab;\n      cursor: grab;\n    ";
+    return {
+      selector: getSelector(dragHandle.contextId),
+      styles: {
+        always: "\n          -webkit-touch-callout: none;\n          -webkit-tap-highlight-color: rgba(0,0,0,0);\n          touch-action: manipulation;\n        ",
+        resting: grabCursor,
+        dragging: noPointerEvents,
+        dropAnimating: grabCursor
+      }
+    };
+  }();
+
+  var draggable$1 = function () {
+    var transition = "\n      transition: " + transitions.outOfTheWay + ";\n    ";
+    return {
+      selector: getSelector(draggable.contextId),
+      styles: {
+        dragging: transition,
+        dropAnimating: transition,
+        userCancel: transition
+      }
+    };
+  }();
+
+  var droppable$1 = {
+    selector: getSelector(droppable.contextId),
+    styles: {
+      always: "overflow-anchor: none;"
+    }
+  };
+  var body = {
+    selector: 'body',
+    styles: {
+      dragging: "\n        cursor: grabbing;\n        cursor: -webkit-grabbing;\n        user-select: none;\n        -webkit-user-select: none;\n        -moz-user-select: none;\n        -ms-user-select: none;\n        overflow-anchor: none;\n      "
+    }
+  };
+  var rules = [draggable$1, dragHandle$1, droppable$1, body];
+  return {
+    always: getStyles(rules, 'always'),
+    resting: getStyles(rules, 'resting'),
+    dragging: getStyles(rules, 'dragging'),
+    dropAnimating: getStyles(rules, 'dropAnimating'),
+    userCancel: getStyles(rules, 'userCancel')
+  };
+});
+
+var useIsomorphicLayoutEffect = typeof window !== 'undefined' && typeof window.document !== 'undefined' && typeof window.document.createElement !== 'undefined' ? useLayoutEffect : useEffect;
+
+var getHead = function getHead() {
+  var head = document.querySelector('head');
+  !head ? invariant(false) : void 0;
+  return head;
+};
+
+var createStyleEl = function createStyleEl(nonce) {
+  var el = document.createElement('style');
+
+  if (nonce) {
+    el.setAttribute('nonce', nonce);
+  }
+
+  el.type = 'text/css';
+  return el;
+};
+
+function useStyleMarshal(contextId, nonce) {
+  var styles = useMemo(function () {
+    return getStyles$1(contextId);
+  }, [contextId]);
+  var alwaysRef = useRef(null);
+  var dynamicRef = useRef(null);
+  var setDynamicStyle = useCallback(memoizeOne(function (proposed) {
+    var el = dynamicRef.current;
+    !el ? invariant(false) : void 0;
+    el.textContent = proposed;
+  }), []);
+  var setAlwaysStyle = useCallback(function (proposed) {
+    var el = alwaysRef.current;
+    !el ? invariant(false) : void 0;
+    el.textContent = proposed;
+  }, []);
+  useIsomorphicLayoutEffect(function () {
+    !(!alwaysRef.current && !dynamicRef.current) ? invariant(false) : void 0;
+    var always = createStyleEl(nonce);
+    var dynamic = createStyleEl(nonce);
+    alwaysRef.current = always;
+    dynamicRef.current = dynamic;
+    always.setAttribute(prefix$1 + "-always", contextId);
+    dynamic.setAttribute(prefix$1 + "-dynamic", contextId);
+    getHead().appendChild(always);
+    getHead().appendChild(dynamic);
+    setAlwaysStyle(styles.always);
+    setDynamicStyle(styles.resting);
+    return function () {
+      var remove = function remove(ref) {
+        var current = ref.current;
+        !current ? invariant(false) : void 0;
+        getHead().removeChild(current);
+        ref.current = null;
+      };
+
+      remove(alwaysRef);
+      remove(dynamicRef);
+    };
+  }, [nonce, setAlwaysStyle, setDynamicStyle, styles.always, styles.resting, contextId]);
+  var dragging = useCallback(function () {
+    return setDynamicStyle(styles.dragging);
+  }, [setDynamicStyle, styles.dragging]);
+  var dropping = useCallback(function (reason) {
+    if (reason === 'DROP') {
+      setDynamicStyle(styles.dropAnimating);
+      return;
+    }
+
+    setDynamicStyle(styles.userCancel);
+  }, [setDynamicStyle, styles.dropAnimating, styles.userCancel]);
+  var resting = useCallback(function () {
+    if (!dynamicRef.current) {
+      return;
+    }
+
+    setDynamicStyle(styles.resting);
+  }, [setDynamicStyle, styles.resting]);
+  var marshal = useMemo(function () {
+    return {
+      dragging: dragging,
+      dropping: dropping,
+      resting: resting
+    };
+  }, [dragging, dropping, resting]);
+  return marshal;
+}
+
+var getWindowFromEl = (function (el) {
+  return el && el.ownerDocument ? el.ownerDocument.defaultView : window;
+});
+
+function isHtmlElement(el) {
+  return el instanceof getWindowFromEl(el).HTMLElement;
+}
+
+function findDragHandle(contextId, draggableId) {
+  var selector = "[" + dragHandle.contextId + "=\"" + contextId + "\"]";
+  var possible = toArray(document.querySelectorAll(selector));
+
+  if (!possible.length) {
+    return null;
+  }
+
+  var handle = find(possible, function (el) {
+    return el.getAttribute(dragHandle.draggableId) === draggableId;
+  });
+
+  if (!handle) {
+    return null;
+  }
+
+  if (!isHtmlElement(handle)) {
+    return null;
+  }
+
+  return handle;
+}
+
+function useFocusMarshal(contextId) {
+  var entriesRef = useRef({});
+  var recordRef = useRef(null);
+  var restoreFocusFrameRef = useRef(null);
+  var isMountedRef = useRef(false);
+  var register = useCallback(function register(id, focus) {
+    var entry = {
+      id: id,
+      focus: focus
+    };
+    entriesRef.current[id] = entry;
+    return function unregister() {
+      var entries = entriesRef.current;
+      var current = entries[id];
+
+      if (current !== entry) {
+        delete entries[id];
+      }
+    };
+  }, []);
+  var tryGiveFocus = useCallback(function tryGiveFocus(tryGiveFocusTo) {
+    var handle = findDragHandle(contextId, tryGiveFocusTo);
+
+    if (handle && handle !== document.activeElement) {
+      handle.focus();
+    }
+  }, [contextId]);
+  var tryShiftRecord = useCallback(function tryShiftRecord(previous, redirectTo) {
+    if (recordRef.current === previous) {
+      recordRef.current = redirectTo;
+    }
+  }, []);
+  var tryRestoreFocusRecorded = useCallback(function tryRestoreFocusRecorded() {
+    if (restoreFocusFrameRef.current) {
+      return;
+    }
+
+    if (!isMountedRef.current) {
+      return;
+    }
+
+    restoreFocusFrameRef.current = requestAnimationFrame(function () {
+      restoreFocusFrameRef.current = null;
+      var record = recordRef.current;
+
+      if (record) {
+        tryGiveFocus(record);
+      }
+    });
+  }, [tryGiveFocus]);
+  var tryRecordFocus = useCallback(function tryRecordFocus(id) {
+    recordRef.current = null;
+    var focused = document.activeElement;
+
+    if (!focused) {
+      return;
+    }
+
+    if (focused.getAttribute(dragHandle.draggableId) !== id) {
+      return;
+    }
+
+    recordRef.current = id;
+  }, []);
+  useIsomorphicLayoutEffect(function () {
+    isMountedRef.current = true;
+    return function clearFrameOnUnmount() {
+      isMountedRef.current = false;
+      var frameId = restoreFocusFrameRef.current;
+
+      if (frameId) {
+        cancelAnimationFrame(frameId);
+      }
+    };
+  }, []);
+  var marshal = useMemo(function () {
+    return {
+      register: register,
+      tryRecordFocus: tryRecordFocus,
+      tryRestoreFocusRecorded: tryRestoreFocusRecorded,
+      tryShiftRecord: tryShiftRecord
+    };
+  }, [register, tryRecordFocus, tryRestoreFocusRecorded, tryShiftRecord]);
+  return marshal;
+}
+
+function createRegistry() {
+  var entries = {
+    draggables: {},
+    droppables: {}
+  };
+  var subscribers = [];
+
+  function subscribe(cb) {
+    subscribers.push(cb);
+    return function unsubscribe() {
+      var index = subscribers.indexOf(cb);
+
+      if (index === -1) {
+        return;
+      }
+
+      subscribers.splice(index, 1);
+    };
+  }
+
+  function notify(event) {
+    if (subscribers.length) {
+      subscribers.forEach(function (cb) {
+        return cb(event);
+      });
+    }
+  }
+
+  function findDraggableById(id) {
+    return entries.draggables[id] || null;
+  }
+
+  function getDraggableById(id) {
+    var entry = findDraggableById(id);
+    !entry ? invariant(false) : void 0;
+    return entry;
+  }
+
+  var draggableAPI = {
+    register: function register(entry) {
+      entries.draggables[entry.descriptor.id] = entry;
+      notify({
+        type: 'ADDITION',
+        value: entry
+      });
+    },
+    update: function update(entry, last) {
+      var current = entries.draggables[last.descriptor.id];
+
+      if (!current) {
+        return;
+      }
+
+      if (current.uniqueId !== entry.uniqueId) {
+        return;
+      }
+
+      delete entries.draggables[last.descriptor.id];
+      entries.draggables[entry.descriptor.id] = entry;
+    },
+    unregister: function unregister(entry) {
+      var draggableId = entry.descriptor.id;
+      var current = findDraggableById(draggableId);
+
+      if (!current) {
+        return;
+      }
+
+      if (entry.uniqueId !== current.uniqueId) {
+        return;
+      }
+
+      delete entries.draggables[draggableId];
+      notify({
+        type: 'REMOVAL',
+        value: entry
+      });
+    },
+    getById: getDraggableById,
+    findById: findDraggableById,
+    exists: function exists(id) {
+      return Boolean(findDraggableById(id));
+    },
+    getAllByType: function getAllByType(type) {
+      return values(entries.draggables).filter(function (entry) {
+        return entry.descriptor.type === type;
+      });
+    }
+  };
+
+  function findDroppableById(id) {
+    return entries.droppables[id] || null;
+  }
+
+  function getDroppableById(id) {
+    var entry = findDroppableById(id);
+    !entry ? invariant(false) : void 0;
+    return entry;
+  }
+
+  var droppableAPI = {
+    register: function register(entry) {
+      entries.droppables[entry.descriptor.id] = entry;
+    },
+    unregister: function unregister(entry) {
+      var current = findDroppableById(entry.descriptor.id);
+
+      if (!current) {
+        return;
+      }
+
+      if (entry.uniqueId !== current.uniqueId) {
+        return;
+      }
+
+      delete entries.droppables[entry.descriptor.id];
+    },
+    getById: getDroppableById,
+    findById: findDroppableById,
+    exists: function exists(id) {
+      return Boolean(findDroppableById(id));
+    },
+    getAllByType: function getAllByType(type) {
+      return values(entries.droppables).filter(function (entry) {
+        return entry.descriptor.type === type;
+      });
+    }
+  };
+
+  function clean() {
+    entries.draggables = {};
+    entries.droppables = {};
+    subscribers.length = 0;
+  }
+
+  return {
+    draggable: draggableAPI,
+    droppable: droppableAPI,
+    subscribe: subscribe,
+    clean: clean
+  };
+}
+
+function useRegistry() {
+  var registry = useMemo(createRegistry, []);
+  useEffect(function () {
+    return function unmount() {
+      requestAnimationFrame(registry.clean);
+    };
+  }, [registry]);
+  return registry;
+}
+
+var StoreContext = React__default.createContext(null);
+
+var getBodyElement = (function () {
+  var body = document.body;
+  !body ? invariant(false) : void 0;
+  return body;
+});
+
+var visuallyHidden = {
+  position: 'absolute',
+  width: '1px',
+  height: '1px',
+  margin: '-1px',
+  border: '0',
+  padding: '0',
+  overflow: 'hidden',
+  clip: 'rect(0 0 0 0)',
+  'clip-path': 'inset(100%)'
+};
+
+var getId = function getId(contextId) {
+  return "rbd-announcement-" + contextId;
+};
+function useAnnouncer(contextId) {
+  var id = useMemo(function () {
+    return getId(contextId);
+  }, [contextId]);
+  var ref = useRef(null);
+  useEffect(function setup() {
+    var el = document.createElement('div');
+    ref.current = el;
+    el.id = id;
+    el.setAttribute('aria-live', 'assertive');
+    el.setAttribute('aria-atomic', 'true');
+
+    _extends(el.style, visuallyHidden);
+
+    getBodyElement().appendChild(el);
+    return function cleanup() {
+      setTimeout(function remove() {
+        var body = getBodyElement();
+
+        if (body.contains(el)) {
+          body.removeChild(el);
+        }
+
+        if (el === ref.current) {
+          ref.current = null;
+        }
+      });
+    };
+  }, [id]);
+  var announce = useCallback(function (message) {
+    var el = ref.current;
+
+    if (el) {
+      el.textContent = message;
+      return;
+    }
+  }, []);
+  return announce;
+}
+
+var count = 0;
+var defaults = {
+  separator: '::'
+};
+function useUniqueId(prefix, options) {
+  if (options === void 0) {
+    options = defaults;
+  }
+
+  return useMemo(function () {
+    return "" + prefix + options.separator + count++;
+  }, [options.separator, prefix]);
+}
+
+function getElementId(_ref) {
+  var contextId = _ref.contextId,
+      uniqueId = _ref.uniqueId;
+  return "rbd-hidden-text-" + contextId + "-" + uniqueId;
+}
+function useHiddenTextElement(_ref2) {
+  var contextId = _ref2.contextId,
+      text = _ref2.text;
+  var uniqueId = useUniqueId('hidden-text', {
+    separator: '-'
+  });
+  var id = useMemo(function () {
+    return getElementId({
+      contextId: contextId,
+      uniqueId: uniqueId
+    });
+  }, [uniqueId, contextId]);
+  useEffect(function mount() {
+    var el = document.createElement('div');
+    el.id = id;
+    el.textContent = text;
+    el.style.display = 'none';
+    getBodyElement().appendChild(el);
+    return function unmount() {
+      var body = getBodyElement();
+
+      if (body.contains(el)) {
+        body.removeChild(el);
+      }
+    };
+  }, [id, text]);
+  return id;
+}
+
+var AppContext = React__default.createContext(null);
+
+function usePrevious(current) {
+  var ref = useRef(current);
+  useEffect(function () {
+    ref.current = current;
+  });
+  return ref;
+}
+
+function create() {
+  var lock = null;
+
+  function isClaimed() {
+    return Boolean(lock);
+  }
+
+  function isActive(value) {
+    return value === lock;
+  }
+
+  function claim(abandon) {
+    !!lock ? invariant(false) : void 0;
+    var newLock = {
+      abandon: abandon
+    };
+    lock = newLock;
+    return newLock;
+  }
+
+  function release() {
+    !lock ? invariant(false) : void 0;
+    lock = null;
+  }
+
+  function tryAbandon() {
+    if (lock) {
+      lock.abandon();
+      release();
+    }
+  }
+
+  return {
+    isClaimed: isClaimed,
+    isActive: isActive,
+    claim: claim,
+    release: release,
+    tryAbandon: tryAbandon
+  };
+}
+
+var tab = 9;
+var enter = 13;
+var escape = 27;
+var space = 32;
+var pageUp = 33;
+var pageDown = 34;
+var end = 35;
+var home = 36;
+var arrowLeft = 37;
+var arrowUp = 38;
+var arrowRight = 39;
+var arrowDown = 40;
+
+var _preventedKeys;
+var preventedKeys = (_preventedKeys = {}, _preventedKeys[enter] = true, _preventedKeys[tab] = true, _preventedKeys);
+var preventStandardKeyEvents = (function (event) {
+  if (preventedKeys[event.keyCode]) {
+    event.preventDefault();
+  }
+});
+
+var supportedEventName = function () {
+  var base = 'visibilitychange';
+
+  if (typeof document === 'undefined') {
+    return base;
+  }
+
+  var candidates = [base, "ms" + base, "webkit" + base, "moz" + base, "o" + base];
+  var supported = find(candidates, function (eventName) {
+    return "on" + eventName in document;
+  });
+  return supported || base;
+}();
+
+var primaryButton = 0;
+var sloppyClickThreshold = 5;
+
+function isSloppyClickThresholdExceeded(original, current) {
+  return Math.abs(current.x - original.x) >= sloppyClickThreshold || Math.abs(current.y - original.y) >= sloppyClickThreshold;
+}
+
+var idle$1 = {
+  type: 'IDLE'
+};
+
+function getCaptureBindings(_ref) {
+  var cancel = _ref.cancel,
+      completed = _ref.completed,
+      getPhase = _ref.getPhase,
+      setPhase = _ref.setPhase;
+  return [{
+    eventName: 'mousemove',
+    fn: function fn(event) {
+      var button = event.button,
+          clientX = event.clientX,
+          clientY = event.clientY;
+
+      if (button !== primaryButton) {
+        return;
+      }
+
+      var point = {
+        x: clientX,
+        y: clientY
+      };
+      var phase = getPhase();
+
+      if (phase.type === 'DRAGGING') {
+        event.preventDefault();
+        phase.actions.move(point);
+        return;
+      }
+
+      !(phase.type === 'PENDING') ? invariant(false) : void 0;
+      var pending = phase.point;
+
+      if (!isSloppyClickThresholdExceeded(pending, point)) {
+        return;
+      }
+
+      event.preventDefault();
+      var actions = phase.actions.fluidLift(point);
+      setPhase({
+        type: 'DRAGGING',
+        actions: actions
+      });
+    }
+  }, {
+    eventName: 'mouseup',
+    fn: function fn(event) {
+      var phase = getPhase();
+
+      if (phase.type !== 'DRAGGING') {
+        cancel();
+        return;
+      }
+
+      event.preventDefault();
+      phase.actions.drop({
+        shouldBlockNextClick: true
+      });
+      completed();
+    }
+  }, {
+    eventName: 'mousedown',
+    fn: function fn(event) {
+      if (getPhase().type === 'DRAGGING') {
+        event.preventDefault();
+      }
+
+      cancel();
+    }
+  }, {
+    eventName: 'keydown',
+    fn: function fn(event) {
+      var phase = getPhase();
+
+      if (phase.type === 'PENDING') {
+        cancel();
+        return;
+      }
+
+      if (event.keyCode === escape) {
+        event.preventDefault();
+        cancel();
+        return;
+      }
+
+      preventStandardKeyEvents(event);
+    }
+  }, {
+    eventName: 'resize',
+    fn: cancel
+  }, {
+    eventName: 'scroll',
+    options: {
+      passive: true,
+      capture: false
+    },
+    fn: function fn() {
+      if (getPhase().type === 'PENDING') {
+        cancel();
+      }
+    }
+  }, {
+    eventName: 'webkitmouseforcedown',
+    fn: function fn(event) {
+      var phase = getPhase();
+      !(phase.type !== 'IDLE') ? invariant(false) : void 0;
+
+      if (phase.actions.shouldRespectForcePress()) {
+        cancel();
+        return;
+      }
+
+      event.preventDefault();
+    }
+  }, {
+    eventName: supportedEventName,
+    fn: cancel
+  }];
+}
+
+function useMouseSensor(api) {
+  var phaseRef = useRef(idle$1);
+  var unbindEventsRef = useRef(noop);
+  var startCaptureBinding = useMemo(function () {
+    return {
+      eventName: 'mousedown',
+      fn: function onMouseDown(event) {
+        if (event.defaultPrevented) {
+          return;
+        }
+
+        if (event.button !== primaryButton) {
+          return;
+        }
+
+        if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) {
+          return;
+        }
+
+        var draggableId = api.findClosestDraggableId(event);
+
+        if (!draggableId) {
+          return;
+        }
+
+        var actions = api.tryGetLock(draggableId, stop, {
+          sourceEvent: event
+        });
+
+        if (!actions) {
+          return;
+        }
+
+        event.preventDefault();
+        var point = {
+          x: event.clientX,
+          y: event.clientY
+        };
+        unbindEventsRef.current();
+        startPendingDrag(actions, point);
+      }
+    };
+  }, [api]);
+  var preventForcePressBinding = useMemo(function () {
+    return {
+      eventName: 'webkitmouseforcewillbegin',
+      fn: function fn(event) {
+        if (event.defaultPrevented) {
+          return;
+        }
+
+        var id = api.findClosestDraggableId(event);
+
+        if (!id) {
+          return;
+        }
+
+        var options = api.findOptionsForDraggable(id);
+
+        if (!options) {
+          return;
+        }
+
+        if (options.shouldRespectForcePress) {
+          return;
+        }
+
+        if (!api.canGetLock(id)) {
+          return;
+        }
+
+        event.preventDefault();
+      }
+    };
+  }, [api]);
+  var listenForCapture = useCallback(function listenForCapture() {
+    var options = {
+      passive: false,
+      capture: true
+    };
+    unbindEventsRef.current = bindEvents(window, [preventForcePressBinding, startCaptureBinding], options);
+  }, [preventForcePressBinding, startCaptureBinding]);
+  var stop = useCallback(function () {
+    var current = phaseRef.current;
+
+    if (current.type === 'IDLE') {
+      return;
+    }
+
+    phaseRef.current = idle$1;
+    unbindEventsRef.current();
+    listenForCapture();
+  }, [listenForCapture]);
+  var cancel = useCallback(function () {
+    var phase = phaseRef.current;
+    stop();
+
+    if (phase.type === 'DRAGGING') {
+      phase.actions.cancel({
+        shouldBlockNextClick: true
+      });
+    }
+
+    if (phase.type === 'PENDING') {
+      phase.actions.abort();
+    }
+  }, [stop]);
+  var bindCapturingEvents = useCallback(function bindCapturingEvents() {
+    var options = {
+      capture: true,
+      passive: false
+    };
+    var bindings = getCaptureBindings({
+      cancel: cancel,
+      completed: stop,
+      getPhase: function getPhase() {
+        return phaseRef.current;
+      },
+      setPhase: function setPhase(phase) {
+        phaseRef.current = phase;
+      }
+    });
+    unbindEventsRef.current = bindEvents(window, bindings, options);
+  }, [cancel, stop]);
+  var startPendingDrag = useCallback(function startPendingDrag(actions, point) {
+    !(phaseRef.current.type === 'IDLE') ? invariant(false) : void 0;
+    phaseRef.current = {
+      type: 'PENDING',
+      point: point,
+      actions: actions
+    };
+    bindCapturingEvents();
+  }, [bindCapturingEvents]);
+  useIsomorphicLayoutEffect(function mount() {
+    listenForCapture();
+    return function unmount() {
+      unbindEventsRef.current();
+    };
+  }, [listenForCapture]);
+}
+
+var _scrollJumpKeys;
+
+function noop$1() {}
+
+var scrollJumpKeys = (_scrollJumpKeys = {}, _scrollJumpKeys[pageDown] = true, _scrollJumpKeys[pageUp] = true, _scrollJumpKeys[home] = true, _scrollJumpKeys[end] = true, _scrollJumpKeys);
+
+function getDraggingBindings(actions, stop) {
+  function cancel() {
+    stop();
+    actions.cancel();
+  }
+
+  function drop() {
+    stop();
+    actions.drop();
+  }
+
+  return [{
+    eventName: 'keydown',
+    fn: function fn(event) {
+      if (event.keyCode === escape) {
+        event.preventDefault();
+        cancel();
+        return;
+      }
+
+      if (event.keyCode === space) {
+        event.preventDefault();
+        drop();
+        return;
+      }
+
+      if (event.keyCode === arrowDown) {
+        event.preventDefault();
+        actions.moveDown();
+        return;
+      }
+
+      if (event.keyCode === arrowUp) {
+        event.preventDefault();
+        actions.moveUp();
+        return;
+      }
+
+      if (event.keyCode === arrowRight) {
+        event.preventDefault();
+        actions.moveRight();
+        return;
+      }
+
+      if (event.keyCode === arrowLeft) {
+        event.preventDefault();
+        actions.moveLeft();
+        return;
+      }
+
+      if (scrollJumpKeys[event.keyCode]) {
+        event.preventDefault();
+        return;
+      }
+
+      preventStandardKeyEvents(event);
+    }
+  }, {
+    eventName: 'mousedown',
+    fn: cancel
+  }, {
+    eventName: 'mouseup',
+    fn: cancel
+  }, {
+    eventName: 'click',
+    fn: cancel
+  }, {
+    eventName: 'touchstart',
+    fn: cancel
+  }, {
+    eventName: 'resize',
+    fn: cancel
+  }, {
+    eventName: 'wheel',
+    fn: cancel,
+    options: {
+      passive: true
+    }
+  }, {
+    eventName: supportedEventName,
+    fn: cancel
+  }];
+}
+
+function useKeyboardSensor(api) {
+  var unbindEventsRef = useRef(noop$1);
+  var startCaptureBinding = useMemo(function () {
+    return {
+      eventName: 'keydown',
+      fn: function onKeyDown(event) {
+        if (event.defaultPrevented) {
+          return;
+        }
+
+        if (event.keyCode !== space) {
+          return;
+        }
+
+        var draggableId = api.findClosestDraggableId(event);
+
+        if (!draggableId) {
+          return;
+        }
+
+        var preDrag = api.tryGetLock(draggableId, stop, {
+          sourceEvent: event
+        });
+
+        if (!preDrag) {
+          return;
+        }
+
+        event.preventDefault();
+        var isCapturing = true;
+        var actions = preDrag.snapLift();
+        unbindEventsRef.current();
+
+        function stop() {
+          !isCapturing ? invariant(false) : void 0;
+          isCapturing = false;
+          unbindEventsRef.current();
+          listenForCapture();
+        }
+
+        unbindEventsRef.current = bindEvents(window, getDraggingBindings(actions, stop), {
+          capture: true,
+          passive: false
+        });
+      }
+    };
+  }, [api]);
+  var listenForCapture = useCallback(function tryStartCapture() {
+    var options = {
+      passive: false,
+      capture: true
+    };
+    unbindEventsRef.current = bindEvents(window, [startCaptureBinding], options);
+  }, [startCaptureBinding]);
+  useIsomorphicLayoutEffect(function mount() {
+    listenForCapture();
+    return function unmount() {
+      unbindEventsRef.current();
+    };
+  }, [listenForCapture]);
+}
+
+var idle$2 = {
+  type: 'IDLE'
+};
+var timeForLongPress = 120;
+var forcePressThreshold = 0.15;
+
+function getWindowBindings(_ref) {
+  var cancel = _ref.cancel,
+      getPhase = _ref.getPhase;
+  return [{
+    eventName: 'orientationchange',
+    fn: cancel
+  }, {
+    eventName: 'resize',
+    fn: cancel
+  }, {
+    eventName: 'contextmenu',
+    fn: function fn(event) {
+      event.preventDefault();
+    }
+  }, {
+    eventName: 'keydown',
+    fn: function fn(event) {
+      if (getPhase().type !== 'DRAGGING') {
+        cancel();
+        return;
+      }
+
+      if (event.keyCode === escape) {
+        event.preventDefault();
+      }
+
+      cancel();
+    }
+  }, {
+    eventName: supportedEventName,
+    fn: cancel
+  }];
+}
+
+function getHandleBindings(_ref2) {
+  var cancel = _ref2.cancel,
+      completed = _ref2.completed,
+      getPhase = _ref2.getPhase;
+  return [{
+    eventName: 'touchmove',
+    options: {
+      capture: false
+    },
+    fn: function fn(event) {
+      var phase = getPhase();
+
+      if (phase.type !== 'DRAGGING') {
+        cancel();
+        return;
+      }
+
+      phase.hasMoved = true;
+      var _event$touches$ = event.touches[0],
+          clientX = _event$touches$.clientX,
+          clientY = _event$touches$.clientY;
+      var point = {
+        x: clientX,
+        y: clientY
+      };
+      event.preventDefault();
+      phase.actions.move(point);
+    }
+  }, {
+    eventName: 'touchend',
+    fn: function fn(event) {
+      var phase = getPhase();
+
+      if (phase.type !== 'DRAGGING') {
+        cancel();
+        return;
+      }
+
+      event.preventDefault();
+      phase.actions.drop({
+        shouldBlockNextClick: true
+      });
+      completed();
+    }
+  }, {
+    eventName: 'touchcancel',
+    fn: function fn(event) {
+      if (getPhase().type !== 'DRAGGING') {
+        cancel();
+        return;
+      }
+
+      event.preventDefault();
+      cancel();
+    }
+  }, {
+    eventName: 'touchforcechange',
+    fn: function fn(event) {
+      var phase = getPhase();
+      !(phase.type !== 'IDLE') ? invariant(false) : void 0;
+      var touch = event.touches[0];
+
+      if (!touch) {
+        return;
+      }
+
+      var isForcePress = touch.force >= forcePressThreshold;
+
+      if (!isForcePress) {
+        return;
+      }
+
+      var shouldRespect = phase.actions.shouldRespectForcePress();
+
+      if (phase.type === 'PENDING') {
+        if (shouldRespect) {
+          cancel();
+        }
+
+        return;
+      }
+
+      if (shouldRespect) {
+        if (phase.hasMoved) {
+          event.preventDefault();
+          return;
+        }
+
+        cancel();
+        return;
+      }
+
+      event.preventDefault();
+    }
+  }, {
+    eventName: supportedEventName,
+    fn: cancel
+  }];
+}
+
+function useTouchSensor(api) {
+  var phaseRef = useRef(idle$2);
+  var unbindEventsRef = useRef(noop);
+  var getPhase = useCallback(function getPhase() {
+    return phaseRef.current;
+  }, []);
+  var setPhase = useCallback(function setPhase(phase) {
+    phaseRef.current = phase;
+  }, []);
+  var startCaptureBinding = useMemo(function () {
+    return {
+      eventName: 'touchstart',
+      fn: function onTouchStart(event) {
+        if (event.defaultPrevented) {
+          return;
+        }
+
+        var draggableId = api.findClosestDraggableId(event);
+
+        if (!draggableId) {
+          return;
+        }
+
+        var actions = api.tryGetLock(draggableId, stop, {
+          sourceEvent: event
+        });
+
+        if (!actions) {
+          return;
+        }
+
+        var touch = event.touches[0];
+        var clientX = touch.clientX,
+            clientY = touch.clientY;
+        var point = {
+          x: clientX,
+          y: clientY
+        };
+        unbindEventsRef.current();
+        startPendingDrag(actions, point);
+      }
+    };
+  }, [api]);
+  var listenForCapture = useCallback(function listenForCapture() {
+    var options = {
+      capture: true,
+      passive: false
+    };
+    unbindEventsRef.current = bindEvents(window, [startCaptureBinding], options);
+  }, [startCaptureBinding]);
+  var stop = useCallback(function () {
+    var current = phaseRef.current;
+
+    if (current.type === 'IDLE') {
+      return;
+    }
+
+    if (current.type === 'PENDING') {
+      clearTimeout(current.longPressTimerId);
+    }
+
+    setPhase(idle$2);
+    unbindEventsRef.current();
+    listenForCapture();
+  }, [listenForCapture, setPhase]);
+  var cancel = useCallback(function () {
+    var phase = phaseRef.current;
+    stop();
+
+    if (phase.type === 'DRAGGING') {
+      phase.actions.cancel({
+        shouldBlockNextClick: true
+      });
+    }
+
+    if (phase.type === 'PENDING') {
+      phase.actions.abort();
+    }
+  }, [stop]);
+  var bindCapturingEvents = useCallback(function bindCapturingEvents() {
+    var options = {
+      capture: true,
+      passive: false
+    };
+    var args = {
+      cancel: cancel,
+      completed: stop,
+      getPhase: getPhase
+    };
+    var unbindTarget = bindEvents(window, getHandleBindings(args), options);
+    var unbindWindow = bindEvents(window, getWindowBindings(args), options);
+
+    unbindEventsRef.current = function unbindAll() {
+      unbindTarget();
+      unbindWindow();
+    };
+  }, [cancel, getPhase, stop]);
+  var startDragging = useCallback(function startDragging() {
+    var phase = getPhase();
+    !(phase.type === 'PENDING') ? invariant(false) : void 0;
+    var actions = phase.actions.fluidLift(phase.point);
+    setPhase({
+      type: 'DRAGGING',
+      actions: actions,
+      hasMoved: false
+    });
+  }, [getPhase, setPhase]);
+  var startPendingDrag = useCallback(function startPendingDrag(actions, point) {
+    !(getPhase().type === 'IDLE') ? invariant(false) : void 0;
+    var longPressTimerId = setTimeout(startDragging, timeForLongPress);
+    setPhase({
+      type: 'PENDING',
+      point: point,
+      actions: actions,
+      longPressTimerId: longPressTimerId
+    });
+    bindCapturingEvents();
+  }, [bindCapturingEvents, getPhase, setPhase, startDragging]);
+  useIsomorphicLayoutEffect(function mount() {
+    listenForCapture();
+    return function unmount() {
+      unbindEventsRef.current();
+      var phase = getPhase();
+
+      if (phase.type === 'PENDING') {
+        clearTimeout(phase.longPressTimerId);
+        setPhase(idle$2);
+      }
+    };
+  }, [getPhase, listenForCapture, setPhase]);
+  useIsomorphicLayoutEffect(function webkitHack() {
+    var unbind = bindEvents(window, [{
+      eventName: 'touchmove',
+      fn: function fn() {},
+      options: {
+        capture: false,
+        passive: false
+      }
+    }]);
+    return unbind;
+  }, []);
+}
+
+var interactiveTagNames = {
+  input: true,
+  button: true,
+  textarea: true,
+  select: true,
+  option: true,
+  optgroup: true,
+  video: true,
+  audio: true
+};
+
+function isAnInteractiveElement(parent, current) {
+  if (current == null) {
+    return false;
+  }
+
+  var hasAnInteractiveTag = Boolean(interactiveTagNames[current.tagName.toLowerCase()]);
+
+  if (hasAnInteractiveTag) {
+    return true;
+  }
+
+  var attribute = current.getAttribute('contenteditable');
+
+  if (attribute === 'true' || attribute === '') {
+    return true;
+  }
+
+  if (current === parent) {
+    return false;
+  }
+
+  return isAnInteractiveElement(parent, current.parentElement);
+}
+
+function isEventInInteractiveElement(draggable, event) {
+  var target = event.target;
+
+  if (!isHtmlElement(target)) {
+    return false;
+  }
+
+  return isAnInteractiveElement(draggable, target);
+}
+
+var getBorderBoxCenterPosition = (function (el) {
+  return getRect(el.getBoundingClientRect()).center;
+});
+
+function isElement(el) {
+  return el instanceof getWindowFromEl(el).Element;
+}
+
+var supportedMatchesName = function () {
+  var base = 'matches';
+
+  if (typeof document === 'undefined') {
+    return base;
+  }
+
+  var candidates = [base, 'msMatchesSelector', 'webkitMatchesSelector'];
+  var value = find(candidates, function (name) {
+    return name in Element.prototype;
+  });
+  return value || base;
+}();
+
+function closestPonyfill(el, selector) {
+  if (el == null) {
+    return null;
+  }
+
+  if (el[supportedMatchesName](selector)) {
+    return el;
+  }
+
+  return closestPonyfill(el.parentElement, selector);
+}
+
+function closest$1(el, selector) {
+  if (el.closest) {
+    return el.closest(selector);
+  }
+
+  return closestPonyfill(el, selector);
+}
+
+function getSelector(contextId) {
+  return "[" + dragHandle.contextId + "=\"" + contextId + "\"]";
+}
+
+function findClosestDragHandleFromEvent(contextId, event) {
+  var target = event.target;
+
+  if (!isElement(target)) {
+    return null;
+  }
+
+  var selector = getSelector(contextId);
+  var handle = closest$1(target, selector);
+
+  if (!handle) {
+    return null;
+  }
+
+  if (!isHtmlElement(handle)) {
+    return null;
+  }
+
+  return handle;
+}
+
+function tryGetClosestDraggableIdFromEvent(contextId, event) {
+  var handle = findClosestDragHandleFromEvent(contextId, event);
+
+  if (!handle) {
+    return null;
+  }
+
+  return handle.getAttribute(dragHandle.draggableId);
+}
+
+function findDraggable(contextId, draggableId) {
+  var selector = "[" + draggable.contextId + "=\"" + contextId + "\"]";
+  var possible = toArray(document.querySelectorAll(selector));
+  var draggable$1 = find(possible, function (el) {
+    return el.getAttribute(draggable.id) === draggableId;
+  });
+
+  if (!draggable$1) {
+    return null;
+  }
+
+  if (!isHtmlElement(draggable$1)) {
+    return null;
+  }
+
+  return draggable$1;
+}
+
+function preventDefault(event) {
+  event.preventDefault();
+}
+
+function _isActive(_ref) {
+  var expected = _ref.expected,
+      phase = _ref.phase,
+      isLockActive = _ref.isLockActive;
+      _ref.shouldWarn;
+
+  if (!isLockActive()) {
+
+    return false;
+  }
+
+  if (expected !== phase) {
+
+    return false;
+  }
+
+  return true;
+}
+
+function canStart(_ref2) {
+  var lockAPI = _ref2.lockAPI,
+      store = _ref2.store,
+      registry = _ref2.registry,
+      draggableId = _ref2.draggableId;
+
+  if (lockAPI.isClaimed()) {
+    return false;
+  }
+
+  var entry = registry.draggable.findById(draggableId);
+
+  if (!entry) {
+    return false;
+  }
+
+  if (!entry.options.isEnabled) {
+    return false;
+  }
+
+  if (!canStartDrag(store.getState(), draggableId)) {
+    return false;
+  }
+
+  return true;
+}
+
+function tryStart(_ref3) {
+  var lockAPI = _ref3.lockAPI,
+      contextId = _ref3.contextId,
+      store = _ref3.store,
+      registry = _ref3.registry,
+      draggableId = _ref3.draggableId,
+      forceSensorStop = _ref3.forceSensorStop,
+      sourceEvent = _ref3.sourceEvent;
+  var shouldStart = canStart({
+    lockAPI: lockAPI,
+    store: store,
+    registry: registry,
+    draggableId: draggableId
+  });
+
+  if (!shouldStart) {
+    return null;
+  }
+
+  var entry = registry.draggable.getById(draggableId);
+  var el = findDraggable(contextId, entry.descriptor.id);
+
+  if (!el) {
+    return null;
+  }
+
+  if (sourceEvent && !entry.options.canDragInteractiveElements && isEventInInteractiveElement(el, sourceEvent)) {
+    return null;
+  }
+
+  var lock = lockAPI.claim(forceSensorStop || noop);
+  var phase = 'PRE_DRAG';
+
+  function getShouldRespectForcePress() {
+    return entry.options.shouldRespectForcePress;
+  }
+
+  function isLockActive() {
+    return lockAPI.isActive(lock);
+  }
+
+  function tryDispatch(expected, getAction) {
+    if (_isActive({
+      expected: expected,
+      phase: phase,
+      isLockActive: isLockActive,
+      shouldWarn: true
+    })) {
+      store.dispatch(getAction());
+    }
+  }
+
+  var tryDispatchWhenDragging = tryDispatch.bind(null, 'DRAGGING');
+
+  function lift$1(args) {
+    function completed() {
+      lockAPI.release();
+      phase = 'COMPLETED';
+    }
+
+    if (phase !== 'PRE_DRAG') {
+      completed();
+      !(phase === 'PRE_DRAG') ? invariant(false) : void 0;
+    }
+
+    store.dispatch(lift(args.liftActionArgs));
+    phase = 'DRAGGING';
+
+    function finish(reason, options) {
+      if (options === void 0) {
+        options = {
+          shouldBlockNextClick: false
+        };
+      }
+
+      args.cleanup();
+
+      if (options.shouldBlockNextClick) {
+        var unbind = bindEvents(window, [{
+          eventName: 'click',
+          fn: preventDefault,
+          options: {
+            once: true,
+            passive: false,
+            capture: true
+          }
+        }]);
+        setTimeout(unbind);
+      }
+
+      completed();
+      store.dispatch(drop({
+        reason: reason
+      }));
+    }
+
+    return _extends({
+      isActive: function isActive() {
+        return _isActive({
+          expected: 'DRAGGING',
+          phase: phase,
+          isLockActive: isLockActive,
+          shouldWarn: false
+        });
+      },
+      shouldRespectForcePress: getShouldRespectForcePress,
+      drop: function drop(options) {
+        return finish('DROP', options);
+      },
+      cancel: function cancel(options) {
+        return finish('CANCEL', options);
+      }
+    }, args.actions);
+  }
+
+  function fluidLift(clientSelection) {
+    var move$1 = rafSchd$1(function (client) {
+      tryDispatchWhenDragging(function () {
+        return move({
+          client: client
+        });
+      });
+    });
+    var api = lift$1({
+      liftActionArgs: {
+        id: draggableId,
+        clientSelection: clientSelection,
+        movementMode: 'FLUID'
+      },
+      cleanup: function cleanup() {
+        return move$1.cancel();
+      },
+      actions: {
+        move: move$1
+      }
+    });
+    return _extends({}, api, {
+      move: move$1
+    });
+  }
+
+  function snapLift() {
+    var actions = {
+      moveUp: function moveUp$1() {
+        return tryDispatchWhenDragging(moveUp);
+      },
+      moveRight: function moveRight$1() {
+        return tryDispatchWhenDragging(moveRight);
+      },
+      moveDown: function moveDown$1() {
+        return tryDispatchWhenDragging(moveDown);
+      },
+      moveLeft: function moveLeft$1() {
+        return tryDispatchWhenDragging(moveLeft);
+      }
+    };
+    return lift$1({
+      liftActionArgs: {
+        id: draggableId,
+        clientSelection: getBorderBoxCenterPosition(el),
+        movementMode: 'SNAP'
+      },
+      cleanup: noop,
+      actions: actions
+    });
+  }
+
+  function abortPreDrag() {
+    var shouldRelease = _isActive({
+      expected: 'PRE_DRAG',
+      phase: phase,
+      isLockActive: isLockActive,
+      shouldWarn: true
+    });
+
+    if (shouldRelease) {
+      lockAPI.release();
+    }
+  }
+
+  var preDrag = {
+    isActive: function isActive() {
+      return _isActive({
+        expected: 'PRE_DRAG',
+        phase: phase,
+        isLockActive: isLockActive,
+        shouldWarn: false
+      });
+    },
+    shouldRespectForcePress: getShouldRespectForcePress,
+    fluidLift: fluidLift,
+    snapLift: snapLift,
+    abort: abortPreDrag
+  };
+  return preDrag;
+}
+
+var defaultSensors = [useMouseSensor, useKeyboardSensor, useTouchSensor];
+function useSensorMarshal(_ref4) {
+  var contextId = _ref4.contextId,
+      store = _ref4.store,
+      registry = _ref4.registry,
+      customSensors = _ref4.customSensors,
+      enableDefaultSensors = _ref4.enableDefaultSensors;
+  var useSensors = [].concat(enableDefaultSensors ? defaultSensors : [], customSensors || []);
+  var lockAPI = useState(function () {
+    return create();
+  })[0];
+  var tryAbandonLock = useCallback(function tryAbandonLock(previous, current) {
+    if (previous.isDragging && !current.isDragging) {
+      lockAPI.tryAbandon();
+    }
+  }, [lockAPI]);
+  useIsomorphicLayoutEffect(function listenToStore() {
+    var previous = store.getState();
+    var unsubscribe = store.subscribe(function () {
+      var current = store.getState();
+      tryAbandonLock(previous, current);
+      previous = current;
+    });
+    return unsubscribe;
+  }, [lockAPI, store, tryAbandonLock]);
+  useIsomorphicLayoutEffect(function () {
+    return lockAPI.tryAbandon;
+  }, [lockAPI.tryAbandon]);
+  var canGetLock = useCallback(function (draggableId) {
+    return canStart({
+      lockAPI: lockAPI,
+      registry: registry,
+      store: store,
+      draggableId: draggableId
+    });
+  }, [lockAPI, registry, store]);
+  var tryGetLock = useCallback(function (draggableId, forceStop, options) {
+    return tryStart({
+      lockAPI: lockAPI,
+      registry: registry,
+      contextId: contextId,
+      store: store,
+      draggableId: draggableId,
+      forceSensorStop: forceStop,
+      sourceEvent: options && options.sourceEvent ? options.sourceEvent : null
+    });
+  }, [contextId, lockAPI, registry, store]);
+  var findClosestDraggableId = useCallback(function (event) {
+    return tryGetClosestDraggableIdFromEvent(contextId, event);
+  }, [contextId]);
+  var findOptionsForDraggable = useCallback(function (id) {
+    var entry = registry.draggable.findById(id);
+    return entry ? entry.options : null;
+  }, [registry.draggable]);
+  var tryReleaseLock = useCallback(function tryReleaseLock() {
+    if (!lockAPI.isClaimed()) {
+      return;
+    }
+
+    lockAPI.tryAbandon();
+
+    if (store.getState().phase !== 'IDLE') {
+      store.dispatch(flush());
+    }
+  }, [lockAPI, store]);
+  var isLockClaimed = useCallback(lockAPI.isClaimed, [lockAPI]);
+  var api = useMemo(function () {
+    return {
+      canGetLock: canGetLock,
+      tryGetLock: tryGetLock,
+      findClosestDraggableId: findClosestDraggableId,
+      findOptionsForDraggable: findOptionsForDraggable,
+      tryReleaseLock: tryReleaseLock,
+      isLockClaimed: isLockClaimed
+    };
+  }, [canGetLock, tryGetLock, findClosestDraggableId, findOptionsForDraggable, tryReleaseLock, isLockClaimed]);
+
+  for (var i = 0; i < useSensors.length; i++) {
+    useSensors[i](api);
+  }
+}
+
+var createResponders = function createResponders(props) {
+  return {
+    onBeforeCapture: props.onBeforeCapture,
+    onBeforeDragStart: props.onBeforeDragStart,
+    onDragStart: props.onDragStart,
+    onDragEnd: props.onDragEnd,
+    onDragUpdate: props.onDragUpdate
+  };
+};
+
+function getStore(lazyRef) {
+  !lazyRef.current ? invariant(false) : void 0;
+  return lazyRef.current;
+}
+
+function App(props) {
+  var contextId = props.contextId,
+      setCallbacks = props.setCallbacks,
+      sensors = props.sensors,
+      nonce = props.nonce,
+      dragHandleUsageInstructions = props.dragHandleUsageInstructions;
+  var lazyStoreRef = useRef(null);
+  var lastPropsRef = usePrevious(props);
+  var getResponders = useCallback(function () {
+    return createResponders(lastPropsRef.current);
+  }, [lastPropsRef]);
+  var announce = useAnnouncer(contextId);
+  var dragHandleUsageInstructionsId = useHiddenTextElement({
+    contextId: contextId,
+    text: dragHandleUsageInstructions
+  });
+  var styleMarshal = useStyleMarshal(contextId, nonce);
+  var lazyDispatch = useCallback(function (action) {
+    getStore(lazyStoreRef).dispatch(action);
+  }, []);
+  var marshalCallbacks = useMemo(function () {
+    return bindActionCreators({
+      publishWhileDragging: publishWhileDragging,
+      updateDroppableScroll: updateDroppableScroll,
+      updateDroppableIsEnabled: updateDroppableIsEnabled,
+      updateDroppableIsCombineEnabled: updateDroppableIsCombineEnabled,
+      collectionStarting: collectionStarting
+    }, lazyDispatch);
+  }, [lazyDispatch]);
+  var registry = useRegistry();
+  var dimensionMarshal = useMemo(function () {
+    return createDimensionMarshal(registry, marshalCallbacks);
+  }, [registry, marshalCallbacks]);
+  var autoScroller = useMemo(function () {
+    return createAutoScroller(_extends({
+      scrollWindow: scrollWindow,
+      scrollDroppable: dimensionMarshal.scrollDroppable
+    }, bindActionCreators({
+      move: move
+    }, lazyDispatch)));
+  }, [dimensionMarshal.scrollDroppable, lazyDispatch]);
+  var focusMarshal = useFocusMarshal(contextId);
+  var store = useMemo(function () {
+    return createStore({
+      announce: announce,
+      autoScroller: autoScroller,
+      dimensionMarshal: dimensionMarshal,
+      focusMarshal: focusMarshal,
+      getResponders: getResponders,
+      styleMarshal: styleMarshal
+    });
+  }, [announce, autoScroller, dimensionMarshal, focusMarshal, getResponders, styleMarshal]);
+
+  lazyStoreRef.current = store;
+  var tryResetStore = useCallback(function () {
+    var current = getStore(lazyStoreRef);
+    var state = current.getState();
+
+    if (state.phase !== 'IDLE') {
+      current.dispatch(flush());
+    }
+  }, []);
+  var isDragging = useCallback(function () {
+    var state = getStore(lazyStoreRef).getState();
+    return state.isDragging || state.phase === 'DROP_ANIMATING';
+  }, []);
+  var appCallbacks = useMemo(function () {
+    return {
+      isDragging: isDragging,
+      tryAbort: tryResetStore
+    };
+  }, [isDragging, tryResetStore]);
+  setCallbacks(appCallbacks);
+  var getCanLift = useCallback(function (id) {
+    return canStartDrag(getStore(lazyStoreRef).getState(), id);
+  }, []);
+  var getIsMovementAllowed = useCallback(function () {
+    return isMovementAllowed(getStore(lazyStoreRef).getState());
+  }, []);
+  var appContext = useMemo(function () {
+    return {
+      marshal: dimensionMarshal,
+      focus: focusMarshal,
+      contextId: contextId,
+      canLift: getCanLift,
+      isMovementAllowed: getIsMovementAllowed,
+      dragHandleUsageInstructionsId: dragHandleUsageInstructionsId,
+      registry: registry
+    };
+  }, [contextId, dimensionMarshal, dragHandleUsageInstructionsId, focusMarshal, getCanLift, getIsMovementAllowed, registry]);
+  useSensorMarshal({
+    contextId: contextId,
+    store: store,
+    registry: registry,
+    customSensors: sensors,
+    enableDefaultSensors: props.enableDefaultSensors !== false
+  });
+  useEffect(function () {
+    return tryResetStore;
+  }, [tryResetStore]);
+  return React__default.createElement(AppContext.Provider, {
+    value: appContext
+  }, React__default.createElement(Provider, {
+    context: StoreContext,
+    store: store
+  }, props.children));
+}
+
+var count$1 = 0;
+function useInstanceCount() {
+  return useMemo(function () {
+    return "" + count$1++;
+  }, []);
+}
+function DragDropContext(props) {
+  var contextId = useInstanceCount();
+  var dragHandleUsageInstructions = props.dragHandleUsageInstructions || preset.dragHandleUsageInstructions;
+  return React__default.createElement(ErrorBoundary, null, function (setCallbacks) {
+    return React__default.createElement(App, {
+      nonce: props.nonce,
+      contextId: contextId,
+      setCallbacks: setCallbacks,
+      dragHandleUsageInstructions: dragHandleUsageInstructions,
+      enableDefaultSensors: props.enableDefaultSensors,
+      sensors: props.sensors,
+      onBeforeCapture: props.onBeforeCapture,
+      onBeforeDragStart: props.onBeforeDragStart,
+      onDragStart: props.onDragStart,
+      onDragUpdate: props.onDragUpdate,
+      onDragEnd: props.onDragEnd
+    }, props.children);
+  });
+}
+
+var isEqual$1 = function isEqual(base) {
+  return function (value) {
+    return base === value;
+  };
+};
+
+var isScroll = isEqual$1('scroll');
+var isAuto = isEqual$1('auto');
+
+var isEither = function isEither(overflow, fn) {
+  return fn(overflow.overflowX) || fn(overflow.overflowY);
+};
+
+var isElementScrollable = function isElementScrollable(el) {
+  var style = window.getComputedStyle(el);
+  var overflow = {
+    overflowX: style.overflowX,
+    overflowY: style.overflowY
+  };
+  return isEither(overflow, isScroll) || isEither(overflow, isAuto);
+};
+
+var isBodyScrollable = function isBodyScrollable() {
+  {
+    return false;
+  }
+};
+
+var getClosestScrollable = function getClosestScrollable(el) {
+  if (el == null) {
+    return null;
+  }
+
+  if (el === document.body) {
+    return isBodyScrollable() ? el : null;
+  }
+
+  if (el === document.documentElement) {
+    return null;
+  }
+
+  if (!isElementScrollable(el)) {
+    return getClosestScrollable(el.parentElement);
+  }
+
+  return el;
+};
+
+var getScroll$1 = (function (el) {
+  return {
+    x: el.scrollLeft,
+    y: el.scrollTop
+  };
+});
+
+var getIsFixed = function getIsFixed(el) {
+  if (!el) {
+    return false;
+  }
+
+  var style = window.getComputedStyle(el);
+
+  if (style.position === 'fixed') {
+    return true;
+  }
+
+  return getIsFixed(el.parentElement);
+};
+
+var getEnv = (function (start) {
+  var closestScrollable = getClosestScrollable(start);
+  var isFixedOnPage = getIsFixed(start);
+  return {
+    closestScrollable: closestScrollable,
+    isFixedOnPage: isFixedOnPage
+  };
+});
+
+var getDroppableDimension = (function (_ref) {
+  var descriptor = _ref.descriptor,
+      isEnabled = _ref.isEnabled,
+      isCombineEnabled = _ref.isCombineEnabled,
+      isFixedOnPage = _ref.isFixedOnPage,
+      direction = _ref.direction,
+      client = _ref.client,
+      page = _ref.page,
+      closest = _ref.closest;
+
+  var frame = function () {
+    if (!closest) {
+      return null;
+    }
+
+    var scrollSize = closest.scrollSize,
+        frameClient = closest.client;
+    var maxScroll = getMaxScroll({
+      scrollHeight: scrollSize.scrollHeight,
+      scrollWidth: scrollSize.scrollWidth,
+      height: frameClient.paddingBox.height,
+      width: frameClient.paddingBox.width
+    });
+    return {
+      pageMarginBox: closest.page.marginBox,
+      frameClient: frameClient,
+      scrollSize: scrollSize,
+      shouldClipSubject: closest.shouldClipSubject,
+      scroll: {
+        initial: closest.scroll,
+        current: closest.scroll,
+        max: maxScroll,
+        diff: {
+          value: origin,
+          displacement: origin
+        }
+      }
+    };
+  }();
+
+  var axis = direction === 'vertical' ? vertical : horizontal;
+  var subject = getSubject({
+    page: page,
+    withPlaceholder: null,
+    axis: axis,
+    frame: frame
+  });
+  var dimension = {
+    descriptor: descriptor,
+    isCombineEnabled: isCombineEnabled,
+    isFixedOnPage: isFixedOnPage,
+    axis: axis,
+    isEnabled: isEnabled,
+    client: client,
+    page: page,
+    frame: frame,
+    subject: subject
+  };
+  return dimension;
+});
+
+var getClient = function getClient(targetRef, closestScrollable) {
+  var base = getBox(targetRef);
+
+  if (!closestScrollable) {
+    return base;
+  }
+
+  if (targetRef !== closestScrollable) {
+    return base;
+  }
+
+  var top = base.paddingBox.top - closestScrollable.scrollTop;
+  var left = base.paddingBox.left - closestScrollable.scrollLeft;
+  var bottom = top + closestScrollable.scrollHeight;
+  var right = left + closestScrollable.scrollWidth;
+  var paddingBox = {
+    top: top,
+    right: right,
+    bottom: bottom,
+    left: left
+  };
+  var borderBox = expand(paddingBox, base.border);
+  var client = createBox({
+    borderBox: borderBox,
+    margin: base.margin,
+    border: base.border,
+    padding: base.padding
+  });
+  return client;
+};
+
+var getDimension = (function (_ref) {
+  var ref = _ref.ref,
+      descriptor = _ref.descriptor,
+      env = _ref.env,
+      windowScroll = _ref.windowScroll,
+      direction = _ref.direction,
+      isDropDisabled = _ref.isDropDisabled,
+      isCombineEnabled = _ref.isCombineEnabled,
+      shouldClipSubject = _ref.shouldClipSubject;
+  var closestScrollable = env.closestScrollable;
+  var client = getClient(ref, closestScrollable);
+  var page = withScroll(client, windowScroll);
+
+  var closest = function () {
+    if (!closestScrollable) {
+      return null;
+    }
+
+    var frameClient = getBox(closestScrollable);
+    var scrollSize = {
+      scrollHeight: closestScrollable.scrollHeight,
+      scrollWidth: closestScrollable.scrollWidth
+    };
+    return {
+      client: frameClient,
+      page: withScroll(frameClient, windowScroll),
+      scroll: getScroll$1(closestScrollable),
+      scrollSize: scrollSize,
+      shouldClipSubject: shouldClipSubject
+    };
+  }();
+
+  var dimension = getDroppableDimension({
+    descriptor: descriptor,
+    isEnabled: !isDropDisabled,
+    isCombineEnabled: isCombineEnabled,
+    isFixedOnPage: env.isFixedOnPage,
+    direction: direction,
+    client: client,
+    page: page,
+    closest: closest
+  });
+  return dimension;
+});
+
+var immediate = {
+  passive: false
+};
+var delayed = {
+  passive: true
+};
+var getListenerOptions = (function (options) {
+  return options.shouldPublishImmediately ? immediate : delayed;
+});
+
+function useRequiredContext(Context) {
+  var result = useContext(Context);
+  !result ? invariant(false) : void 0;
+  return result;
+}
+
+var getClosestScrollableFromDrag = function getClosestScrollableFromDrag(dragging) {
+  return dragging && dragging.env.closestScrollable || null;
+};
+
+function useDroppablePublisher(args) {
+  var whileDraggingRef = useRef(null);
+  var appContext = useRequiredContext(AppContext);
+  var uniqueId = useUniqueId('droppable');
+  var registry = appContext.registry,
+      marshal = appContext.marshal;
+  var previousRef = usePrevious(args);
+  var descriptor = useMemo(function () {
+    return {
+      id: args.droppableId,
+      type: args.type,
+      mode: args.mode
+    };
+  }, [args.droppableId, args.mode, args.type]);
+  var publishedDescriptorRef = useRef(descriptor);
+  var memoizedUpdateScroll = useMemo(function () {
+    return memoizeOne(function (x, y) {
+      !whileDraggingRef.current ? invariant(false) : void 0;
+      var scroll = {
+        x: x,
+        y: y
+      };
+      marshal.updateDroppableScroll(descriptor.id, scroll);
+    });
+  }, [descriptor.id, marshal]);
+  var getClosestScroll = useCallback(function () {
+    var dragging = whileDraggingRef.current;
+
+    if (!dragging || !dragging.env.closestScrollable) {
+      return origin;
+    }
+
+    return getScroll$1(dragging.env.closestScrollable);
+  }, []);
+  var updateScroll = useCallback(function () {
+    var scroll = getClosestScroll();
+    memoizedUpdateScroll(scroll.x, scroll.y);
+  }, [getClosestScroll, memoizedUpdateScroll]);
+  var scheduleScrollUpdate = useMemo(function () {
+    return rafSchd$1(updateScroll);
+  }, [updateScroll]);
+  var onClosestScroll = useCallback(function () {
+    var dragging = whileDraggingRef.current;
+    var closest = getClosestScrollableFromDrag(dragging);
+    !(dragging && closest) ? invariant(false) : void 0;
+    var options = dragging.scrollOptions;
+
+    if (options.shouldPublishImmediately) {
+      updateScroll();
+      return;
+    }
+
+    scheduleScrollUpdate();
+  }, [scheduleScrollUpdate, updateScroll]);
+  var getDimensionAndWatchScroll = useCallback(function (windowScroll, options) {
+    !!whileDraggingRef.current ? invariant(false) : void 0;
+    var previous = previousRef.current;
+    var ref = previous.getDroppableRef();
+    !ref ? invariant(false) : void 0;
+    var env = getEnv(ref);
+    var dragging = {
+      ref: ref,
+      descriptor: descriptor,
+      env: env,
+      scrollOptions: options
+    };
+    whileDraggingRef.current = dragging;
+    var dimension = getDimension({
+      ref: ref,
+      descriptor: descriptor,
+      env: env,
+      windowScroll: windowScroll,
+      direction: previous.direction,
+      isDropDisabled: previous.isDropDisabled,
+      isCombineEnabled: previous.isCombineEnabled,
+      shouldClipSubject: !previous.ignoreContainerClipping
+    });
+    var scrollable = env.closestScrollable;
+
+    if (scrollable) {
+      scrollable.setAttribute(scrollContainer.contextId, appContext.contextId);
+      scrollable.addEventListener('scroll', onClosestScroll, getListenerOptions(dragging.scrollOptions));
+    }
+
+    return dimension;
+  }, [appContext.contextId, descriptor, onClosestScroll, previousRef]);
+  var getScrollWhileDragging = useCallback(function () {
+    var dragging = whileDraggingRef.current;
+    var closest = getClosestScrollableFromDrag(dragging);
+    !(dragging && closest) ? invariant(false) : void 0;
+    return getScroll$1(closest);
+  }, []);
+  var dragStopped = useCallback(function () {
+    var dragging = whileDraggingRef.current;
+    !dragging ? invariant(false) : void 0;
+    var closest = getClosestScrollableFromDrag(dragging);
+    whileDraggingRef.current = null;
+
+    if (!closest) {
+      return;
+    }
+
+    scheduleScrollUpdate.cancel();
+    closest.removeAttribute(scrollContainer.contextId);
+    closest.removeEventListener('scroll', onClosestScroll, getListenerOptions(dragging.scrollOptions));
+  }, [onClosestScroll, scheduleScrollUpdate]);
+  var scroll = useCallback(function (change) {
+    var dragging = whileDraggingRef.current;
+    !dragging ? invariant(false) : void 0;
+    var closest = getClosestScrollableFromDrag(dragging);
+    !closest ? invariant(false) : void 0;
+    closest.scrollTop += change.y;
+    closest.scrollLeft += change.x;
+  }, []);
+  var callbacks = useMemo(function () {
+    return {
+      getDimensionAndWatchScroll: getDimensionAndWatchScroll,
+      getScrollWhileDragging: getScrollWhileDragging,
+      dragStopped: dragStopped,
+      scroll: scroll
+    };
+  }, [dragStopped, getDimensionAndWatchScroll, getScrollWhileDragging, scroll]);
+  var entry = useMemo(function () {
+    return {
+      uniqueId: uniqueId,
+      descriptor: descriptor,
+      callbacks: callbacks
+    };
+  }, [callbacks, descriptor, uniqueId]);
+  useIsomorphicLayoutEffect(function () {
+    publishedDescriptorRef.current = entry.descriptor;
+    registry.droppable.register(entry);
+    return function () {
+      if (whileDraggingRef.current) {
+        dragStopped();
+      }
+
+      registry.droppable.unregister(entry);
+    };
+  }, [callbacks, descriptor, dragStopped, entry, marshal, registry.droppable]);
+  useIsomorphicLayoutEffect(function () {
+    if (!whileDraggingRef.current) {
+      return;
+    }
+
+    marshal.updateDroppableIsEnabled(publishedDescriptorRef.current.id, !args.isDropDisabled);
+  }, [args.isDropDisabled, marshal]);
+  useIsomorphicLayoutEffect(function () {
+    if (!whileDraggingRef.current) {
+      return;
+    }
+
+    marshal.updateDroppableIsCombineEnabled(publishedDescriptorRef.current.id, args.isCombineEnabled);
+  }, [args.isCombineEnabled, marshal]);
+}
+
+function noop$2() {}
+
+var empty = {
+  width: 0,
+  height: 0,
+  margin: noSpacing
+};
+
+var getSize = function getSize(_ref) {
+  var isAnimatingOpenOnMount = _ref.isAnimatingOpenOnMount,
+      placeholder = _ref.placeholder,
+      animate = _ref.animate;
+
+  if (isAnimatingOpenOnMount) {
+    return empty;
+  }
+
+  if (animate === 'close') {
+    return empty;
+  }
+
+  return {
+    height: placeholder.client.borderBox.height,
+    width: placeholder.client.borderBox.width,
+    margin: placeholder.client.margin
+  };
+};
+
+var getStyle = function getStyle(_ref2) {
+  var isAnimatingOpenOnMount = _ref2.isAnimatingOpenOnMount,
+      placeholder = _ref2.placeholder,
+      animate = _ref2.animate;
+  var size = getSize({
+    isAnimatingOpenOnMount: isAnimatingOpenOnMount,
+    placeholder: placeholder,
+    animate: animate
+  });
+  return {
+    display: placeholder.display,
+    boxSizing: 'border-box',
+    width: size.width,
+    height: size.height,
+    marginTop: size.margin.top,
+    marginRight: size.margin.right,
+    marginBottom: size.margin.bottom,
+    marginLeft: size.margin.left,
+    flexShrink: '0',
+    flexGrow: '0',
+    pointerEvents: 'none',
+    transition: animate !== 'none' ? transitions.placeholder : null
+  };
+};
+
+function Placeholder(props) {
+  var animateOpenTimerRef = useRef(null);
+  var tryClearAnimateOpenTimer = useCallback(function () {
+    if (!animateOpenTimerRef.current) {
+      return;
+    }
+
+    clearTimeout(animateOpenTimerRef.current);
+    animateOpenTimerRef.current = null;
+  }, []);
+  var animate = props.animate,
+      onTransitionEnd = props.onTransitionEnd,
+      onClose = props.onClose,
+      contextId = props.contextId;
+
+  var _useState = useState(props.animate === 'open'),
+      isAnimatingOpenOnMount = _useState[0],
+      setIsAnimatingOpenOnMount = _useState[1];
+
+  useEffect(function () {
+    if (!isAnimatingOpenOnMount) {
+      return noop$2;
+    }
+
+    if (animate !== 'open') {
+      tryClearAnimateOpenTimer();
+      setIsAnimatingOpenOnMount(false);
+      return noop$2;
+    }
+
+    if (animateOpenTimerRef.current) {
+      return noop$2;
+    }
+
+    animateOpenTimerRef.current = setTimeout(function () {
+      animateOpenTimerRef.current = null;
+      setIsAnimatingOpenOnMount(false);
+    });
+    return tryClearAnimateOpenTimer;
+  }, [animate, isAnimatingOpenOnMount, tryClearAnimateOpenTimer]);
+  var onSizeChangeEnd = useCallback(function (event) {
+    if (event.propertyName !== 'height') {
+      return;
+    }
+
+    onTransitionEnd();
+
+    if (animate === 'close') {
+      onClose();
+    }
+  }, [animate, onClose, onTransitionEnd]);
+  var style = getStyle({
+    isAnimatingOpenOnMount: isAnimatingOpenOnMount,
+    animate: props.animate,
+    placeholder: props.placeholder
+  });
+  return React__default.createElement(props.placeholder.tagName, {
+    style: style,
+    'data-rbd-placeholder-context-id': contextId,
+    onTransitionEnd: onSizeChangeEnd,
+    ref: props.innerRef
+  });
+}
+
+var Placeholder$1 = React__default.memo(Placeholder);
+
+var DroppableContext = React__default.createContext(null);
+
+var AnimateInOut = function (_React$PureComponent) {
+  _inheritsLoose(AnimateInOut, _React$PureComponent);
+
+  function AnimateInOut() {
+    var _this;
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = _React$PureComponent.call.apply(_React$PureComponent, [this].concat(args)) || this;
+    _this.state = {
+      isVisible: Boolean(_this.props.on),
+      data: _this.props.on,
+      animate: _this.props.shouldAnimate && _this.props.on ? 'open' : 'none'
+    };
+
+    _this.onClose = function () {
+      if (_this.state.animate !== 'close') {
+        return;
+      }
+
+      _this.setState({
+        isVisible: false
+      });
+    };
+
+    return _this;
+  }
+
+  AnimateInOut.getDerivedStateFromProps = function getDerivedStateFromProps(props, state) {
+    if (!props.shouldAnimate) {
+      return {
+        isVisible: Boolean(props.on),
+        data: props.on,
+        animate: 'none'
+      };
+    }
+
+    if (props.on) {
+      return {
+        isVisible: true,
+        data: props.on,
+        animate: 'open'
+      };
+    }
+
+    if (state.isVisible) {
+      return {
+        isVisible: true,
+        data: state.data,
+        animate: 'close'
+      };
+    }
+
+    return {
+      isVisible: false,
+      animate: 'close',
+      data: null
+    };
+  };
+
+  var _proto = AnimateInOut.prototype;
+
+  _proto.render = function render() {
+    if (!this.state.isVisible) {
+      return null;
+    }
+
+    var provided = {
+      onClose: this.onClose,
+      data: this.state.data,
+      animate: this.state.animate
+    };
+    return this.props.children(provided);
+  };
+
+  return AnimateInOut;
+}(React__default.PureComponent);
+
+var zIndexOptions = {
+  dragging: 5000,
+  dropAnimating: 4500
+};
+
+var getDraggingTransition = function getDraggingTransition(shouldAnimateDragMovement, dropping) {
+  if (dropping) {
+    return transitions.drop(dropping.duration);
+  }
+
+  if (shouldAnimateDragMovement) {
+    return transitions.snap;
+  }
+
+  return transitions.fluid;
+};
+
+var getDraggingOpacity = function getDraggingOpacity(isCombining, isDropAnimating) {
+  if (!isCombining) {
+    return null;
+  }
+
+  return isDropAnimating ? combine.opacity.drop : combine.opacity.combining;
+};
+
+var getShouldDraggingAnimate = function getShouldDraggingAnimate(dragging) {
+  if (dragging.forceShouldAnimate != null) {
+    return dragging.forceShouldAnimate;
+  }
+
+  return dragging.mode === 'SNAP';
+};
+
+function getDraggingStyle(dragging) {
+  var dimension = dragging.dimension;
+  var box = dimension.client;
+  var offset = dragging.offset,
+      combineWith = dragging.combineWith,
+      dropping = dragging.dropping;
+  var isCombining = Boolean(combineWith);
+  var shouldAnimate = getShouldDraggingAnimate(dragging);
+  var isDropAnimating = Boolean(dropping);
+  var transform = isDropAnimating ? transforms.drop(offset, isCombining) : transforms.moveTo(offset);
+  var style = {
+    position: 'fixed',
+    top: box.marginBox.top,
+    left: box.marginBox.left,
+    boxSizing: 'border-box',
+    width: box.borderBox.width,
+    height: box.borderBox.height,
+    transition: getDraggingTransition(shouldAnimate, dropping),
+    transform: transform,
+    opacity: getDraggingOpacity(isCombining, isDropAnimating),
+    zIndex: isDropAnimating ? zIndexOptions.dropAnimating : zIndexOptions.dragging,
+    pointerEvents: 'none'
+  };
+  return style;
+}
+
+function getSecondaryStyle(secondary) {
+  return {
+    transform: transforms.moveTo(secondary.offset),
+    transition: secondary.shouldAnimateDisplacement ? null : 'none'
+  };
+}
+
+function getStyle$1(mapped) {
+  return mapped.type === 'DRAGGING' ? getDraggingStyle(mapped) : getSecondaryStyle(mapped);
+}
+
+function getDimension$1(descriptor, el, windowScroll) {
+  if (windowScroll === void 0) {
+    windowScroll = origin;
+  }
+
+  var computedStyles = window.getComputedStyle(el);
+  var borderBox = el.getBoundingClientRect();
+  var client = calculateBox(borderBox, computedStyles);
+  var page = withScroll(client, windowScroll);
+  var placeholder = {
+    client: client,
+    tagName: el.tagName.toLowerCase(),
+    display: computedStyles.display
+  };
+  var displaceBy = {
+    x: client.marginBox.width,
+    y: client.marginBox.height
+  };
+  var dimension = {
+    descriptor: descriptor,
+    placeholder: placeholder,
+    displaceBy: displaceBy,
+    client: client,
+    page: page
+  };
+  return dimension;
+}
+
+function useDraggablePublisher(args) {
+  var uniqueId = useUniqueId('draggable');
+  var descriptor = args.descriptor,
+      registry = args.registry,
+      getDraggableRef = args.getDraggableRef,
+      canDragInteractiveElements = args.canDragInteractiveElements,
+      shouldRespectForcePress = args.shouldRespectForcePress,
+      isEnabled = args.isEnabled;
+  var options = useMemo(function () {
+    return {
+      canDragInteractiveElements: canDragInteractiveElements,
+      shouldRespectForcePress: shouldRespectForcePress,
+      isEnabled: isEnabled
+    };
+  }, [canDragInteractiveElements, isEnabled, shouldRespectForcePress]);
+  var getDimension = useCallback(function (windowScroll) {
+    var el = getDraggableRef();
+    !el ? invariant(false) : void 0;
+    return getDimension$1(descriptor, el, windowScroll);
+  }, [descriptor, getDraggableRef]);
+  var entry = useMemo(function () {
+    return {
+      uniqueId: uniqueId,
+      descriptor: descriptor,
+      options: options,
+      getDimension: getDimension
+    };
+  }, [descriptor, getDimension, options, uniqueId]);
+  var publishedRef = useRef(entry);
+  var isFirstPublishRef = useRef(true);
+  useIsomorphicLayoutEffect(function () {
+    registry.draggable.register(publishedRef.current);
+    return function () {
+      return registry.draggable.unregister(publishedRef.current);
+    };
+  }, [registry.draggable]);
+  useIsomorphicLayoutEffect(function () {
+    if (isFirstPublishRef.current) {
+      isFirstPublishRef.current = false;
+      return;
+    }
+
+    var last = publishedRef.current;
+    publishedRef.current = entry;
+    registry.draggable.update(entry, last);
+  }, [entry, registry.draggable]);
+}
+
+function preventHtml5Dnd(event) {
+  event.preventDefault();
+}
+
+function Draggable(props) {
+  var ref = useRef(null);
+  var setRef = useCallback(function (el) {
+    ref.current = el;
+  }, []);
+  var getRef = useCallback(function () {
+    return ref.current;
+  }, []);
+
+  var _useRequiredContext = useRequiredContext(AppContext),
+      contextId = _useRequiredContext.contextId,
+      dragHandleUsageInstructionsId = _useRequiredContext.dragHandleUsageInstructionsId,
+      registry = _useRequiredContext.registry;
+
+  var _useRequiredContext2 = useRequiredContext(DroppableContext),
+      type = _useRequiredContext2.type,
+      droppableId = _useRequiredContext2.droppableId;
+
+  var descriptor = useMemo(function () {
+    return {
+      id: props.draggableId,
+      index: props.index,
+      type: type,
+      droppableId: droppableId
+    };
+  }, [props.draggableId, props.index, type, droppableId]);
+  var children = props.children,
+      draggableId = props.draggableId,
+      isEnabled = props.isEnabled,
+      shouldRespectForcePress = props.shouldRespectForcePress,
+      canDragInteractiveElements = props.canDragInteractiveElements,
+      isClone = props.isClone,
+      mapped = props.mapped,
+      dropAnimationFinishedAction = props.dropAnimationFinished;
+
+  if (!isClone) {
+    var forPublisher = useMemo(function () {
+      return {
+        descriptor: descriptor,
+        registry: registry,
+        getDraggableRef: getRef,
+        canDragInteractiveElements: canDragInteractiveElements,
+        shouldRespectForcePress: shouldRespectForcePress,
+        isEnabled: isEnabled
+      };
+    }, [descriptor, registry, getRef, canDragInteractiveElements, shouldRespectForcePress, isEnabled]);
+    useDraggablePublisher(forPublisher);
+  }
+
+  var dragHandleProps = useMemo(function () {
+    return isEnabled ? {
+      tabIndex: 0,
+      role: 'button',
+      'aria-describedby': dragHandleUsageInstructionsId,
+      'data-rbd-drag-handle-draggable-id': draggableId,
+      'data-rbd-drag-handle-context-id': contextId,
+      draggable: false,
+      onDragStart: preventHtml5Dnd
+    } : null;
+  }, [contextId, dragHandleUsageInstructionsId, draggableId, isEnabled]);
+  var onMoveEnd = useCallback(function (event) {
+    if (mapped.type !== 'DRAGGING') {
+      return;
+    }
+
+    if (!mapped.dropping) {
+      return;
+    }
+
+    if (event.propertyName !== 'transform') {
+      return;
+    }
+
+    dropAnimationFinishedAction();
+  }, [dropAnimationFinishedAction, mapped]);
+  var provided = useMemo(function () {
+    var style = getStyle$1(mapped);
+    var onTransitionEnd = mapped.type === 'DRAGGING' && mapped.dropping ? onMoveEnd : null;
+    var result = {
+      innerRef: setRef,
+      draggableProps: {
+        'data-rbd-draggable-context-id': contextId,
+        'data-rbd-draggable-id': draggableId,
+        style: style,
+        onTransitionEnd: onTransitionEnd
+      },
+      dragHandleProps: dragHandleProps
+    };
+    return result;
+  }, [contextId, dragHandleProps, draggableId, mapped, onMoveEnd, setRef]);
+  var rubric = useMemo(function () {
+    return {
+      draggableId: descriptor.id,
+      type: descriptor.type,
+      source: {
+        index: descriptor.index,
+        droppableId: descriptor.droppableId
+      }
+    };
+  }, [descriptor.droppableId, descriptor.id, descriptor.index, descriptor.type]);
+  return children(provided, mapped.snapshot, rubric);
+}
+
+var isStrictEqual = (function (a, b) {
+  return a === b;
+});
+
+var whatIsDraggedOverFromResult = (function (result) {
+  var combine = result.combine,
+      destination = result.destination;
+
+  if (destination) {
+    return destination.droppableId;
+  }
+
+  if (combine) {
+    return combine.droppableId;
+  }
+
+  return null;
+});
+
+var getCombineWithFromResult = function getCombineWithFromResult(result) {
+  return result.combine ? result.combine.draggableId : null;
+};
+
+var getCombineWithFromImpact = function getCombineWithFromImpact(impact) {
+  return impact.at && impact.at.type === 'COMBINE' ? impact.at.combine.draggableId : null;
+};
+
+function getDraggableSelector() {
+  var memoizedOffset = memoizeOne(function (x, y) {
+    return {
+      x: x,
+      y: y
+    };
+  });
+  var getMemoizedSnapshot = memoizeOne(function (mode, isClone, draggingOver, combineWith, dropping) {
+    return {
+      isDragging: true,
+      isClone: isClone,
+      isDropAnimating: Boolean(dropping),
+      dropAnimation: dropping,
+      mode: mode,
+      draggingOver: draggingOver,
+      combineWith: combineWith,
+      combineTargetFor: null
+    };
+  });
+  var getMemoizedProps = memoizeOne(function (offset, mode, dimension, isClone, draggingOver, combineWith, forceShouldAnimate) {
+    return {
+      mapped: {
+        type: 'DRAGGING',
+        dropping: null,
+        draggingOver: draggingOver,
+        combineWith: combineWith,
+        mode: mode,
+        offset: offset,
+        dimension: dimension,
+        forceShouldAnimate: forceShouldAnimate,
+        snapshot: getMemoizedSnapshot(mode, isClone, draggingOver, combineWith, null)
+      }
+    };
+  });
+
+  var selector = function selector(state, ownProps) {
+    if (state.isDragging) {
+      if (state.critical.draggable.id !== ownProps.draggableId) {
+        return null;
+      }
+
+      var offset = state.current.client.offset;
+      var dimension = state.dimensions.draggables[ownProps.draggableId];
+      var draggingOver = whatIsDraggedOver(state.impact);
+      var combineWith = getCombineWithFromImpact(state.impact);
+      var forceShouldAnimate = state.forceShouldAnimate;
+      return getMemoizedProps(memoizedOffset(offset.x, offset.y), state.movementMode, dimension, ownProps.isClone, draggingOver, combineWith, forceShouldAnimate);
+    }
+
+    if (state.phase === 'DROP_ANIMATING') {
+      var completed = state.completed;
+
+      if (completed.result.draggableId !== ownProps.draggableId) {
+        return null;
+      }
+
+      var isClone = ownProps.isClone;
+      var _dimension = state.dimensions.draggables[ownProps.draggableId];
+      var result = completed.result;
+      var mode = result.mode;
+
+      var _draggingOver = whatIsDraggedOverFromResult(result);
+
+      var _combineWith = getCombineWithFromResult(result);
+
+      var duration = state.dropDuration;
+      var dropping = {
+        duration: duration,
+        curve: curves.drop,
+        moveTo: state.newHomeClientOffset,
+        opacity: _combineWith ? combine.opacity.drop : null,
+        scale: _combineWith ? combine.scale.drop : null
+      };
+      return {
+        mapped: {
+          type: 'DRAGGING',
+          offset: state.newHomeClientOffset,
+          dimension: _dimension,
+          dropping: dropping,
+          draggingOver: _draggingOver,
+          combineWith: _combineWith,
+          mode: mode,
+          forceShouldAnimate: null,
+          snapshot: getMemoizedSnapshot(mode, isClone, _draggingOver, _combineWith, dropping)
+        }
+      };
+    }
+
+    return null;
+  };
+
+  return selector;
+}
+
+function getSecondarySnapshot(combineTargetFor) {
+  return {
+    isDragging: false,
+    isDropAnimating: false,
+    isClone: false,
+    dropAnimation: null,
+    mode: null,
+    draggingOver: null,
+    combineTargetFor: combineTargetFor,
+    combineWith: null
+  };
+}
+
+var atRest = {
+  mapped: {
+    type: 'SECONDARY',
+    offset: origin,
+    combineTargetFor: null,
+    shouldAnimateDisplacement: true,
+    snapshot: getSecondarySnapshot(null)
+  }
+};
+
+function getSecondarySelector() {
+  var memoizedOffset = memoizeOne(function (x, y) {
+    return {
+      x: x,
+      y: y
+    };
+  });
+  var getMemoizedSnapshot = memoizeOne(getSecondarySnapshot);
+  var getMemoizedProps = memoizeOne(function (offset, combineTargetFor, shouldAnimateDisplacement) {
+    if (combineTargetFor === void 0) {
+      combineTargetFor = null;
+    }
+
+    return {
+      mapped: {
+        type: 'SECONDARY',
+        offset: offset,
+        combineTargetFor: combineTargetFor,
+        shouldAnimateDisplacement: shouldAnimateDisplacement,
+        snapshot: getMemoizedSnapshot(combineTargetFor)
+      }
+    };
+  });
+
+  var getFallback = function getFallback(combineTargetFor) {
+    return combineTargetFor ? getMemoizedProps(origin, combineTargetFor, true) : null;
+  };
+
+  var getProps = function getProps(ownId, draggingId, impact, afterCritical) {
+    var visualDisplacement = impact.displaced.visible[ownId];
+    var isAfterCriticalInVirtualList = Boolean(afterCritical.inVirtualList && afterCritical.effected[ownId]);
+    var combine = tryGetCombine(impact);
+    var combineTargetFor = combine && combine.draggableId === ownId ? draggingId : null;
+
+    if (!visualDisplacement) {
+      if (!isAfterCriticalInVirtualList) {
+        return getFallback(combineTargetFor);
+      }
+
+      if (impact.displaced.invisible[ownId]) {
+        return null;
+      }
+
+      var change = negate(afterCritical.displacedBy.point);
+
+      var _offset = memoizedOffset(change.x, change.y);
+
+      return getMemoizedProps(_offset, combineTargetFor, true);
+    }
+
+    if (isAfterCriticalInVirtualList) {
+      return getFallback(combineTargetFor);
+    }
+
+    var displaceBy = impact.displacedBy.point;
+    var offset = memoizedOffset(displaceBy.x, displaceBy.y);
+    return getMemoizedProps(offset, combineTargetFor, visualDisplacement.shouldAnimate);
+  };
+
+  var selector = function selector(state, ownProps) {
+    if (state.isDragging) {
+      if (state.critical.draggable.id === ownProps.draggableId) {
+        return null;
+      }
+
+      return getProps(ownProps.draggableId, state.critical.draggable.id, state.impact, state.afterCritical);
+    }
+
+    if (state.phase === 'DROP_ANIMATING') {
+      var completed = state.completed;
+
+      if (completed.result.draggableId === ownProps.draggableId) {
+        return null;
+      }
+
+      return getProps(ownProps.draggableId, completed.result.draggableId, completed.impact, completed.afterCritical);
+    }
+
+    return null;
+  };
+
+  return selector;
+}
+
+var makeMapStateToProps = function makeMapStateToProps() {
+  var draggingSelector = getDraggableSelector();
+  var secondarySelector = getSecondarySelector();
+
+  var selector = function selector(state, ownProps) {
+    return draggingSelector(state, ownProps) || secondarySelector(state, ownProps) || atRest;
+  };
+
+  return selector;
+};
+var mapDispatchToProps = {
+  dropAnimationFinished: dropAnimationFinished
+};
+var ConnectedDraggable = connect(makeMapStateToProps, mapDispatchToProps, null, {
+  context: StoreContext,
+  pure: true,
+  areStatePropsEqual: isStrictEqual
+})(Draggable);
+
+function PrivateDraggable(props) {
+  var droppableContext = useRequiredContext(DroppableContext);
+  var isUsingCloneFor = droppableContext.isUsingCloneFor;
+
+  if (isUsingCloneFor === props.draggableId && !props.isClone) {
+    return null;
+  }
+
+  return React__default.createElement(ConnectedDraggable, props);
+}
+function PublicDraggable(props) {
+  var isEnabled = typeof props.isDragDisabled === 'boolean' ? !props.isDragDisabled : true;
+  var canDragInteractiveElements = Boolean(props.disableInteractiveElementBlocking);
+  var shouldRespectForcePress = Boolean(props.shouldRespectForcePress);
+  return React__default.createElement(PrivateDraggable, _extends({}, props, {
+    isClone: false,
+    isEnabled: isEnabled,
+    canDragInteractiveElements: canDragInteractiveElements,
+    shouldRespectForcePress: shouldRespectForcePress
+  }));
+}
+
+function Droppable(props) {
+  var appContext = useContext(AppContext);
+  !appContext ? invariant(false) : void 0;
+  var contextId = appContext.contextId,
+      isMovementAllowed = appContext.isMovementAllowed;
+  var droppableRef = useRef(null);
+  var placeholderRef = useRef(null);
+  var children = props.children,
+      droppableId = props.droppableId,
+      type = props.type,
+      mode = props.mode,
+      direction = props.direction,
+      ignoreContainerClipping = props.ignoreContainerClipping,
+      isDropDisabled = props.isDropDisabled,
+      isCombineEnabled = props.isCombineEnabled,
+      snapshot = props.snapshot,
+      useClone = props.useClone,
+      updateViewportMaxScroll = props.updateViewportMaxScroll,
+      getContainerForClone = props.getContainerForClone;
+  var getDroppableRef = useCallback(function () {
+    return droppableRef.current;
+  }, []);
+  var setDroppableRef = useCallback(function (value) {
+    droppableRef.current = value;
+  }, []);
+  useCallback(function () {
+    return placeholderRef.current;
+  }, []);
+  var setPlaceholderRef = useCallback(function (value) {
+    placeholderRef.current = value;
+  }, []);
+  var onPlaceholderTransitionEnd = useCallback(function () {
+    if (isMovementAllowed()) {
+      updateViewportMaxScroll({
+        maxScroll: getMaxWindowScroll()
+      });
+    }
+  }, [isMovementAllowed, updateViewportMaxScroll]);
+  useDroppablePublisher({
+    droppableId: droppableId,
+    type: type,
+    mode: mode,
+    direction: direction,
+    isDropDisabled: isDropDisabled,
+    isCombineEnabled: isCombineEnabled,
+    ignoreContainerClipping: ignoreContainerClipping,
+    getDroppableRef: getDroppableRef
+  });
+  var placeholder = React__default.createElement(AnimateInOut, {
+    on: props.placeholder,
+    shouldAnimate: props.shouldAnimatePlaceholder
+  }, function (_ref) {
+    var onClose = _ref.onClose,
+        data = _ref.data,
+        animate = _ref.animate;
+    return React__default.createElement(Placeholder$1, {
+      placeholder: data,
+      onClose: onClose,
+      innerRef: setPlaceholderRef,
+      animate: animate,
+      contextId: contextId,
+      onTransitionEnd: onPlaceholderTransitionEnd
+    });
+  });
+  var provided = useMemo(function () {
+    return {
+      innerRef: setDroppableRef,
+      placeholder: placeholder,
+      droppableProps: {
+        'data-rbd-droppable-id': droppableId,
+        'data-rbd-droppable-context-id': contextId
+      }
+    };
+  }, [contextId, droppableId, placeholder, setDroppableRef]);
+  var isUsingCloneFor = useClone ? useClone.dragging.draggableId : null;
+  var droppableContext = useMemo(function () {
+    return {
+      droppableId: droppableId,
+      type: type,
+      isUsingCloneFor: isUsingCloneFor
+    };
+  }, [droppableId, isUsingCloneFor, type]);
+
+  function getClone() {
+    if (!useClone) {
+      return null;
+    }
+
+    var dragging = useClone.dragging,
+        render = useClone.render;
+    var node = React__default.createElement(PrivateDraggable, {
+      draggableId: dragging.draggableId,
+      index: dragging.source.index,
+      isClone: true,
+      isEnabled: true,
+      shouldRespectForcePress: false,
+      canDragInteractiveElements: true
+    }, function (draggableProvided, draggableSnapshot) {
+      return render(draggableProvided, draggableSnapshot, dragging);
+    });
+    return ReactDOM.createPortal(node, getContainerForClone());
+  }
+
+  return React__default.createElement(DroppableContext.Provider, {
+    value: droppableContext
+  }, children(provided, snapshot), getClone());
+}
+
+var isMatchingType = function isMatchingType(type, critical) {
+  return type === critical.droppable.type;
+};
+
+var getDraggable = function getDraggable(critical, dimensions) {
+  return dimensions.draggables[critical.draggable.id];
+};
+
+var makeMapStateToProps$1 = function makeMapStateToProps() {
+  var idleWithAnimation = {
+    placeholder: null,
+    shouldAnimatePlaceholder: true,
+    snapshot: {
+      isDraggingOver: false,
+      draggingOverWith: null,
+      draggingFromThisWith: null,
+      isUsingPlaceholder: false
+    },
+    useClone: null
+  };
+
+  var idleWithoutAnimation = _extends({}, idleWithAnimation, {
+    shouldAnimatePlaceholder: false
+  });
+
+  var getDraggableRubric = memoizeOne(function (descriptor) {
+    return {
+      draggableId: descriptor.id,
+      type: descriptor.type,
+      source: {
+        index: descriptor.index,
+        droppableId: descriptor.droppableId
+      }
+    };
+  });
+  var getMapProps = memoizeOne(function (id, isEnabled, isDraggingOverForConsumer, isDraggingOverForImpact, dragging, renderClone) {
+    var draggableId = dragging.descriptor.id;
+    var isHome = dragging.descriptor.droppableId === id;
+
+    if (isHome) {
+      var useClone = renderClone ? {
+        render: renderClone,
+        dragging: getDraggableRubric(dragging.descriptor)
+      } : null;
+      var _snapshot = {
+        isDraggingOver: isDraggingOverForConsumer,
+        draggingOverWith: isDraggingOverForConsumer ? draggableId : null,
+        draggingFromThisWith: draggableId,
+        isUsingPlaceholder: true
+      };
+      return {
+        placeholder: dragging.placeholder,
+        shouldAnimatePlaceholder: false,
+        snapshot: _snapshot,
+        useClone: useClone
+      };
+    }
+
+    if (!isEnabled) {
+      return idleWithoutAnimation;
+    }
+
+    if (!isDraggingOverForImpact) {
+      return idleWithAnimation;
+    }
+
+    var snapshot = {
+      isDraggingOver: isDraggingOverForConsumer,
+      draggingOverWith: draggableId,
+      draggingFromThisWith: null,
+      isUsingPlaceholder: true
+    };
+    return {
+      placeholder: dragging.placeholder,
+      shouldAnimatePlaceholder: true,
+      snapshot: snapshot,
+      useClone: null
+    };
+  });
+
+  var selector = function selector(state, ownProps) {
+    var id = ownProps.droppableId;
+    var type = ownProps.type;
+    var isEnabled = !ownProps.isDropDisabled;
+    var renderClone = ownProps.renderClone;
+
+    if (state.isDragging) {
+      var critical = state.critical;
+
+      if (!isMatchingType(type, critical)) {
+        return idleWithoutAnimation;
+      }
+
+      var dragging = getDraggable(critical, state.dimensions);
+      var isDraggingOver = whatIsDraggedOver(state.impact) === id;
+      return getMapProps(id, isEnabled, isDraggingOver, isDraggingOver, dragging, renderClone);
+    }
+
+    if (state.phase === 'DROP_ANIMATING') {
+      var completed = state.completed;
+
+      if (!isMatchingType(type, completed.critical)) {
+        return idleWithoutAnimation;
+      }
+
+      var _dragging = getDraggable(completed.critical, state.dimensions);
+
+      return getMapProps(id, isEnabled, whatIsDraggedOverFromResult(completed.result) === id, whatIsDraggedOver(completed.impact) === id, _dragging, renderClone);
+    }
+
+    if (state.phase === 'IDLE' && state.completed && !state.shouldFlush) {
+      var _completed = state.completed;
+
+      if (!isMatchingType(type, _completed.critical)) {
+        return idleWithoutAnimation;
+      }
+
+      var wasOver = whatIsDraggedOver(_completed.impact) === id;
+      var wasCombining = Boolean(_completed.impact.at && _completed.impact.at.type === 'COMBINE');
+      var isHome = _completed.critical.droppable.id === id;
+
+      if (wasOver) {
+        return wasCombining ? idleWithAnimation : idleWithoutAnimation;
+      }
+
+      if (isHome) {
+        return idleWithAnimation;
+      }
+
+      return idleWithoutAnimation;
+    }
+
+    return idleWithoutAnimation;
+  };
+
+  return selector;
+};
+var mapDispatchToProps$1 = {
+  updateViewportMaxScroll: updateViewportMaxScroll
+};
+
+function getBody() {
+  !document.body ? invariant(false) : void 0;
+  return document.body;
+}
+
+var defaultProps = {
+  mode: 'standard',
+  type: 'DEFAULT',
+  direction: 'vertical',
+  isDropDisabled: false,
+  isCombineEnabled: false,
+  ignoreContainerClipping: false,
+  renderClone: null,
+  getContainerForClone: getBody
+};
+var ConnectedDroppable = connect(makeMapStateToProps$1, mapDispatchToProps$1, null, {
+  context: StoreContext,
+  pure: true,
+  areStatePropsEqual: isStrictEqual
+})(Droppable);
+ConnectedDroppable.defaultProps = defaultProps;
+
+/*
+ * Copyright (C) 2007-2022 Crafter Software Corporation. All Rights Reserved.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License version 3 as published by
+ * the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+function useActiveSiteId() {
+  return useSelector((state) => state.sites.active);
+}
+
+/*
+ * Copyright (C) 2007-2022 Crafter Software Corporation. All Rights Reserved.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License version 3 as published by
+ * the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+// endregion
+// region Publish
+const showPublishDialog = /*#__PURE__*/ createAction('SHOW_PUBLISH_DIALOG');
+// endregion
+// region New Content
+const showNewContentDialog = /*#__PURE__*/ createAction('SHOW_NEW_CONTENT_DIALOG');
+const closeNewContentDialog = /*#__PURE__*/ createAction('CLOSE_NEW_CONTENT_DIALOG');
+// endregion
+// region Legacy Form
+const showEditDialog = /*#__PURE__*/ createAction('SHOW_EDIT_DIALOG');
+const newContentCreationComplete = /*#__PURE__*/ createAction('NEW_CONTENT_CREATION_COMPLETE');
+// endregion
+// region Upload Dialog
+const showUploadDialog = /*#__PURE__*/ createAction('SHOW_UPLOAD_DIALOG');
+// endregion
+// region Widget Dialog
+const showWidgetDialog = /*#__PURE__*/ createAction('SHOW_WIDGET_DIALOG');
+// endregion
+
+/*
+ * Copyright (C) 2007-2022 Crafter Software Corporation. All Rights Reserved.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License version 3 as published by
+ * the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+// region Batch Actions
+const batchActions = /*#__PURE__*/ createAction('BATCH_ACTIONS');
+// endregion
+// region dispatch DOM Event
+const dispatchDOMEvent = /*#__PURE__*/ createAction('DISPATCH_DOM_EVENT');
+// endregion
+
+var BoardCard = function (_a) {
+    var cardId = _a.cardId, cardName = _a.cardName; _a.trelloCardUrl; var coverColor = _a.coverColor, description = _a.description, attachmentCount = _a.attachmentCount, cardAttachments = _a.cardAttachments;
+    var siteId = useActiveSiteId();
+    var dispatch = useDispatch();
+    var _b = React.useState(false), expanded = _b[0], setExpanded = _b[1];
+    var _c = React.useState(null), anchorEl = _c[0], setAnchorEl = _c[1];
+    var open = Boolean(anchorEl);
+    var ITEM_HEIGHT = 55;
+    var _d = useState(), rdAttachedContentItems = _d[0], setRdAttachedContentItems = _d[1];
+    var rdAttachedContentItemPaths = useMemo$1(function () { return []; }, []);
+    var rdAttachedDocuments = useMemo$1(function () { return []; }, []);
+    useEffect(function () {
+        var contentItems = [];
+        cardAttachments === null || cardAttachments === void 0 ? void 0 : cardAttachments.forEach(function (value) {
+            var url = value.url;
+            if (url.includes('contentId=')) {
+                var path = url.substr(url.indexOf('contentId=') + 10);
+                if (path.includes('&')) {
+                    path = path.substr(0, path.indexOf('&'));
+                }
+                contentItems[contentItems.length] = path;
+            }
+            else {
+                rdAttachedDocuments[rdAttachedDocuments.length] = value;
+            }
+        });
+        rdAttachedContentItemPaths = contentItems;
+        fetchItemsByPath(siteId, rdAttachedContentItemPaths, { castAsDetailedItem: true }).subscribe({
+            next: function (sandboxItems) {
+                setRdAttachedContentItems(sandboxItems);
+            }
+        });
+    }, [siteId, rdAttachedContentItemPaths]);
+    var handleExpandClick = function () {
+        setExpanded(!expanded);
+    };
+    var attachContent = function (contentName, siteId, cardId, contentId) {
+        var serviceUrl = "/studio/api/2/plugin/script/plugins/org/rd/plugin/trellowf/trellowf/card/attach-content.json?siteId=".concat(siteId, "&name=").concat(contentName, "&cardId=").concat(cardId, "&contentId=").concat(contentId);
+        get(serviceUrl).subscribe({
+            next: function (response) { },
+            error: function (e) { }
+        });
+    };
+    var handleCardActionsClose = function () {
+        console.log(anchorEl, open);
+        setAnchorEl(null);
+    };
+    var handleCreatePage = function () {
+        handleCreateContent('/site/website/index.xml');
+    };
+    var handleCreateComponent = function () {
+        handleCreateContent('/site/components');
+    };
+    var handleCreateContent = function (path) {
+        fetchSandboxItem(siteId, path, { castAsDetailedItem: true }).subscribe({
+            next: function (sandboxItem) {
+                createCustomDocumentEventListener('TRELLO_NEW_CONTENT', function (response) {
+                    attachContent(response.item.internalName, siteId, cardId, response.item.url);
+                });
+                createCustomDocumentEventListener('TRELLO_CONTENTTYPE_SELECTED', function (response) {
+                    console.log(response);
+                    dispatch(showEditDialog(__assign(__assign({}, response), { onSaveSuccess: batchActions([
+                            closeNewContentDialog(),
+                            newContentCreationComplete(),
+                            dispatchDOMEvent({
+                                id: 'TRELLO_NEW_CONTENT'
+                            })
+                        ]) })));
+                });
+                dispatch(showNewContentDialog({
+                    item: sandboxItem,
+                    // @ts-ignore - required attributes of `showEditDialog` are submitted by new content dialog `onContentTypeSelected` callback and injected into the showEditDialog action by the GlobalDialogManger
+                    onContentTypeSelected: dispatchDOMEvent({
+                        id: 'TRELLO_CONTENTTYPE_SELECTED'
+                    })
+                }));
+            },
+            error: function () {
+                console.error("Oops! We can't find the content you are looking for.");
+            }
+        });
+        handleCardActionsClose();
+    };
+    var handleUploadAsset = function () {
+        dispatch(showUploadDialog({
+            path: '/static-assets/images/library',
+            site: siteId,
+            onClose: dispatchDOMEvent({
+                id: 'TRELLO_UPLOAD_CONTENT'
+            })
+        }));
+        handleCardActionsClose();
+    };
+    var handleAttachContent = function () {
+        createCustomDocumentEventListener('TRELLO_SEARCH_CONTENT', function (response) {
+            console.log(response);
+            alert('search1!');
+            //        attachContent(response.item.internalName, siteId, cardId, response.item.url);
+        });
+        dispatch({
+            type: 'SHOW_WIDGET_DIALOG',
+            payload: {
+                id: 'siteSearchDialog',
+                title: 'Search',
+                widget: {
+                    id: 'craftercms.components.Search',
+                    configuration: {
+                        embedded: true,
+                        mode: 'select',
+                        onAcceptSelection: function (response) {
+                            console.log(response);
+                            alert('search2!');
+                        }
+                    }
+                }
+            }
+        });
+        //     item: lookupItemByPath('/', items),
+        //     // @ts-ignore - required attributes of `showEditDialog` are submitted by new content dialog `onContentTypeSelected` callback and injected into the showEditDialog action by the GlobalDialogManger
+        //     onContentTypeSelected: showEditDialog({})
+        //   })
+        // );
+        //attachContent('test', useActiveSiteId(), cardId, '/site/website/index.xml');
+        //attachContent('test', siteId, cardId, '/site/website/index.xml');
+        handleCardActionsClose();
+    };
+    var handleSubmitContent = function () {
+        alert('Submit ' + cardId);
+        setAnchorEl(null);
+    };
+    var handleRejectContent = function () {
+        alert('Reject ' + cardId);
+        handleCardActionsClose();
+    };
+    var handlePublishContent = function () {
+        dispatch(showPublishDialog({
+            items: rdAttachedContentItems,
+            onSuccess: null,
+            onClosed: null //dispatchDOMEvent({ id: customEventId, type: 'cancel' })
+        }));
+        handleCardActionsClose();
+    };
+    var handleClick = function (event) {
+        setAnchorEl(event.currentTarget);
+    };
+    return (React.createElement(React.Fragment, null,
+        React.createElement(Card, { elevation: 3, sx: { borderTop: coverColor ? "10px solid ".concat(coverColor) : "" } },
+            React.createElement(CardHeader, { action: React.createElement(IconButton, { id: "long-button", "aria-label": "settings", "aria-controls": open ? 'long-menu' : undefined, "aria-expanded": open ? 'true' : undefined, "aria-haspopup": "true", onClick: handleClick },
+                    React.createElement(MoreVertRoundedIcon, null)), title: cardName, titleTypographyProps: { variant: 'body1' } }),
+            attachmentCount > 0 && (React.createElement(CardActions, { disableSpacing: true },
+                React.createElement(Button, { size: "small", onClick: handleExpandClick, "aria-expanded": expanded, "aria-label": "show more" }, expanded ? 'Show Less' : 'Show More'))),
+            expanded && (React.createElement(CardContent, null,
+                React.createElement(React.Fragment, null,
+                    React.createElement(Typography, { variant: "h6", component: "h4" }, "Description"),
+                    React.createElement(Typography, { paragraph: true }, description),
+                    React.createElement(Typography, { variant: "h6", component: "h4" }, "Related Content"), rdAttachedContentItems === null || rdAttachedContentItems === void 0 ? void 0 :
+                    rdAttachedContentItems.map(function (contentItem, contentIndex) { return (React.createElement("div", null,
+                        React.createElement(ItemDisplay, { key: contentItem.path, item: contentItem, showNavigableAsLinks: false }))); }),
+                    React.createElement(Typography, { variant: "h6", component: "h4" }, "Related Documents & Assets"), rdAttachedDocuments === null || rdAttachedDocuments === void 0 ? void 0 :
+                    rdAttachedDocuments.map(function (document, docIndex) { return (React.createElement("div", null,
+                        React.createElement(Link, { href: document.url, target: "_new", variant: "body2" }, document.name))); }))))),
+        React.createElement(Menu, { id: "long-menu", anchorEl: anchorEl, open: open, onClose: handleCardActionsClose, MenuListProps: {
+                'aria-labelledby': 'long-button'
+            }, PaperProps: {
+                style: {
+                    maxHeight: ITEM_HEIGHT * 4.5,
+                    width: '40ch'
+                }
+            } },
+            React.createElement(MenuItem, { key: "createPage", onClick: handleCreatePage }, "Create New Page"),
+            React.createElement(MenuItem, { key: "createComponent", onClick: handleCreateComponent }, "Create New Component"),
+            React.createElement(MenuItem, { key: "uploadAsset", onClick: handleUploadAsset }, "Upload Asset(s)"),
+            React.createElement(MenuItem, { key: "attachContent", onClick: handleAttachContent }, "Attach Existing Content"),
+            React.createElement(MenuItem, { key: "submitContent", onClick: handleSubmitContent }, "Submit Content for Review"),
+            React.createElement(MenuItem, { key: "rejectContent", onClick: handleRejectContent }, "Reject Content in Review"),
+            React.createElement(MenuItem, { key: "publishContent", onClick: handlePublishContent }, "Approve Content for Publish"))));
+};
+
+var Board = function (_a) {
+    var boardId = _a.boardId;
+    var siteId = useActiveSiteId();
+    var _b = useState(), error = _b[0], setError = _b[1];
+    var _c = useState({
+        board: null,
+        lists: null
+    }), state = _c[0], setState = _c[1];
+    var onDragEnd = function (result) {
+        moveCard(result.destination.droppableId, result.draggableId);
+    };
+    var moveCard = function (listId, cardId) {
+        var serviceUrl = "/studio/api/2/plugin/script/plugins/org/rd/plugin/trellowf/trellowf/card/move.json?siteId=".concat(siteId, "&listId=").concat(listId, "&cardId=").concat(cardId);
+        get(serviceUrl).subscribe({
+            next: function (response) {
+                loadBoardData();
+            },
+            error: function (e) {
+                var _a, _b;
+                console.error(e);
+                setError((_b = (_a = e.response) === null || _a === void 0 ? void 0 : _a.response) !== null && _b !== void 0 ? _b : { code: '?', message: 'Unknown Error. Check browser console.' });
+            }
+        });
+    };
+    var loadBoardData = function () {
+        var serviceUrl = "/studio/api/2/plugin/script/plugins/org/rd/plugin/trellowf/trellowf/board/lists.json?siteId=".concat(siteId);
+        if (boardId) {
+            serviceUrl += '&boardId=' + boardId;
+        }
+        get(serviceUrl).subscribe({
+            next: function (response) {
+                setState(__assign(__assign({}, state), { board: response.response.result.board, lists: response.response.result.lists }));
+            },
+            error: function (e) {
+                var _a, _b;
+                console.error(e);
+                setError((_b = (_a = e.response) === null || _a === void 0 ? void 0 : _a.response) !== null && _b !== void 0 ? _b : { code: '?', message: 'Unknown Error. Check browser console.' });
+            }
+        });
+    };
+    useEffect(function () {
+        loadBoardData();
+        var intervalRef = setInterval(function () {
+            loadBoardData();
+        }, 10000);
+        return function () {
+            clearInterval(intervalRef);
+        };
+    }, []);
+    return (React.createElement(DragDropContext, { onDragEnd: function (result) { return onDragEnd(result); } },
+        React.createElement(Box, { sx: {
+                backgroundImage: state.board ? "url(".concat(state.board.prefs.backgroundImage, ")") : null,
+                flexDirection: 'row',
+                position: 'relative',
+                width: '300%;',
+                height: '500%'
+            } },
+            error && React.createElement(ApiResponseErrorState, { error: error }),
+            state.board && (React.createElement(Fab, { href: state.board.url, target: "new", "aria-label": "Edit in Trello", sx: { position: 'absolute', bottom: 20, right: 20 }, color: "info" },
+                React.createElement(EditRoundedIcon, null))),
+            state.lists &&
+                state.lists.map(function (list) {
+                    return (React.createElement(Paper, { elevation: 1, style: {}, sx: function (theme) { return ({
+                            width: '280px',
+                            display: 'inline-table',
+                            margin: '5px',
+                            p: 1,
+                            bgcolor: theme.palette.mode === 'dark' ? 'grey' : 'grey.A200'
+                        }); } },
+                        React.createElement(Typography, { variant: "h6", component: "h2", sx: { mb: 1 } }, list.name),
+                        React.createElement(ConnectedDroppable, { droppableId: list.id, key: list.id }, function (provided, snapshot) {
+                            var _a;
+                            return (React.createElement(Box, __assign({ sx: (_a = {}, _a[".".concat(cardClasses.root, ":not(:last-child)")] = { mb: 1 }, _a) }, provided.droppableProps, { ref: provided.innerRef }), list.cards &&
+                                Object.values(list.cards).map(function (card, cardIndex) {
+                                    return (React.createElement(PublicDraggable, { key: card.id, draggableId: card.id, index: cardIndex }, function (provided, snapshot) {
+                                        return (React.createElement("div", __assign({ ref: provided.innerRef }, provided.draggableProps, provided.dragHandleProps),
+                                            React.createElement("div", { style: { padding: '5px' } },
+                                                React.createElement(BoardCard, { cardId: card.id, cardName: card.name, trelloCardUrl: card.url, coverColor: card.cover.color, description: card.desc, attachmentCount: card.badges.attachments, cardAttachments: card.cardAttachments })),
+                                            provided.placeholder));
+                                    }));
+                                })));
+                        })));
+                }))));
+};
+
+function OpenBoardDialogPanelButton(props) {
+    var boardLabel = props.title ? props.title : 'Trello Board';
+    var boardIcon = props.icon && props.icon.id ? props.icon.id : '@mui/icons-material/ContentPasteOutlined';
+    var dispatch = useDispatch();
+    return (React.createElement(ToolsPanelListItemButton, { icon: { id: boardIcon }, title: boardLabel, onClick: function () {
+            return dispatch(showWidgetDialog({
+                title: boardLabel,
+                extraProps: props,
+                widget: {
+                    id: 'org.rd.plugin.trellowf.board'
+                }
+            }));
+        } }));
+}
+
+var plugin = {
+    locales: undefined,
+    scripts: undefined,
+    stylesheets: undefined,
+    id: 'org.rd.plugin.trellowf',
+    widgets: {
+        'org.rd.plugin.trellowf.openBoardButton': OpenBoardDialogPanelButton,
+        'org.rd.plugin.trellowf.board': Board
+    }
+};
+
+export { Board, OpenBoardDialogPanelButton, plugin as default };
