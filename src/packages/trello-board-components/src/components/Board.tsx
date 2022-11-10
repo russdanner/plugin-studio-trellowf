@@ -120,7 +120,7 @@ const Board = ({ boardId }: BoardProps) => {
             href={state.board.url}
             target="new"
             aria-label="Edit in Trello"
-            sx={{ position: 'absolute', bottom: 20, right: 20 }}
+            sx={{ position: 'fixed', bottom: 60, right: 50 }}
             color="info"
           >
             <EditRoundedIcon />
