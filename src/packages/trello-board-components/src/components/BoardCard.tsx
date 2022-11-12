@@ -295,7 +295,7 @@ const BoardCard = ({
               ))}
 
               <Typography variant="h6" component="h4">
-                Related Documents & Assets
+                Related&nbsp;Documents&nbsp;&&nbsp;Assets
               </Typography>
 
               {rdAttachedDocuments?.map((document, docIndex) => (

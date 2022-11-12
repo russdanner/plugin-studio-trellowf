@@ -12,7 +12,8 @@ import {
   Paper,
   Typography,
   cardClasses,
-  Fab
+  Fab,
+  Button
 } from '@mui/material';
 import IconButton, { IconButtonProps } from '@mui/material/IconButton';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
@@ -49,13 +50,38 @@ const Board = ({ boardId }: BoardProps) => {
       >;
     }>
   });
+  
+  const PLUGIN_SERVICE_BASE = "/studio/api/2/plugin/script/plugins/org/rd/plugin/trellowf/trellowf"
 
   const onDragEnd = (result) => {
-    moveCard(result.destination.droppableId, result.draggableId);
+    console.log(result)
+    const cardId = result.draggableId
+    const targetListIdIndex = result.destination.index
+    const targetListId = result.destination.droppableId
+    const sourceListIndex = result.source.index
+    const sourceListId = result.source.droppableId
+
+    // guard on no move
+    if(sourceListId === targetListId
+    && sourceListIndex == targetListIdIndex) return
+
+    moveCard(cardId, sourceListId, targetListId, targetListIdIndex);
   };
 
-  const moveCard = (listId, cardId) => {
-    let serviceUrl = `/studio/api/2/plugin/script/plugins/org/rd/plugin/trellowf/trellowf/card/move.json?siteId=${siteId}&listId=${listId}&cardId=${cardId}`;
+  const moveCard = (cardId, sourceListId, targetListId, targetListIdIndex) => {
+    // update the board data locally
+    let sourceList = state.lists.find((list) => { return list.id === sourceListId; });    
+    let targetList = state.lists.find((list) => { return list.id === targetListId; });
+    // @ts-ignore 
+    let card = sourceList.cards.find((card) => { return card.id === cardId; }); 
+
+    // @ts-ignore 
+    sourceList.cards = sourceList.cards.filter(curCard => curCard.id != cardId)
+    // @ts-ignore 
+    targetList.cards.splice(targetListIdIndex, 0, card)
+
+    // Update the card on the server
+    let serviceUrl = `${PLUGIN_SERVICE_BASE}/card/move.json?siteId=${siteId}&listId=${targetListId}&cardId=${cardId}`;
 
     get(serviceUrl).subscribe({
       next: (response) => {
@@ -71,7 +97,7 @@ const Board = ({ boardId }: BoardProps) => {
   };
 
   const loadBoardData = () => {
-    let serviceUrl = `/studio/api/2/plugin/script/plugins/org/rd/plugin/trellowf/trellowf/board/lists.json?siteId=${siteId}`;
+    let serviceUrl = `${PLUGIN_SERVICE_BASE}/board/lists.json?siteId=${siteId}`;
     if (boardId) {
       serviceUrl += '&boardId=' + boardId;
     }
@@ -95,12 +121,12 @@ const Board = ({ boardId }: BoardProps) => {
 
   useEffect(() => {
     loadBoardData();
-    let intervalRef = setInterval(() => {
-      loadBoardData();
-    }, 10000);
-    return function () {
-      clearInterval(intervalRef);
-    };
+    // let intervalRef = setInterval(() => {
+    //   loadBoardData();
+    // }, 10000);
+    // return function () {
+    //   clearInterval(intervalRef);
+    // };
   }, []);
 
   return (
@@ -147,7 +173,7 @@ const Board = ({ boardId }: BoardProps) => {
                 <Droppable droppableId={list.id} key={list.id}>
                   {(provided, snapshot) => {
                     return (
-                      <Box
+                      <Box   
                         sx={{ [`.${cardClasses.root}:not(:last-child)`]: { mb: 1 } }}
                         {...provided.droppableProps}
                         ref={provided.innerRef}
@@ -181,6 +207,10 @@ const Board = ({ boardId }: BoardProps) => {
                               </Draggable>
                             );
                           })}
+                        <div style={{ height: snapshot.isDraggingOver ? "120px" : "80px" }}>&nbsp;</div>
+                        <Button size="small" aria-label="add card">
+                          Add Card
+                        </Button>
                       </Box>
                     );
                   }}

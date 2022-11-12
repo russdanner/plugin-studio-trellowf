@@ -9191,7 +9191,7 @@ var BoardCard = function (_a) {
                     React.createElement(Typography, { variant: "h6", component: "h4" }, "Related Content"), rdAttachedContentItems === null || rdAttachedContentItems === void 0 ? void 0 :
                     rdAttachedContentItems.map(function (contentItem, contentIndex) { return (React.createElement("div", null,
                         React.createElement(ItemDisplay, { key: contentItem.path, item: contentItem, showNavigableAsLinks: false }))); }),
-                    React.createElement(Typography, { variant: "h6", component: "h4" }, "Related Documents & Assets"), rdAttachedDocuments === null || rdAttachedDocuments === void 0 ? void 0 :
+                    React.createElement(Typography, { variant: "h6", component: "h4" }, "Related\u00A0Documents\u00A0&\u00A0Assets"), rdAttachedDocuments === null || rdAttachedDocuments === void 0 ? void 0 :
                     rdAttachedDocuments.map(function (document, docIndex) { return (React.createElement("div", null,
                         React.createElement(Link, { href: document.url, target: "_new", variant: "body2" }, document.name))); }))))),
         React.createElement(Menu, { id: "long-menu", anchorEl: anchorEl, open: open, onClose: handleCardActionsClose, MenuListProps: {
@@ -9219,11 +9219,32 @@ var Board = function (_a) {
         board: null,
         lists: null
     }), state = _c[0], setState = _c[1];
+    var PLUGIN_SERVICE_BASE = "/studio/api/2/plugin/script/plugins/org/rd/plugin/trellowf/trellowf";
     var onDragEnd = function (result) {
-        moveCard(result.destination.droppableId, result.draggableId);
+        console.log(result);
+        var cardId = result.draggableId;
+        var targetListIdIndex = result.destination.index;
+        var targetListId = result.destination.droppableId;
+        var sourceListIndex = result.source.index;
+        var sourceListId = result.source.droppableId;
+        // guard on no move
+        if (sourceListId === targetListId
+            && sourceListIndex == targetListIdIndex)
+            return;
+        moveCard(cardId, sourceListId, targetListId, targetListIdIndex);
     };
-    var moveCard = function (listId, cardId) {
-        var serviceUrl = "/studio/api/2/plugin/script/plugins/org/rd/plugin/trellowf/trellowf/card/move.json?siteId=".concat(siteId, "&listId=").concat(listId, "&cardId=").concat(cardId);
+    var moveCard = function (cardId, sourceListId, targetListId, targetListIdIndex) {
+        // update the board data locally
+        var sourceList = state.lists.find(function (list) { return list.id === sourceListId; });
+        var targetList = state.lists.find(function (list) { return list.id === targetListId; });
+        // @ts-ignore 
+        var card = sourceList.cards.find(function (card) { return card.id === cardId; });
+        // @ts-ignore 
+        sourceList.cards = sourceList.cards.filter(function (curCard) { return curCard.id != cardId; });
+        // @ts-ignore 
+        targetList.cards.splice(targetListIdIndex, 0, card);
+        // Update the card on the server
+        var serviceUrl = "".concat(PLUGIN_SERVICE_BASE, "/card/move.json?siteId=").concat(siteId, "&listId=").concat(targetListId, "&cardId=").concat(cardId);
         get(serviceUrl).subscribe({
             next: function (response) {
                 loadBoardData();
@@ -9236,7 +9257,7 @@ var Board = function (_a) {
         });
     };
     var loadBoardData = function () {
-        var serviceUrl = "/studio/api/2/plugin/script/plugins/org/rd/plugin/trellowf/trellowf/board/lists.json?siteId=".concat(siteId);
+        var serviceUrl = "".concat(PLUGIN_SERVICE_BASE, "/board/lists.json?siteId=").concat(siteId);
         if (boardId) {
             serviceUrl += '&boardId=' + boardId;
         }
@@ -9253,12 +9274,12 @@ var Board = function (_a) {
     };
     useEffect(function () {
         loadBoardData();
-        var intervalRef = setInterval(function () {
-            loadBoardData();
-        }, 10000);
-        return function () {
-            clearInterval(intervalRef);
-        };
+        // let intervalRef = setInterval(() => {
+        //   loadBoardData();
+        // }, 10000);
+        // return function () {
+        //   clearInterval(intervalRef);
+        // };
     }, []);
     return (React.createElement(DragDropContext, { onDragEnd: function (result) { return onDragEnd(result); } },
         React.createElement(Box, { sx: {
@@ -9269,7 +9290,7 @@ var Board = function (_a) {
                 height: '500%'
             } },
             error && React.createElement(ApiResponseErrorState, { error: error }),
-            state.board && (React.createElement(Fab, { href: state.board.url, target: "new", "aria-label": "Edit in Trello", sx: { position: 'absolute', bottom: 20, right: 20 }, color: "info" },
+            state.board && (React.createElement(Fab, { href: state.board.url, target: "new", "aria-label": "Edit in Trello", sx: { position: 'fixed', bottom: 60, right: 50 }, color: "info" },
                 React.createElement(EditRoundedIcon, null))),
             state.lists &&
                 state.lists.map(function (list) {
@@ -9283,15 +9304,18 @@ var Board = function (_a) {
                         React.createElement(Typography, { variant: "h6", component: "h2", sx: { mb: 1 } }, list.name),
                         React.createElement(ConnectedDroppable, { droppableId: list.id, key: list.id }, function (provided, snapshot) {
                             var _a;
-                            return (React.createElement(Box, __assign({ sx: (_a = {}, _a[".".concat(cardClasses.root, ":not(:last-child)")] = { mb: 1 }, _a) }, provided.droppableProps, { ref: provided.innerRef }), list.cards &&
-                                Object.values(list.cards).map(function (card, cardIndex) {
-                                    return (React.createElement(PublicDraggable, { key: card.id, draggableId: card.id, index: cardIndex }, function (provided, snapshot) {
-                                        return (React.createElement("div", __assign({ ref: provided.innerRef }, provided.draggableProps, provided.dragHandleProps),
-                                            React.createElement("div", { style: { padding: '5px' } },
-                                                React.createElement(BoardCard, { cardId: card.id, cardName: card.name, trelloCardUrl: card.url, coverColor: card.cover.color, description: card.desc, attachmentCount: card.badges.attachments, cardAttachments: card.cardAttachments })),
-                                            provided.placeholder));
-                                    }));
-                                })));
+                            return (React.createElement(Box, __assign({ sx: (_a = {}, _a[".".concat(cardClasses.root, ":not(:last-child)")] = { mb: 1 }, _a) }, provided.droppableProps, { ref: provided.innerRef }),
+                                list.cards &&
+                                    Object.values(list.cards).map(function (card, cardIndex) {
+                                        return (React.createElement(PublicDraggable, { key: card.id, draggableId: card.id, index: cardIndex }, function (provided, snapshot) {
+                                            return (React.createElement("div", __assign({ ref: provided.innerRef }, provided.draggableProps, provided.dragHandleProps),
+                                                React.createElement("div", { style: { padding: '5px' } },
+                                                    React.createElement(BoardCard, { cardId: card.id, cardName: card.name, trelloCardUrl: card.url, coverColor: card.cover.color, description: card.desc, attachmentCount: card.badges.attachments, cardAttachments: card.cardAttachments })),
+                                                provided.placeholder));
+                                        }));
+                                    }),
+                                React.createElement("div", { style: { height: snapshot.isDraggingOver ? "120px" : "80px" } }, "\u00A0"),
+                                React.createElement(Button, { size: "small", "aria-label": "add card" }, "Add Card")));
                         })));
                 }))));
 };
