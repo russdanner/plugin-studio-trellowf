@@ -13,13 +13,17 @@ import MoreVertRoundedIcon from '@mui/icons-material/MoreVertRounded';
 import IconButton, { IconButtonProps } from '@mui/material/IconButton';
 
 import {
-  newContentCreationComplete,
   showEditDialog,
   showNewContentDialog,
-  showUploadDialog,
   closeNewContentDialog,
+  newContentCreationComplete,
+  showUploadDialog,
+  closeUploadDialog,
   showPublishDialog,
-  closePublishDialog
+  closePublishDialog,
+  showRejectDialog,
+  closeRejectDialog,
+  showWidgetDialog
 } from '@craftercms/studio-ui/state/actions/dialogs';
 import { get } from '@craftercms/studio-ui/utils/ajax';
 import { ApiResponse, ApiResponseErrorState } from '@craftercms/studio-ui';
@@ -116,52 +120,64 @@ const CardActions = ({ card, cardDetails }: CardActionsProps) => {
   };
 
   const handleUploadAsset = () => {
+    createCustomDocumentEventListener('TRELLO_UPLOAD_CONTENT', (response) => {
+      console.log('Stuff was upliaded!');
+      console.log(response);
+      //attachContent(response.item.internalName, siteId, card.id, response.item.uri);
+    });
+
     dispatch(
       showUploadDialog({
         path: '/static-assets/images/library',
         site: siteId,
-        onClose: dispatchDOMEvent({
-          id: 'TRELLO_UPLOAD_CONTENT'
-        })
+        onClose: batchActions([
+          closeUploadDialog(),
+          dispatchDOMEvent({
+            id: 'TRELLO_UPLOAD_CONTENT'
+          })
+        ])
       })
     );
 
     handleCardActionsClose();
   };
 
-  const handleAttachContent = () => {
-    createCustomDocumentEventListener('TRELLO_SEARCH_CONTENT', (response) => {
-      console.log(response);
-      alert('search1!');
-      //        attachContent(response.item.internalName, siteId, cardId, response.item.url);
-    });
-
+  const handleAttachExistingContent = () => {
     dispatch({
       type: 'SHOW_WIDGET_DIALOG',
       payload: {
         id: 'siteSearchDialog',
-        title: 'Search',
         widget: {
           id: 'craftercms.components.Search',
           configuration: {
             embedded: true,
             mode: 'select',
             onAcceptSelection: (response) => {
+              console.log('Documents selected, attaching them');
               console.log(response);
-              alert('search2!');
+              Object.values(response).map((item, itemIndex) => {
+                // @ts-ignore item is untyped?
+                attachContent(item.label, siteId, card.id, item.path);
+              });
+
+              // at the moment search eats our trello board because you can only have one dialog
+              // so.. dispatch open trello
+              // the problem is we don't have context of the board we are in ARG!
+              dispatch(
+                showWidgetDialog({
+                  ...response,
+                  // title: boardLabel,
+                  // extraProps: props,
+                  widget: {
+                    id: 'org.rd.plugin.trellowf.board'
+                  }
+                })
+              );
             }
           }
         }
       }
     });
-
-    //     item: lookupItemByPath('/', items),
-    //     // @ts-ignore - required attributes of `showEditDialog` are submitted by new content dialog `onContentTypeSelected` callback and injected into the showEditDialog action by the GlobalDialogManger
-    //     onContentTypeSelected: showEditDialog({})
-    //   })
-    // );
-    //attachContent('test', useActiveSiteId(), cardId, '/site/website/index.xml');
-    //attachContent('test', siteId, cardId, '/site/website/index.xml');
 
     handleCardActionsClose();
   };
@@ -170,8 +186,40 @@ const CardActions = ({ card, cardDetails }: CardActionsProps) => {
     dispatch(
       showPublishDialog({
         items: cardDetails.attachedContentItems,
-        onSuccess: batchActions([closePublishDialog()]),
-        onClosed: null //dispatchDOMEvent({ id: customEventId, type: 'cancel' })
+        onSuccess: batchActions([closePublishDialog()])
+      })
+    );
+    handleCardActionsClose();
+  };
+
+  const handleRequestReviewOfContent = () => {
+    console.log('Requesting a publish');
+    const schedulingMap = {
+      approvePublish: null,
+      schedulePublish: 'custom',
+      requestPublish: 'now',
+      publish: 'now'
+    };
+
+    dispatch(
+      showPublishDialog({
+        scheduling: schedulingMap['requestPublish'],
+        items: cardDetails.attachedContentItems,
+        isRequestPublish: true,
+        isSubmmitting: true,
+        submissionCommentRequired: true,
+        showRequestApproval: true,
+        onSuccess: batchActions([closePublishDialog()])
+      })
+    );
+    handleCardActionsClose();
+  };
+
+  const handleRejectContent = () => {
+    dispatch(
+      showRejectDialog({
+        items: cardDetails.attachedContentItems,
+        onSuccess: batchActions([closeRejectDialog()])
       })
     );
     handleCardActionsClose();
@@ -180,6 +228,7 @@ const CardActions = ({ card, cardDetails }: CardActionsProps) => {
   const handleClickActions = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
+
   const handleClickAttactActions = (event: React.MouseEvent<HTMLElement>) => {
     setAttachAnchorEl(event.currentTarget);
   };
@@ -191,8 +240,8 @@ const CardActions = ({ card, cardDetails }: CardActionsProps) => {
 
   if (cardDetails && cardDetails.attachedContentItems) {
     cardDetails.attachedContentItems?.map((contentItem, contentIndex) => {
-      console.log('attachedItem');
-      console.log(contentItem);
+      //console.log('Evaluating workflow options on attachedItem');
+      //console.log(contentItem);
       hasItems = true; // invariant
       let availableActionsMap = contentItem.availableActionsMap;
 
@@ -249,25 +298,27 @@ const CardActions = ({ card, cardDetails }: CardActionsProps) => {
         <MenuItem key="createComponent" onClick={handleCreateComponent}>
           <Typography>New Component</Typography>
         </MenuItem>
-        <MenuItem key="attachContent" onClick={handleAttachContent}>
+        <MenuItem key="exustubgContent" onClick={handleAttachExistingContent}>
           <Typography>Existing Content</Typography>
         </MenuItem>
+        {/*        Can't reliably listen for upload events that we generate so disabling for now
         <MenuItem key="uploadAsset" onClick={handleUploadAsset}>
           <Typography>Upload Asset(s)</Typography>
         </MenuItem>
+*/}{' '}
         {/*          </Menu>
         </MenuItem>*/}
         <Divider />
         <MenuItem
-          key="submitContemt"
-          onClick={handlePublishContent}
+          key="handleRequestReviewOfContent"
+          onClick={handleRequestReviewOfContent}
           style={{ display: hasItemsForReview ? 'block' : 'none' }}
         >
-          <Typography>Submit for Review</Typography>
+          <Typography>Request Review</Typography>
         </MenuItem>
         <MenuItem
           key="rejectContent"
-          onClick={handlePublishContent}
+          onClick={handleRejectContent}
           style={{ display: hasItemsInReview ? 'block' : 'none' }}
         >
           <Typography>Reject Submission</Typography>

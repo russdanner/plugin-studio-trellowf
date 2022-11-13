@@ -9,12 +9,16 @@ const { createCustomDocumentEventListener } = craftercms.utils.dom;
 const { get } = craftercms.utils.ajax;
 const { ApiResponseErrorState } = craftercms.components;
 const { fetchSandboxItem, fetchItemsByPath } = craftercms.services.content;
+const ClearRoundedIcon = craftercms.utils.constants.components.get('@mui/icons-material/ClearRounded') && Object.prototype.hasOwnProperty.call(craftercms.utils.constants.components.get('@mui/icons-material/ClearRounded'), 'default') ? craftercms.utils.constants.components.get('@mui/icons-material/ClearRounded')['default'] : craftercms.utils.constants.components.get('@mui/icons-material/ClearRounded');
+const IconButton = craftercms.libs.MaterialUI.IconButton && Object.prototype.hasOwnProperty.call(craftercms.libs.MaterialUI.IconButton, 'default') ? craftercms.libs.MaterialUI.IconButton['default'] : craftercms.libs.MaterialUI.IconButton;
+const List = craftercms.libs.MaterialUI.List && Object.prototype.hasOwnProperty.call(craftercms.libs.MaterialUI.List, 'default') ? craftercms.libs.MaterialUI.List['default'] : craftercms.libs.MaterialUI.List;
+const ListItem = craftercms.libs.MaterialUI.ListItem && Object.prototype.hasOwnProperty.call(craftercms.libs.MaterialUI.ListItem, 'default') ? craftercms.libs.MaterialUI.ListItem['default'] : craftercms.libs.MaterialUI.ListItem;
+const ListItemText = craftercms.libs.MaterialUI.ListItemText && Object.prototype.hasOwnProperty.call(craftercms.libs.MaterialUI.ListItemText, 'default') ? craftercms.libs.MaterialUI.ListItemText['default'] : craftercms.libs.MaterialUI.ListItemText;
 const ItemDisplay = craftercms.components.ItemDisplay && Object.prototype.hasOwnProperty.call(craftercms.components.ItemDisplay, 'default') ? craftercms.components.ItemDisplay['default'] : craftercms.components.ItemDisplay;
 const Menu = craftercms.libs.MaterialUI.Menu && Object.prototype.hasOwnProperty.call(craftercms.libs.MaterialUI.Menu, 'default') ? craftercms.libs.MaterialUI.Menu['default'] : craftercms.libs.MaterialUI.Menu;
 const MenuItem = craftercms.libs.MaterialUI.MenuItem && Object.prototype.hasOwnProperty.call(craftercms.libs.MaterialUI.MenuItem, 'default') ? craftercms.libs.MaterialUI.MenuItem['default'] : craftercms.libs.MaterialUI.MenuItem;
 const Divider = craftercms.libs.MaterialUI.Divider && Object.prototype.hasOwnProperty.call(craftercms.libs.MaterialUI.Divider, 'default') ? craftercms.libs.MaterialUI.Divider['default'] : craftercms.libs.MaterialUI.Divider;
 const MoreVertRoundedIcon = craftercms.utils.constants.components.get('@mui/icons-material/MoreVertRounded') && Object.prototype.hasOwnProperty.call(craftercms.utils.constants.components.get('@mui/icons-material/MoreVertRounded'), 'default') ? craftercms.utils.constants.components.get('@mui/icons-material/MoreVertRounded')['default'] : craftercms.utils.constants.components.get('@mui/icons-material/MoreVertRounded');
-const IconButton = craftercms.libs.MaterialUI.IconButton && Object.prototype.hasOwnProperty.call(craftercms.libs.MaterialUI.IconButton, 'default') ? craftercms.libs.MaterialUI.IconButton['default'] : craftercms.libs.MaterialUI.IconButton;
 const { createAction } = craftercms.libs.ReduxToolkit;
 const ToolsPanelListItemButton = craftercms.components.ToolsPanelListItemButton && Object.prototype.hasOwnProperty.call(craftercms.components.ToolsPanelListItemButton, 'default') ? craftercms.components.ToolsPanelListItemButton['default'] : craftercms.components.ToolsPanelListItemButton;
 
@@ -8978,18 +8982,25 @@ function useActiveSiteId() {
   return useSelector((state) => state.sites.active);
 }
 
+var dense = true;
 var CardDetails = function (_a) {
     var _b, _c;
     var card = _a.card, cardDetails = _a.cardDetails;
+    var handleRemoveAttachment = function (event) {
+        alert('yoink');
+    };
+    console.log(card);
     return (React.createElement(React.Fragment, null,
         React.createElement(Typography, { variant: "h6", component: "h4" }, "Description"),
-        React.createElement(Typography, { paragraph: true }, card.description),
-        React.createElement(Typography, { variant: "h6", component: "h4" }, "Related Content"), (_b = cardDetails.attachedContentItems) === null || _b === void 0 ? void 0 :
-        _b.map(function (contentItem, contentIndex) { return (React.createElement("div", null,
-            React.createElement(ItemDisplay, { key: contentItem.path, item: contentItem, showNavigableAsLinks: false }))); }),
-        React.createElement(Typography, { variant: "h6", component: "h4" }, "Related\u00A0Documents\u00A0&\u00A0Assets"), (_c = cardDetails.attachedDocuments) === null || _c === void 0 ? void 0 :
-        _c.map(function (document, docIndex) { return (React.createElement("div", null,
-            React.createElement(Link, { href: document.url, target: "_new", variant: "body2" }, document.name))); })));
+        React.createElement(Typography, { paragraph: true }, card.desc),
+        React.createElement(Typography, { variant: "h6", component: "h4" }, "Related Content"),
+        React.createElement(List, { dense: dense }, (_b = cardDetails.attachedContentItems) === null || _b === void 0 ? void 0 : _b.map(function (contentItem, contentIndex) { return (React.createElement(ListItem, { secondaryAction: React.createElement(IconButton, { edge: "end", "aria-label": "remove attachment", onClick: handleRemoveAttachment },
+                React.createElement(ClearRoundedIcon, null)) },
+            React.createElement(ListItemText, { primary: React.createElement(ItemDisplay, { key: contentItem.path, item: contentItem, showNavigableAsLinks: false }), secondary: contentItem.path  }))); })),
+        React.createElement(Typography, { variant: "h6", component: "h4" }, "Related\u00A0Documents\u00A0&\u00A0Assets"),
+        React.createElement(List, { dense: dense }, (_c = cardDetails.attachedDocuments) === null || _c === void 0 ? void 0 : _c.map(function (document, docIndex) { return (React.createElement(ListItem, { secondaryAction: React.createElement(IconButton, { edge: "end", "aria-label": "remove attachment", onClick: handleRemoveAttachment },
+                React.createElement(ClearRoundedIcon, null)) },
+            React.createElement(ListItemText, { primary: React.createElement(Link, { href: document.url, target: "_new", variant: "body2" }, document.name), secondary: null }))); }))));
 };
 
 /*
@@ -9016,12 +9027,13 @@ const closePublishDialog = /*#__PURE__*/ createAction('CLOSE_PUBLISH_DIALOG');
 const showNewContentDialog = /*#__PURE__*/ createAction('SHOW_NEW_CONTENT_DIALOG');
 const closeNewContentDialog = /*#__PURE__*/ createAction('CLOSE_NEW_CONTENT_DIALOG');
 // endregion
+// region Reject
+const showRejectDialog = /*#__PURE__*/ createAction('SHOW_REJECT_DIALOG');
+const closeRejectDialog = /*#__PURE__*/ createAction('CLOSE_REJECT_DIALOG');
+// endregion
 // region Legacy Form
 const showEditDialog = /*#__PURE__*/ createAction('SHOW_EDIT_DIALOG');
 const newContentCreationComplete = /*#__PURE__*/ createAction('NEW_CONTENT_CREATION_COMPLETE');
-// endregion
-// region Upload Dialog
-const showUploadDialog = /*#__PURE__*/ createAction('SHOW_UPLOAD_DIALOG');
 // endregion
 // region Widget Dialog
 const showWidgetDialog = /*#__PURE__*/ createAction('SHOW_WIDGET_DIALOG');
@@ -9103,54 +9115,69 @@ var CardActions = function (_a) {
         });
         handleCardActionsClose();
     };
-    var handleUploadAsset = function () {
-        dispatch(showUploadDialog({
-            path: '/static-assets/images/library',
-            site: siteId,
-            onClose: dispatchDOMEvent({
-                id: 'TRELLO_UPLOAD_CONTENT'
-            })
-        }));
-        handleCardActionsClose();
-    };
-    var handleAttachContent = function () {
-        createCustomDocumentEventListener('TRELLO_SEARCH_CONTENT', function (response) {
-            console.log(response);
-            alert('search1!');
-            //        attachContent(response.item.internalName, siteId, cardId, response.item.url);
-        });
+    var handleAttachExistingContent = function () {
         dispatch({
             type: 'SHOW_WIDGET_DIALOG',
             payload: {
                 id: 'siteSearchDialog',
-                title: 'Search',
                 widget: {
                     id: 'craftercms.components.Search',
                     configuration: {
                         embedded: true,
                         mode: 'select',
                         onAcceptSelection: function (response) {
+                            console.log('Documents selected, attaching them');
                             console.log(response);
-                            alert('search2!');
+                            Object.values(response).map(function (item, itemIndex) {
+                                // @ts-ignore item is untyped?
+                                attachContent(item.label, siteId, card.id, item.path);
+                            });
+                            // at the moment search eats our trello board because you can only have one dialog
+                            // so.. dispatch open trello
+                            // the problem is we don't have context of the board we are in ARG!
+                            dispatch(showWidgetDialog(__assign(__assign({}, response), { 
+                                // title: boardLabel,
+                                // extraProps: props,
+                                widget: {
+                                    id: 'org.rd.plugin.trellowf.board'
+                                } })));
                         }
                     }
                 }
             }
         });
-        //     item: lookupItemByPath('/', items),
-        //     // @ts-ignore - required attributes of `showEditDialog` are submitted by new content dialog `onContentTypeSelected` callback and injected into the showEditDialog action by the GlobalDialogManger
-        //     onContentTypeSelected: showEditDialog({})
-        //   })
-        // );
-        //attachContent('test', useActiveSiteId(), cardId, '/site/website/index.xml');
-        //attachContent('test', siteId, cardId, '/site/website/index.xml');
         handleCardActionsClose();
     };
     var handlePublishContent = function () {
         dispatch(showPublishDialog({
             items: cardDetails.attachedContentItems,
-            onSuccess: batchActions([closePublishDialog()]),
-            onClosed: null //dispatchDOMEvent({ id: customEventId, type: 'cancel' })
+            onSuccess: batchActions([closePublishDialog()])
+        }));
+        handleCardActionsClose();
+    };
+    var handleRequestReviewOfContent = function () {
+        console.log('Requesting a publish');
+        var schedulingMap = {
+            approvePublish: null,
+            schedulePublish: 'custom',
+            requestPublish: 'now',
+            publish: 'now'
+        };
+        dispatch(showPublishDialog({
+            scheduling: schedulingMap['requestPublish'],
+            items: cardDetails.attachedContentItems,
+            isRequestPublish: true,
+            isSubmmitting: true,
+            submissionCommentRequired: true,
+            showRequestApproval: true,
+            onSuccess: batchActions([closePublishDialog()])
+        }));
+        handleCardActionsClose();
+    };
+    var handleRejectContent = function () {
+        dispatch(showRejectDialog({
+            items: cardDetails.attachedContentItems,
+            onSuccess: batchActions([closeRejectDialog()])
         }));
         handleCardActionsClose();
     };
@@ -9163,8 +9190,8 @@ var CardActions = function (_a) {
     var hasItems = false;
     if (cardDetails && cardDetails.attachedContentItems) {
         (_b = cardDetails.attachedContentItems) === null || _b === void 0 ? void 0 : _b.map(function (contentItem, contentIndex) {
-            console.log('attachedItem');
-            console.log(contentItem);
+            //console.log('Evaluating workflow options on attachedItem');
+            //console.log(contentItem);
             hasItems = true; // invariant
             var availableActionsMap = contentItem.availableActionsMap;
             // basic workflow evaluation
@@ -9188,14 +9215,13 @@ var CardActions = function (_a) {
                 React.createElement(Typography, null, "New Page")),
             React.createElement(MenuItem, { key: "createComponent", onClick: handleCreateComponent },
                 React.createElement(Typography, null, "New Component")),
-            React.createElement(MenuItem, { key: "attachContent", onClick: handleAttachContent },
+            React.createElement(MenuItem, { key: "exustubgContent", onClick: handleAttachExistingContent },
                 React.createElement(Typography, null, "Existing Content")),
-            React.createElement(MenuItem, { key: "uploadAsset", onClick: handleUploadAsset },
-                React.createElement(Typography, null, "Upload Asset(s)")),
+            ' ',
             React.createElement(Divider, null),
-            React.createElement(MenuItem, { key: "submitContemt", onClick: handlePublishContent, style: { display: hasItemsForReview ? 'block' : 'none' } },
-                React.createElement(Typography, null, "Submit for Review")),
-            React.createElement(MenuItem, { key: "rejectContent", onClick: handlePublishContent, style: { display: hasItemsInReview ? 'block' : 'none' } },
+            React.createElement(MenuItem, { key: "handleRequestReviewOfContent", onClick: handleRequestReviewOfContent, style: { display: hasItemsForReview ? 'block' : 'none' } },
+                React.createElement(Typography, null, "Request Review")),
+            React.createElement(MenuItem, { key: "rejectContent", onClick: handleRejectContent, style: { display: hasItemsInReview ? 'block' : 'none' } },
                 React.createElement(Typography, null, "Reject Submission")),
             React.createElement(MenuItem, { key: "publishContent", onClick: handlePublishContent, style: { display: hasItemsForPublish ? 'block' : 'none' } },
                 React.createElement(Typography, null, "Publish")),
@@ -9219,12 +9245,10 @@ var BoardCard = function (_a) {
     }), cardDetailsData = _e[0], setCardDetailsData = _e[1];
     var loadCardDetailsData = function () {
         // why is this running for each card?
-        if (card.badges.attachments === 0)
+        if (card.badges.attachments === 0) {
+            console.log('item has no attachements nothing load');
             return;
-        setCardDetailsData({
-            attachedContentItems: null,
-            attachedDocuments: null
-        });
+        }
         //otherwise get the details
         var serviceUrl = "".concat(PLUGIN_SERVICE_BASE, "/card/details.json?siteId=").concat(siteId, "&cardId=").concat(card.id);
         get(serviceUrl).subscribe({
@@ -9269,16 +9293,19 @@ var BoardCard = function (_a) {
             }
         });
     };
-    var handleActionsClick = function () {
-        loadCardDetailsData();
-    };
     var handleShowMoreClick = function () {
-        loadCardDetailsData();
         setDetailsOpen(!detailsOpen);
     };
-    // load details data
-    // useEffect(() => {
-    // }, []);
+    useEffect(function () {
+        if (!cardDetailsData.attachedContentItems || !cardDetailsData.attachedDocuments) {
+            // For now load only once
+            console.log('loading details for card ' + card.name);
+            loadCardDetailsData();
+        }
+        else {
+            console.log(card.name + 'card alread has details data');
+        }
+    }, []);
     return (React.createElement(React.Fragment, null,
         React.createElement(Dialog, { open: detailsOpen, keepMounted: true, "aria-describedby": "alert-dialog-slide-description" },
             React.createElement(DialogTitle, { sx: { backgroundColor: card.cover.color ? "".concat(card.cover.color) : "" } }, card.name),
@@ -9287,7 +9314,7 @@ var BoardCard = function (_a) {
             React.createElement(DialogActions, null,
                 React.createElement(Button, { onClick: handleShowMoreClick }, "Close"))),
         React.createElement(Card, { elevation: 3, sx: { borderTop: card.cover.color ? "10px solid ".concat(card.cover.color) : "" } },
-            React.createElement(CardHeader, { onClick: handleActionsClick, action: React.createElement(CardActions, { card: card, cardDetails: cardDetailsData }), title: card.name, titleTypographyProps: { variant: 'body1' } }),
+            React.createElement(CardHeader, { action: React.createElement(CardActions, { card: card, cardDetails: cardDetailsData }), title: card.name, titleTypographyProps: { variant: 'body1' } }),
             card.badges.attachments > 0 && (React.createElement(CardActions$1, { disableSpacing: true },
                 React.createElement(Button, { size: "small", onClick: handleShowMoreClick, "aria-label": "Show more" }, "Show More"))))));
 };
@@ -9365,7 +9392,7 @@ var Board = function (_a) {
         loadBoardData();
         var intervalRef = setInterval(function () {
             loadBoardData();
-        }, 30000);
+        }, 10000);
         return function () {
             clearInterval(intervalRef);
         };

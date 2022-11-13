@@ -49,12 +49,10 @@ const BoardCard = ({ card }: BoardCardProps) => {
 
   const loadCardDetailsData = () => {
     // why is this running for each card?
-    if (card.badges.attachments === 0) return;
-
-    setCardDetailsData({
-      attachedContentItems: null,
-      attachedDocuments: null
-    });
+    if (card.badges.attachments === 0) {
+      console.log('item has no attachements nothing load');
+      return;
+    }
 
     //otherwise get the details
     let serviceUrl = `${PLUGIN_SERVICE_BASE}/card/details.json?siteId=${siteId}&cardId=${card.id}`;
@@ -106,17 +104,19 @@ const BoardCard = ({ card }: BoardCardProps) => {
     });
   };
 
-  const handleActionsClick = () => {
-    loadCardDetailsData();
-  };
-
   const handleShowMoreClick = () => {
-    loadCardDetailsData();
     setDetailsOpen(!detailsOpen);
   };
-  // load details data
-  // useEffect(() => {
-  // }, []);
+
+  useEffect(() => {
+    if (!cardDetailsData.attachedContentItems || !cardDetailsData.attachedDocuments) {
+      // For now load only once
+      console.log('loading details for card ' + card.name);
+      loadCardDetailsData();
+    } else {
+      console.log(card.name + 'card alread has details data');
+    }
+  }, []);
 
   return (
     <>
@@ -132,7 +132,6 @@ const BoardCard = ({ card }: BoardCardProps) => {
 
       <Card elevation={3} sx={{ borderTop: card.cover.color ? `10px solid ${card.cover.color}` : `` }}>
         <CardHeader
-          onClick={handleActionsClick}
           action={<BoardCardActions card={card} cardDetails={cardDetailsData} />}
           title={card.name}
           titleTypographyProps={{ variant: 'body1' }}

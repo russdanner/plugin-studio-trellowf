@@ -5,7 +5,7 @@ export interface CardRecord {
   name: string;
   url: string;
   cover: { color: string };
-  description: string;
+  desc: string;
   badges: {
     attachments: number;
   };

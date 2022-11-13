@@ -124,7 +124,7 @@ const Board = ({ boardId }: BoardProps) => {
     loadBoardData();
     let intervalRef = setInterval(() => {
       loadBoardData();
-    }, 30000);
+    }, 10000);
     return function () {
       clearInterval(intervalRef);
     };
