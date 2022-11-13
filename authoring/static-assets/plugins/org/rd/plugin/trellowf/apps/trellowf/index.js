@@ -1,20 +1,20 @@
 const React = craftercms.libs.React;
-const { useState, useRef, useEffect, useContext, useLayoutEffect, useMemo: useMemo$1 } = craftercms.libs.React;
+const { useState, useRef, useEffect, useContext, useLayoutEffect } = craftercms.libs.React;
 const React__default = craftercms.libs.React && Object.prototype.hasOwnProperty.call(craftercms.libs.React, 'default') ? craftercms.libs.React['default'] : craftercms.libs.React;
 const EditRoundedIcon = craftercms.utils.constants.components.get('@mui/icons-material/EditRounded') && Object.prototype.hasOwnProperty.call(craftercms.utils.constants.components.get('@mui/icons-material/EditRounded'), 'default') ? craftercms.utils.constants.components.get('@mui/icons-material/EditRounded')['default'] : craftercms.utils.constants.components.get('@mui/icons-material/EditRounded');
-const { Card, CardHeader, CardActions, Button, CardContent, Typography, Link, Box, Fab, Paper, cardClasses } = craftercms.libs.MaterialUI;
+const { Typography, Link, Dialog, DialogTitle, DialogContent, DialogActions, Button, Card, CardHeader, CardActions: CardActions$1, Box, Fab, Paper, cardClasses } = craftercms.libs.MaterialUI;
 const { connect, Provider, useSelector, useDispatch } = craftercms.libs.ReactRedux;
 const ReactDOM = craftercms.libs.ReactDOM && Object.prototype.hasOwnProperty.call(craftercms.libs.ReactDOM, 'default') ? craftercms.libs.ReactDOM['default'] : craftercms.libs.ReactDOM;
+const { createCustomDocumentEventListener } = craftercms.utils.dom;
 const { get } = craftercms.utils.ajax;
 const { ApiResponseErrorState } = craftercms.components;
-const MoreVertRoundedIcon = craftercms.utils.constants.components.get('@mui/icons-material/MoreVertRounded') && Object.prototype.hasOwnProperty.call(craftercms.utils.constants.components.get('@mui/icons-material/MoreVertRounded'), 'default') ? craftercms.utils.constants.components.get('@mui/icons-material/MoreVertRounded')['default'] : craftercms.utils.constants.components.get('@mui/icons-material/MoreVertRounded');
+const { fetchSandboxItem, fetchItemsByPath } = craftercms.services.content;
+const ItemDisplay = craftercms.components.ItemDisplay && Object.prototype.hasOwnProperty.call(craftercms.components.ItemDisplay, 'default') ? craftercms.components.ItemDisplay['default'] : craftercms.components.ItemDisplay;
 const Menu = craftercms.libs.MaterialUI.Menu && Object.prototype.hasOwnProperty.call(craftercms.libs.MaterialUI.Menu, 'default') ? craftercms.libs.MaterialUI.Menu['default'] : craftercms.libs.MaterialUI.Menu;
 const MenuItem = craftercms.libs.MaterialUI.MenuItem && Object.prototype.hasOwnProperty.call(craftercms.libs.MaterialUI.MenuItem, 'default') ? craftercms.libs.MaterialUI.MenuItem['default'] : craftercms.libs.MaterialUI.MenuItem;
-const { createAction } = craftercms.libs.ReduxToolkit;
-const { fetchItemsByPath, fetchSandboxItem } = craftercms.services.content;
-const { createCustomDocumentEventListener } = craftercms.utils.dom;
-const ItemDisplay = craftercms.components.ItemDisplay && Object.prototype.hasOwnProperty.call(craftercms.components.ItemDisplay, 'default') ? craftercms.components.ItemDisplay['default'] : craftercms.components.ItemDisplay;
+const MoreVertRoundedIcon = craftercms.utils.constants.components.get('@mui/icons-material/MoreVertRounded') && Object.prototype.hasOwnProperty.call(craftercms.utils.constants.components.get('@mui/icons-material/MoreVertRounded'), 'default') ? craftercms.utils.constants.components.get('@mui/icons-material/MoreVertRounded')['default'] : craftercms.utils.constants.components.get('@mui/icons-material/MoreVertRounded');
 const IconButton = craftercms.libs.MaterialUI.IconButton && Object.prototype.hasOwnProperty.call(craftercms.libs.MaterialUI.IconButton, 'default') ? craftercms.libs.MaterialUI.IconButton['default'] : craftercms.libs.MaterialUI.IconButton;
+const { createAction } = craftercms.libs.ReduxToolkit;
 const ToolsPanelListItemButton = craftercms.components.ToolsPanelListItemButton && Object.prototype.hasOwnProperty.call(craftercms.components.ToolsPanelListItemButton, 'default') ? craftercms.components.ToolsPanelListItemButton['default'] : craftercms.components.ToolsPanelListItemButton;
 
 /******************************************************************************
@@ -8977,6 +8977,20 @@ function useActiveSiteId() {
   return useSelector((state) => state.sites.active);
 }
 
+var CardDetails = function (_a) {
+    var _b, _c;
+    var card = _a.card, cardDetails = _a.cardDetails;
+    return (React.createElement(React.Fragment, null,
+        React.createElement(Typography, { variant: "h6", component: "h4" }, "Description"),
+        React.createElement(Typography, { paragraph: true }, card.description),
+        React.createElement(Typography, { variant: "h6", component: "h4" }, "Related Content"), (_b = cardDetails.attachedContentItems) === null || _b === void 0 ? void 0 :
+        _b.map(function (contentItem, contentIndex) { return (React.createElement("div", null,
+            React.createElement(ItemDisplay, { key: contentItem.path, item: contentItem, showNavigableAsLinks: false }))); }),
+        React.createElement(Typography, { variant: "h6", component: "h4" }, "Related\u00A0Documents\u00A0&\u00A0Assets"), (_c = cardDetails.attachedDocuments) === null || _c === void 0 ? void 0 :
+        _c.map(function (document, docIndex) { return (React.createElement("div", null,
+            React.createElement(Link, { href: document.url, target: "_new", variant: "body2" }, document.name))); })));
+};
+
 /*
  * Copyright (C) 2007-2022 Crafter Software Corporation. All Rights Reserved.
  *
@@ -8995,6 +9009,7 @@ function useActiveSiteId() {
 // endregion
 // region Publish
 const showPublishDialog = /*#__PURE__*/ createAction('SHOW_PUBLISH_DIALOG');
+const closePublishDialog = /*#__PURE__*/ createAction('CLOSE_PUBLISH_DIALOG');
 // endregion
 // region New Content
 const showNewContentDialog = /*#__PURE__*/ createAction('SHOW_NEW_CONTENT_DIALOG');
@@ -9033,51 +9048,22 @@ const batchActions = /*#__PURE__*/ createAction('BATCH_ACTIONS');
 const dispatchDOMEvent = /*#__PURE__*/ createAction('DISPATCH_DOM_EVENT');
 // endregion
 
-var BoardCard = function (_a) {
-    var cardId = _a.cardId, cardName = _a.cardName; _a.trelloCardUrl; var coverColor = _a.coverColor, description = _a.description, attachmentCount = _a.attachmentCount, cardAttachments = _a.cardAttachments;
+var CardActions = function (_a) {
+    var card = _a.card, cardDetails = _a.cardDetails;
+    var PLUGIN_SERVICE_BASE = '/studio/api/2/plugin/script/plugins/org/rd/plugin/trellowf/trellowf';
     var siteId = useActiveSiteId();
     var dispatch = useDispatch();
-    var _b = React.useState(false), expanded = _b[0], setExpanded = _b[1];
-    var _c = React.useState(null), anchorEl = _c[0], setAnchorEl = _c[1];
+    var _b = React.useState(null), anchorEl = _b[0], setAnchorEl = _b[1];
     var open = Boolean(anchorEl);
     var ITEM_HEIGHT = 55;
-    var _d = useState(), rdAttachedContentItems = _d[0], setRdAttachedContentItems = _d[1];
-    var rdAttachedContentItemPaths = useMemo$1(function () { return []; }, []);
-    var rdAttachedDocuments = useMemo$1(function () { return []; }, []);
-    useEffect(function () {
-        var contentItems = [];
-        cardAttachments === null || cardAttachments === void 0 ? void 0 : cardAttachments.forEach(function (value) {
-            var url = value.url;
-            if (url.includes('contentId=')) {
-                var path = url.substr(url.indexOf('contentId=') + 10);
-                if (path.includes('&')) {
-                    path = path.substr(0, path.indexOf('&'));
-                }
-                contentItems[contentItems.length] = path;
-            }
-            else {
-                rdAttachedDocuments[rdAttachedDocuments.length] = value;
-            }
-        });
-        rdAttachedContentItemPaths = contentItems;
-        fetchItemsByPath(siteId, rdAttachedContentItemPaths, { castAsDetailedItem: true }).subscribe({
-            next: function (sandboxItems) {
-                setRdAttachedContentItems(sandboxItems);
-            }
-        });
-    }, [siteId, rdAttachedContentItemPaths]);
-    var handleExpandClick = function () {
-        setExpanded(!expanded);
-    };
     var attachContent = function (contentName, siteId, cardId, contentId) {
-        var serviceUrl = "/studio/api/2/plugin/script/plugins/org/rd/plugin/trellowf/trellowf/card/attach-content.json?siteId=".concat(siteId, "&name=").concat(contentName, "&cardId=").concat(cardId, "&contentId=").concat(contentId);
+        var serviceUrl = "".concat(PLUGIN_SERVICE_BASE, "/card/attach-content.json?siteId=").concat(siteId, "&name=").concat(contentName, "&cardId=").concat(cardId, "&contentId=").concat(contentId);
         get(serviceUrl).subscribe({
             next: function (response) { },
             error: function (e) { }
         });
     };
     var handleCardActionsClose = function () {
-        console.log(anchorEl, open);
         setAnchorEl(null);
     };
     var handleCreatePage = function () {
@@ -9090,10 +9076,9 @@ var BoardCard = function (_a) {
         fetchSandboxItem(siteId, path, { castAsDetailedItem: true }).subscribe({
             next: function (sandboxItem) {
                 createCustomDocumentEventListener('TRELLO_NEW_CONTENT', function (response) {
-                    attachContent(response.item.internalName, siteId, cardId, response.item.url);
+                    attachContent(response.item.internalName, siteId, card.id, response.item.uri);
                 });
                 createCustomDocumentEventListener('TRELLO_CONTENTTYPE_SELECTED', function (response) {
-                    console.log(response);
                     dispatch(showEditDialog(__assign(__assign({}, response), { onSaveSuccess: batchActions([
                             closeNewContentDialog(),
                             newContentCreationComplete(),
@@ -9160,17 +9145,17 @@ var BoardCard = function (_a) {
         handleCardActionsClose();
     };
     var handleSubmitContent = function () {
-        alert('Submit ' + cardId);
+        alert('Submit ' + card.id);
         setAnchorEl(null);
     };
     var handleRejectContent = function () {
-        alert('Reject ' + cardId);
+        alert('Reject ' + card.id);
         handleCardActionsClose();
     };
     var handlePublishContent = function () {
         dispatch(showPublishDialog({
-            items: rdAttachedContentItems,
-            onSuccess: null,
+            items: cardDetails.attachedContentItems,
+            onSuccess: batchActions([closePublishDialog()]),
             onClosed: null //dispatchDOMEvent({ id: customEventId, type: 'cancel' })
         }));
         handleCardActionsClose();
@@ -9179,21 +9164,8 @@ var BoardCard = function (_a) {
         setAnchorEl(event.currentTarget);
     };
     return (React.createElement(React.Fragment, null,
-        React.createElement(Card, { elevation: 3, sx: { borderTop: coverColor ? "10px solid ".concat(coverColor) : "" } },
-            React.createElement(CardHeader, { action: React.createElement(IconButton, { id: "long-button", "aria-label": "settings", "aria-controls": open ? 'long-menu' : undefined, "aria-expanded": open ? 'true' : undefined, "aria-haspopup": "true", onClick: handleClick },
-                    React.createElement(MoreVertRoundedIcon, null)), title: cardName, titleTypographyProps: { variant: 'body1' } }),
-            attachmentCount > 0 && (React.createElement(CardActions, { disableSpacing: true },
-                React.createElement(Button, { size: "small", onClick: handleExpandClick, "aria-expanded": expanded, "aria-label": "show more" }, expanded ? 'Show Less' : 'Show More'))),
-            expanded && (React.createElement(CardContent, null,
-                React.createElement(React.Fragment, null,
-                    React.createElement(Typography, { variant: "h6", component: "h4" }, "Description"),
-                    React.createElement(Typography, { paragraph: true }, description),
-                    React.createElement(Typography, { variant: "h6", component: "h4" }, "Related Content"), rdAttachedContentItems === null || rdAttachedContentItems === void 0 ? void 0 :
-                    rdAttachedContentItems.map(function (contentItem, contentIndex) { return (React.createElement("div", null,
-                        React.createElement(ItemDisplay, { key: contentItem.path, item: contentItem, showNavigableAsLinks: false }))); }),
-                    React.createElement(Typography, { variant: "h6", component: "h4" }, "Related\u00A0Documents\u00A0&\u00A0Assets"), rdAttachedDocuments === null || rdAttachedDocuments === void 0 ? void 0 :
-                    rdAttachedDocuments.map(function (document, docIndex) { return (React.createElement("div", null,
-                        React.createElement(Link, { href: document.url, target: "_new", variant: "body2" }, document.name))); }))))),
+        React.createElement(IconButton, { id: "long-button", "aria-label": "settings", "aria-controls": open ? 'long-menu' : undefined, "aria-expanded": open ? 'true' : undefined, "aria-haspopup": "true", onClick: handleClick },
+            React.createElement(MoreVertRoundedIcon, null)),
         React.createElement(Menu, { id: "long-menu", anchorEl: anchorEl, open: open, onClose: handleCardActionsClose, MenuListProps: {
                 'aria-labelledby': 'long-button'
             }, PaperProps: {
@@ -9211,6 +9183,90 @@ var BoardCard = function (_a) {
             React.createElement(MenuItem, { key: "publishContent", onClick: handlePublishContent }, "Approve Content for Publish"))));
 };
 
+var BoardCard = function (_a) {
+    var card = _a.card;
+    var PLUGIN_SERVICE_BASE = '/studio/api/2/plugin/script/plugins/org/rd/plugin/trellowf/trellowf';
+    useDispatch();
+    var _b = React.useState(false), detailsOpen = _b[0], setDetailsOpen = _b[1];
+    var siteId = useActiveSiteId();
+    var _c = useState(); _c[0]; var setError = _c[1];
+    var _d = useState(); _d[0]; _d[1];
+    var _e = useState({
+        attachedContentItems: null,
+        attachedDocuments: null
+    }), cardDetailsData = _e[0], setCardDetailsData = _e[1];
+    var handleShowMoreClick = function () {
+        setDetailsOpen(!detailsOpen);
+    };
+    var loadCardDetailsData = function () {
+        // why is this running for each card?
+        if (card.badges.attachments === 0)
+            return;
+        setCardDetailsData({
+            attachedContentItems: null,
+            attachedDocuments: null
+        });
+        //otherwise get the details
+        var serviceUrl = "".concat(PLUGIN_SERVICE_BASE, "/card/details.json?siteId=").concat(siteId, "&cardId=").concat(card.id);
+        get(serviceUrl).subscribe({
+            next: function (response) {
+                var _a;
+                // sort our our attachments vs everything else
+                var details = response.response.result;
+                var contentItemPaths = [];
+                var documentItems = [];
+                (_a = details.attachments) === null || _a === void 0 ? void 0 : _a.forEach(function (attachment) {
+                    var url = attachment.url;
+                    if (url.includes('contentId=')) {
+                        var path = url.substr(url.indexOf('contentId=') + 10);
+                        if (path.includes('&')) {
+                            path = path.substr(0, path.indexOf('&'));
+                        }
+                        if (path && path != 'undefined') {
+                            // why undefined?
+                            contentItemPaths[contentItemPaths.length] = path;
+                        }
+                    }
+                    else {
+                        documentItems[documentItems.length] = attachment;
+                    }
+                });
+                // now set the component state
+                cardDetailsData.attachedDocuments = documentItems;
+                setCardDetailsData(cardDetailsData);
+                if (contentItemPaths.length > 0) {
+                    fetchItemsByPath(siteId, contentItemPaths, { castAsDetailedItem: true }).subscribe({
+                        next: function (sandboxItems) {
+                            cardDetailsData.attachedContentItems = sandboxItems;
+                            setCardDetailsData(cardDetailsData);
+                        }
+                    });
+                }
+            },
+            error: function (e) {
+                var _a, _b;
+                console.error(e);
+                setError((_b = (_a = e.response) === null || _a === void 0 ? void 0 : _a.response) !== null && _b !== void 0 ? _b : { code: '?', message: 'Unknown Error. Check browser console.' });
+            }
+        });
+    };
+    // load details data
+    useEffect(function () {
+        loadCardDetailsData();
+    }, []);
+    return (React.createElement(React.Fragment, null,
+        React.createElement(Dialog, { open: detailsOpen, keepMounted: true, "aria-describedby": "alert-dialog-slide-description" },
+            React.createElement(DialogTitle, { sx: { backgroundColor: card.cover.color ? "".concat(card.cover.color) : "" } }, card.name),
+            React.createElement(DialogContent, null,
+                React.createElement(CardDetails, { card: card, cardDetails: cardDetailsData })),
+            React.createElement(DialogActions, null,
+                React.createElement(Button, { onClick: handleShowMoreClick }, "Close"))),
+        React.createElement(Card, { elevation: 3, sx: { borderTop: card.cover.color ? "10px solid ".concat(card.cover.color) : "" } },
+            React.createElement(CardHeader, { action: React.createElement(CardActions, { card: card, cardDetails: cardDetailsData }), title: card.name, titleTypographyProps: { variant: 'body1' } }),
+            card.badges.attachments > 0 && (React.createElement(CardActions$1, { disableSpacing: true },
+                React.createElement(Button, { size: "small", onClick: handleShowMoreClick, "aria-label": "Show more" }, "Show More"))))));
+};
+
 var Board = function (_a) {
     var boardId = _a.boardId;
     var siteId = useActiveSiteId();
@@ -9219,29 +9275,37 @@ var Board = function (_a) {
         board: null,
         lists: null
     }), state = _c[0], setState = _c[1];
-    var PLUGIN_SERVICE_BASE = "/studio/api/2/plugin/script/plugins/org/rd/plugin/trellowf/trellowf";
+    var PLUGIN_SERVICE_BASE = '/studio/api/2/plugin/script/plugins/org/rd/plugin/trellowf/trellowf';
+    createCustomDocumentEventListener('TRELLO_CARD_UPDATE', function (response) {
+        alert('stuff happened');
+        loadBoardData();
+    });
     var onDragEnd = function (result) {
-        console.log(result);
         var cardId = result.draggableId;
         var targetListIdIndex = result.destination.index;
         var targetListId = result.destination.droppableId;
         var sourceListIndex = result.source.index;
         var sourceListId = result.source.droppableId;
         // guard on no move
-        if (sourceListId === targetListId
-            && sourceListIndex == targetListIdIndex)
+        if (sourceListId === targetListId && sourceListIndex == targetListIdIndex)
             return;
         moveCard(cardId, sourceListId, targetListId, targetListIdIndex);
     };
     var moveCard = function (cardId, sourceListId, targetListId, targetListIdIndex) {
         // update the board data locally
-        var sourceList = state.lists.find(function (list) { return list.id === sourceListId; });
-        var targetList = state.lists.find(function (list) { return list.id === targetListId; });
-        // @ts-ignore 
-        var card = sourceList.cards.find(function (card) { return card.id === cardId; });
-        // @ts-ignore 
+        var sourceList = state.lists.find(function (list) {
+            return list.id === sourceListId;
+        });
+        var targetList = state.lists.find(function (list) {
+            return list.id === targetListId;
+        });
+        // @ts-ignore
+        var card = sourceList.cards.find(function (card) {
+            return card.id === cardId;
+        });
+        // @ts-ignore
         sourceList.cards = sourceList.cards.filter(function (curCard) { return curCard.id != cardId; });
-        // @ts-ignore 
+        // @ts-ignore
         targetList.cards.splice(targetListIdIndex, 0, card);
         // Update the card on the server
         var serviceUrl = "".concat(PLUGIN_SERVICE_BASE, "/card/move.json?siteId=").concat(siteId, "&listId=").concat(targetListId, "&cardId=").concat(cardId);
@@ -9274,12 +9338,12 @@ var Board = function (_a) {
     };
     useEffect(function () {
         loadBoardData();
-        // let intervalRef = setInterval(() => {
-        //   loadBoardData();
-        // }, 10000);
-        // return function () {
-        //   clearInterval(intervalRef);
-        // };
+        var intervalRef = setInterval(function () {
+            loadBoardData();
+        }, 10000);
+        return function () {
+            clearInterval(intervalRef);
+        };
     }, []);
     return (React.createElement(DragDropContext, { onDragEnd: function (result) { return onDragEnd(result); } },
         React.createElement(Box, { sx: {
@@ -9310,11 +9374,11 @@ var Board = function (_a) {
                                         return (React.createElement(PublicDraggable, { key: card.id, draggableId: card.id, index: cardIndex }, function (provided, snapshot) {
                                             return (React.createElement("div", __assign({ ref: provided.innerRef }, provided.draggableProps, provided.dragHandleProps),
                                                 React.createElement("div", { style: { padding: '5px' } },
-                                                    React.createElement(BoardCard, { cardId: card.id, cardName: card.name, trelloCardUrl: card.url, coverColor: card.cover.color, description: card.desc, attachmentCount: card.badges.attachments, cardAttachments: card.cardAttachments })),
+                                                    React.createElement(BoardCard, { card: card })),
                                                 provided.placeholder));
                                         }));
                                     }),
-                                React.createElement("div", { style: { height: snapshot.isDraggingOver ? "120px" : "80px" } }, "\u00A0"),
+                                React.createElement("div", { style: { height: snapshot.isDraggingOver ? '120px' : '80px' } }, "\u00A0"),
                                 React.createElement(Button, { size: "small", "aria-label": "add card" }, "Add Card")));
                         })));
                 }))));

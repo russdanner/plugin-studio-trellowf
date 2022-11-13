@@ -15,13 +15,16 @@ import {
   Fab,
   Button
 } from '@mui/material';
+
 import IconButton, { IconButtonProps } from '@mui/material/IconButton';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 
+import { createCustomDocumentEventListener } from '@craftercms/studio-ui/utils/dom';
 import useActiveSiteId from '@craftercms/studio-ui/hooks/useActiveSiteId';
 import { get } from '@craftercms/studio-ui/utils/ajax';
 import { ApiResponse, ApiResponseErrorState } from '@craftercms/studio-ui';
 import BoardCard from './BoardCard';
+import CardRecord from '../types/CardRecord';
 
 export interface BoardProps {
   boardId: string;
@@ -30,55 +33,53 @@ export interface BoardProps {
 const Board = ({ boardId }: BoardProps) => {
   const siteId = useActiveSiteId();
   const [error, setError] = useState();
+
   const [state, setState] = useState({
     board: null,
     lists: null as Array<{
       id: string;
       name: string;
-      cards: Record<
-        string,
-        {
-          id: string;
-          url: string;
-          name: string;
-          cover: { color: string };
-          desc: string;
-          badges: { attachments: number };
-          cardAttachments: Array<{ id: string; name: string; url: string }>;
-          cardComments: Array<{ id: string }>;
-        }
-      >;
+      cards: Array<CardRecord>;
     }>
   });
-  
-  const PLUGIN_SERVICE_BASE = "/studio/api/2/plugin/script/plugins/org/rd/plugin/trellowf/trellowf"
+
+  const PLUGIN_SERVICE_BASE = '/studio/api/2/plugin/script/plugins/org/rd/plugin/trellowf/trellowf';
+
+  createCustomDocumentEventListener('TRELLO_CARD_UPDATE', (response) => {
+    alert('stuff happened');
+    loadBoardData();
+  });
 
   const onDragEnd = (result) => {
-    console.log(result)
-    const cardId = result.draggableId
-    const targetListIdIndex = result.destination.index
-    const targetListId = result.destination.droppableId
-    const sourceListIndex = result.source.index
-    const sourceListId = result.source.droppableId
+    const cardId = result.draggableId;
+    const targetListIdIndex = result.destination.index;
+    const targetListId = result.destination.droppableId;
+    const sourceListIndex = result.source.index;
+    const sourceListId = result.source.droppableId;
 
     // guard on no move
-    if(sourceListId === targetListId
-    && sourceListIndex == targetListIdIndex) return
+    if (sourceListId === targetListId && sourceListIndex == targetListIdIndex) return;
 
     moveCard(cardId, sourceListId, targetListId, targetListIdIndex);
   };
 
   const moveCard = (cardId, sourceListId, targetListId, targetListIdIndex) => {
     // update the board data locally
-    let sourceList = state.lists.find((list) => { return list.id === sourceListId; });    
-    let targetList = state.lists.find((list) => { return list.id === targetListId; });
-    // @ts-ignore 
-    let card = sourceList.cards.find((card) => { return card.id === cardId; }); 
+    let sourceList = state.lists.find((list) => {
+      return list.id === sourceListId;
+    });
+    let targetList = state.lists.find((list) => {
+      return list.id === targetListId;
+    });
+    // @ts-ignore
+    let card = sourceList.cards.find((card) => {
+      return card.id === cardId;
+    });
 
-    // @ts-ignore 
-    sourceList.cards = sourceList.cards.filter(curCard => curCard.id != cardId)
-    // @ts-ignore 
-    targetList.cards.splice(targetListIdIndex, 0, card)
+    // @ts-ignore
+    sourceList.cards = sourceList.cards.filter((curCard) => curCard.id != cardId);
+    // @ts-ignore
+    targetList.cards.splice(targetListIdIndex, 0, card);
 
     // Update the card on the server
     let serviceUrl = `${PLUGIN_SERVICE_BASE}/card/move.json?siteId=${siteId}&listId=${targetListId}&cardId=${cardId}`;
@@ -121,12 +122,12 @@ const Board = ({ boardId }: BoardProps) => {
 
   useEffect(() => {
     loadBoardData();
-    // let intervalRef = setInterval(() => {
-    //   loadBoardData();
-    // }, 10000);
-    // return function () {
-    //   clearInterval(intervalRef);
-    // };
+    let intervalRef = setInterval(() => {
+      loadBoardData();
+    }, 10000);
+    return function () {
+      clearInterval(intervalRef);
+    };
   }, []);
 
   return (
@@ -173,7 +174,7 @@ const Board = ({ boardId }: BoardProps) => {
                 <Droppable droppableId={list.id} key={list.id}>
                   {(provided, snapshot) => {
                     return (
-                      <Box   
+                      <Box
                         sx={{ [`.${cardClasses.root}:not(:last-child)`]: { mb: 1 } }}
                         {...provided.droppableProps}
                         ref={provided.innerRef}
@@ -190,15 +191,7 @@ const Board = ({ boardId }: BoardProps) => {
                                       {...provided.dragHandleProps}
                                     >
                                       <div style={{ padding: '5px' }}>
-                                        <BoardCard
-                                          cardId={card.id}
-                                          cardName={card.name}
-                                          trelloCardUrl={card.url}
-                                          coverColor={card.cover.color}
-                                          description={card.desc}
-                                          attachmentCount={card.badges.attachments}
-                                          cardAttachments={card.cardAttachments}
-                                        />
+                                        <BoardCard card={card} />
                                       </div>
                                       {provided.placeholder}
                                     </div>
@@ -207,7 +200,7 @@ const Board = ({ boardId }: BoardProps) => {
                               </Draggable>
                             );
                           })}
-                        <div style={{ height: snapshot.isDraggingOver ? "120px" : "80px" }}>&nbsp;</div>
+                        <div style={{ height: snapshot.isDraggingOver ? '120px' : '80px' }}>&nbsp;</div>
                         <Button size="small" aria-label="add card">
                           Add Card
                         </Button>
