@@ -106,6 +106,10 @@ const BoardCard = ({ card }: BoardCardProps) => {
 
   const handleShowMoreClick = () => {
     setDetailsOpen(!detailsOpen);
+
+    if(detailsOpen === true){
+      loadCardDetailsData();
+    }
   };
 
   useEffect(() => {

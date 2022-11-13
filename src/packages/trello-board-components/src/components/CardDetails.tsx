@@ -31,7 +31,7 @@ const CardDetails = ({ card, cardDetails }: CardDetailsProps) => {
   const handleRemoveAttachment = (event: React.MouseEvent<HTMLElement>) => {
     alert('yoink');
   };
-  console.log(card);
+
   return (
     <>
       <Typography variant="h6" component="h4">

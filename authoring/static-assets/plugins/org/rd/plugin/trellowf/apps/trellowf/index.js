@@ -8989,7 +8989,6 @@ var CardDetails = function (_a) {
     var handleRemoveAttachment = function (event) {
         alert('yoink');
     };
-    console.log(card);
     return (React.createElement(React.Fragment, null,
         React.createElement(Typography, { variant: "h6", component: "h4" }, "Description"),
         React.createElement(Typography, { paragraph: true }, card.desc),
@@ -9295,6 +9294,9 @@ var BoardCard = function (_a) {
     };
     var handleShowMoreClick = function () {
         setDetailsOpen(!detailsOpen);
+        if (detailsOpen === true) {
+            loadCardDetailsData();
+        }
     };
     useEffect(function () {
         if (!cardDetailsData.attachedContentItems || !cardDetailsData.attachedDocuments) {
