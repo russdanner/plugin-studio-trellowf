@@ -68,11 +68,11 @@ public class Trello {
             def cards = getCardsForList(list.id)
             list.cards = cards
 
-            cards.each { card ->
-                if(card.badges.attachments > 0) {
-                    card.cardAttachments = getAttachmentsForCard(card.id)
-                }
-            }
+            // cards.each { card ->
+            //     if(card.badges.attachments > 0) {
+            //         card.cardAttachments = getAttachmentsForCard(card.id)
+            //     }
+            // }
         }
 
         return result
