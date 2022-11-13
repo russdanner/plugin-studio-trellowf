@@ -12,6 +12,7 @@ const { fetchSandboxItem, fetchItemsByPath } = craftercms.services.content;
 const ItemDisplay = craftercms.components.ItemDisplay && Object.prototype.hasOwnProperty.call(craftercms.components.ItemDisplay, 'default') ? craftercms.components.ItemDisplay['default'] : craftercms.components.ItemDisplay;
 const Menu = craftercms.libs.MaterialUI.Menu && Object.prototype.hasOwnProperty.call(craftercms.libs.MaterialUI.Menu, 'default') ? craftercms.libs.MaterialUI.Menu['default'] : craftercms.libs.MaterialUI.Menu;
 const MenuItem = craftercms.libs.MaterialUI.MenuItem && Object.prototype.hasOwnProperty.call(craftercms.libs.MaterialUI.MenuItem, 'default') ? craftercms.libs.MaterialUI.MenuItem['default'] : craftercms.libs.MaterialUI.MenuItem;
+const Divider = craftercms.libs.MaterialUI.Divider && Object.prototype.hasOwnProperty.call(craftercms.libs.MaterialUI.Divider, 'default') ? craftercms.libs.MaterialUI.Divider['default'] : craftercms.libs.MaterialUI.Divider;
 const MoreVertRoundedIcon = craftercms.utils.constants.components.get('@mui/icons-material/MoreVertRounded') && Object.prototype.hasOwnProperty.call(craftercms.utils.constants.components.get('@mui/icons-material/MoreVertRounded'), 'default') ? craftercms.utils.constants.components.get('@mui/icons-material/MoreVertRounded')['default'] : craftercms.utils.constants.components.get('@mui/icons-material/MoreVertRounded');
 const IconButton = craftercms.libs.MaterialUI.IconButton && Object.prototype.hasOwnProperty.call(craftercms.libs.MaterialUI.IconButton, 'default') ? craftercms.libs.MaterialUI.IconButton['default'] : craftercms.libs.MaterialUI.IconButton;
 const { createAction } = craftercms.libs.ReduxToolkit;
@@ -9049,13 +9050,14 @@ const dispatchDOMEvent = /*#__PURE__*/ createAction('DISPATCH_DOM_EVENT');
 // endregion
 
 var CardActions = function (_a) {
+    var _b;
     var card = _a.card, cardDetails = _a.cardDetails;
     var PLUGIN_SERVICE_BASE = '/studio/api/2/plugin/script/plugins/org/rd/plugin/trellowf/trellowf';
     var siteId = useActiveSiteId();
     var dispatch = useDispatch();
-    var _b = React.useState(null), anchorEl = _b[0], setAnchorEl = _b[1];
+    var _c = React.useState(null), anchorEl = _c[0], setAnchorEl = _c[1];
     var open = Boolean(anchorEl);
-    var ITEM_HEIGHT = 55;
+    var _d = React.useState(null); _d[0]; _d[1];
     var attachContent = function (contentName, siteId, cardId, contentId) {
         var serviceUrl = "".concat(PLUGIN_SERVICE_BASE, "/card/attach-content.json?siteId=").concat(siteId, "&name=").concat(contentName, "&cardId=").concat(cardId, "&contentId=").concat(contentId);
         get(serviceUrl).subscribe({
@@ -9144,14 +9146,6 @@ var CardActions = function (_a) {
         //attachContent('test', siteId, cardId, '/site/website/index.xml');
         handleCardActionsClose();
     };
-    var handleSubmitContent = function () {
-        alert('Submit ' + card.id);
-        setAnchorEl(null);
-    };
-    var handleRejectContent = function () {
-        alert('Reject ' + card.id);
-        handleCardActionsClose();
-    };
     var handlePublishContent = function () {
         dispatch(showPublishDialog({
             items: cardDetails.attachedContentItems,
@@ -9160,27 +9154,55 @@ var CardActions = function (_a) {
         }));
         handleCardActionsClose();
     };
-    var handleClick = function (event) {
+    var handleClickActions = function (event) {
         setAnchorEl(event.currentTarget);
     };
+    var hasItemsInReview = false;
+    var hasItemsForReview = false;
+    var hasItemsForPublish = false;
+    var hasItems = false;
+    if (cardDetails && cardDetails.attachedContentItems) {
+        (_b = cardDetails.attachedContentItems) === null || _b === void 0 ? void 0 : _b.map(function (contentItem, contentIndex) {
+            console.log('attachedItem');
+            console.log(contentItem);
+            hasItems = true; // invariant
+            var availableActionsMap = contentItem.availableActionsMap;
+            // basic workflow evaluation
+            hasItemsForReview =
+                availableActionsMap.rejectPublish === false // can't reject because we're in workflow
+                    ? true
+                    : hasItemsForReview;
+            hasItemsInReview = availableActionsMap.rejectPublish === true ? true : hasItemsInReview;
+            hasItemsForPublish =
+                (availableActionsMap.approvePublish || availableActionsMap.publish) === true ? true : hasItemsForPublish;
+        });
+    }
     return (React.createElement(React.Fragment, null,
-        React.createElement(IconButton, { id: "long-button", "aria-label": "settings", "aria-controls": open ? 'long-menu' : undefined, "aria-expanded": open ? 'true' : undefined, "aria-haspopup": "true", onClick: handleClick },
+        React.createElement(IconButton, { id: "long-button", "aria-label": "settings", "aria-controls": open ? 'long-menu' : undefined, "aria-expanded": open ? 'true' : undefined, "aria-haspopup": "true", onClick: handleClickActions },
             React.createElement(MoreVertRoundedIcon, null)),
         React.createElement(Menu, { id: "long-menu", anchorEl: anchorEl, open: open, onClose: handleCardActionsClose, MenuListProps: {
                 'aria-labelledby': 'long-button'
-            }, PaperProps: {
-                style: {
-                    maxHeight: ITEM_HEIGHT * 4.5,
-                    width: '40ch'
-                }
             } },
-            React.createElement(MenuItem, { key: "createPage", onClick: handleCreatePage }, "Create New Page"),
-            React.createElement(MenuItem, { key: "createComponent", onClick: handleCreateComponent }, "Create New Component"),
-            React.createElement(MenuItem, { key: "uploadAsset", onClick: handleUploadAsset }, "Upload Asset(s)"),
-            React.createElement(MenuItem, { key: "attachContent", onClick: handleAttachContent }, "Attach Existing Content"),
-            React.createElement(MenuItem, { key: "submitContent", onClick: handleSubmitContent }, "Submit Content for Review"),
-            React.createElement(MenuItem, { key: "rejectContent", onClick: handleRejectContent }, "Reject Content in Review"),
-            React.createElement(MenuItem, { key: "publishContent", onClick: handlePublishContent }, "Approve Content for Publish"))));
+            ' ',
+            React.createElement(MenuItem, { key: "createPage", onClick: handleCreatePage },
+                React.createElement(Typography, null, "New Page")),
+            React.createElement(MenuItem, { key: "createComponent", onClick: handleCreateComponent },
+                React.createElement(Typography, null, "New Component")),
+            React.createElement(MenuItem, { key: "attachContent", onClick: handleAttachContent },
+                React.createElement(Typography, null, "Existing Content")),
+            React.createElement(MenuItem, { key: "uploadAsset", onClick: handleUploadAsset },
+                React.createElement(Typography, null, "Upload Asset(s)")),
+            React.createElement(Divider, null),
+            React.createElement(MenuItem, { key: "submitContemt", onClick: handlePublishContent, style: { display: hasItemsForReview ? 'block' : 'none' } },
+                React.createElement(Typography, null, "Submit for Review")),
+            React.createElement(MenuItem, { key: "rejectContent", onClick: handlePublishContent, style: { display: hasItemsInReview ? 'block' : 'none' } },
+                React.createElement(Typography, null, "Reject Submission")),
+            React.createElement(MenuItem, { key: "publishContent", onClick: handlePublishContent, style: { display: hasItemsForPublish ? 'block' : 'none' } },
+                React.createElement(Typography, null, "Publish")),
+            React.createElement(Divider, { style: { display: hasItems ? 'block' : 'none' } }),
+            React.createElement(MenuItem, { key: "openInTrello" },
+                React.createElement(Typography, null,
+                    React.createElement(Link, { href: card.url, target: "new" }, "Open Card in Trello"))))));
 };
 
 var BoardCard = function (_a) {
@@ -9195,9 +9217,6 @@ var BoardCard = function (_a) {
         attachedContentItems: null,
         attachedDocuments: null
     }), cardDetailsData = _e[0], setCardDetailsData = _e[1];
-    var handleShowMoreClick = function () {
-        setDetailsOpen(!detailsOpen);
-    };
     var loadCardDetailsData = function () {
         // why is this running for each card?
         if (card.badges.attachments === 0)
@@ -9250,10 +9269,16 @@ var BoardCard = function (_a) {
             }
         });
     };
-    // load details data
-    useEffect(function () {
+    var handleActionsClick = function () {
         loadCardDetailsData();
-    }, []);
+    };
+    var handleShowMoreClick = function () {
+        loadCardDetailsData();
+        setDetailsOpen(!detailsOpen);
+    };
+    // load details data
+    // useEffect(() => {
+    // }, []);
     return (React.createElement(React.Fragment, null,
         React.createElement(Dialog, { open: detailsOpen, keepMounted: true, "aria-describedby": "alert-dialog-slide-description" },
             React.createElement(DialogTitle, { sx: { backgroundColor: card.cover.color ? "".concat(card.cover.color) : "" } }, card.name),
@@ -9262,7 +9287,7 @@ var BoardCard = function (_a) {
             React.createElement(DialogActions, null,
                 React.createElement(Button, { onClick: handleShowMoreClick }, "Close"))),
         React.createElement(Card, { elevation: 3, sx: { borderTop: card.cover.color ? "10px solid ".concat(card.cover.color) : "" } },
-            React.createElement(CardHeader, { action: React.createElement(CardActions, { card: card, cardDetails: cardDetailsData }), title: card.name, titleTypographyProps: { variant: 'body1' } }),
+            React.createElement(CardHeader, { onClick: handleActionsClick, action: React.createElement(CardActions, { card: card, cardDetails: cardDetailsData }), title: card.name, titleTypographyProps: { variant: 'body1' } }),
             card.badges.attachments > 0 && (React.createElement(CardActions$1, { disableSpacing: true },
                 React.createElement(Button, { size: "small", onClick: handleShowMoreClick, "aria-label": "Show more" }, "Show More"))))));
 };
@@ -9340,7 +9365,7 @@ var Board = function (_a) {
         loadBoardData();
         var intervalRef = setInterval(function () {
             loadBoardData();
-        }, 10000);
+        }, 30000);
         return function () {
             clearInterval(intervalRef);
         };
@@ -9354,7 +9379,7 @@ var Board = function (_a) {
                 height: '500%'
             } },
             error && React.createElement(ApiResponseErrorState, { error: error }),
-            state.board && (React.createElement(Fab, { href: state.board.url, target: "new", "aria-label": "Edit in Trello", sx: { position: 'fixed', bottom: 60, right: 50 }, color: "info" },
+            state.board && (React.createElement(Fab, { onClick: loadBoardData, href: state.board.url, target: "new", "aria-label": "Open Board in Trello", sx: { position: 'fixed', bottom: 60, right: 50 }, color: "info" },
                 React.createElement(EditRoundedIcon, null))),
             state.lists &&
                 state.lists.map(function (list) {

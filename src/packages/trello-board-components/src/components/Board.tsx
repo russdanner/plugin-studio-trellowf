@@ -124,7 +124,7 @@ const Board = ({ boardId }: BoardProps) => {
     loadBoardData();
     let intervalRef = setInterval(() => {
       loadBoardData();
-    }, 10000);
+    }, 30000);
     return function () {
       clearInterval(intervalRef);
     };
@@ -144,9 +144,10 @@ const Board = ({ boardId }: BoardProps) => {
         {error && <ApiResponseErrorState error={error} />}
         {state.board && (
           <Fab
+            onClick={loadBoardData}
             href={state.board.url}
             target="new"
-            aria-label="Edit in Trello"
+            aria-label="Open Board in Trello"
             sx={{ position: 'fixed', bottom: 60, right: 50 }}
             color="info"
           >

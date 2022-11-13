@@ -3,10 +3,12 @@ import { useEffect, useState, useMemo } from 'react';
 import { Dispatch } from 'redux';
 import { useDispatch } from 'react-redux';
 
-import { Typography } from '@mui/material';
+import { Typography, Link } from '@mui/material';
 
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
+import Divider from '@mui/material/Divider';
+
 import MoreVertRoundedIcon from '@mui/icons-material/MoreVertRounded';
 import IconButton, { IconButtonProps } from '@mui/material/IconButton';
 
@@ -41,9 +43,11 @@ const CardActions = ({ card, cardDetails }: CardActionsProps) => {
 
   const siteId = useActiveSiteId();
   const dispatch = useDispatch();
+
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
-  const ITEM_HEIGHT = 55;
+  const [attachAnchorEl, setAttachAnchorEl] = React.useState<null | HTMLElement>(null);
+  const attachOpen = Boolean(attachAnchorEl);
 
   const attachContent = (contentName, siteId, cardId, contentId) => {
     let serviceUrl = `${PLUGIN_SERVICE_BASE}/card/attach-content.json?siteId=${siteId}&name=${contentName}&cardId=${cardId}&contentId=${contentId}`;
@@ -56,6 +60,11 @@ const CardActions = ({ card, cardDetails }: CardActionsProps) => {
 
   const handleCardActionsClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleCardAttachActionsClose = () => {
+    setAnchorEl(null);
+    setAttachAnchorEl(null);
   };
 
   const handleCreatePage = () => {
@@ -157,16 +166,6 @@ const CardActions = ({ card, cardDetails }: CardActionsProps) => {
     handleCardActionsClose();
   };
 
-  const handleSubmitContent = () => {
-    alert('Submit ' + card.id);
-    setAnchorEl(null);
-  };
-
-  const handleRejectContent = () => {
-    alert('Reject ' + card.id);
-    handleCardActionsClose();
-  };
-
   const handlePublishContent = () => {
     dispatch(
       showPublishDialog({
@@ -178,9 +177,37 @@ const CardActions = ({ card, cardDetails }: CardActionsProps) => {
     handleCardActionsClose();
   };
 
-  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+  const handleClickActions = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
+  const handleClickAttactActions = (event: React.MouseEvent<HTMLElement>) => {
+    setAttachAnchorEl(event.currentTarget);
+  };
+
+  let hasItemsInReview = false;
+  let hasItemsForReview = false;
+  let hasItemsForPublish = false;
+  let hasItems = false;
+
+  if (cardDetails && cardDetails.attachedContentItems) {
+    cardDetails.attachedContentItems?.map((contentItem, contentIndex) => {
+      console.log('attachedItem');
+      console.log(contentItem);
+      hasItems = true; // invariant
+      let availableActionsMap = contentItem.availableActionsMap;
+
+      // basic workflow evaluation
+      hasItemsForReview =
+        availableActionsMap.rejectPublish === false // can't reject because we're in workflow
+          ? true
+          : hasItemsForReview;
+
+      hasItemsInReview = availableActionsMap.rejectPublish === true ? true : hasItemsInReview;
+
+      hasItemsForPublish =
+        (availableActionsMap.approvePublish || availableActionsMap.publish) === true ? true : hasItemsForPublish;
+    });
+  }
 
   return (
     <>
@@ -190,7 +217,7 @@ const CardActions = ({ card, cardDetails }: CardActionsProps) => {
         aria-controls={open ? 'long-menu' : undefined}
         aria-expanded={open ? 'true' : undefined}
         aria-haspopup="true"
-        onClick={handleClick}
+        onClick={handleClickActions}
       >
         <MoreVertRoundedIcon />
       </IconButton>
@@ -202,39 +229,63 @@ const CardActions = ({ card, cardDetails }: CardActionsProps) => {
         MenuListProps={{
           'aria-labelledby': 'long-button'
         }}
-        PaperProps={{
-          style: {
-            maxHeight: ITEM_HEIGHT * 4.5,
-            width: '40ch'
-          }
-        }}
       >
+        {/*        <MenuItem onClick={handleClickAttactActions}>
+          <Typography>Attach Content to Card</Typography>
+
+          <Menu
+            id="attach-menu"
+            anchorEl={attachAnchorEl}
+            open={attachOpen}
+            onClose={handleCardAttachActionsClose}
+            MenuListProps={{
+              'aria-labelledby': 'long-button'
+            }}
+          >
+*/}{' '}
         <MenuItem key="createPage" onClick={handleCreatePage}>
-          Create New Page
+          <Typography>New Page</Typography>
         </MenuItem>
-
         <MenuItem key="createComponent" onClick={handleCreateComponent}>
-          Create New Component
+          <Typography>New Component</Typography>
         </MenuItem>
-
-        <MenuItem key="uploadAsset" onClick={handleUploadAsset}>
-          Upload Asset(s)
-        </MenuItem>
-
         <MenuItem key="attachContent" onClick={handleAttachContent}>
-          Attach Existing Content
+          <Typography>Existing Content</Typography>
         </MenuItem>
-
-        <MenuItem key="submitContent" onClick={handleSubmitContent}>
-          Submit Content for Review
+        <MenuItem key="uploadAsset" onClick={handleUploadAsset}>
+          <Typography>Upload Asset(s)</Typography>
         </MenuItem>
-
-        <MenuItem key="rejectContent" onClick={handleRejectContent}>
-          Reject Content in Review
+        {/*          </Menu>
+        </MenuItem>*/}
+        <Divider />
+        <MenuItem
+          key="submitContemt"
+          onClick={handlePublishContent}
+          style={{ display: hasItemsForReview ? 'block' : 'none' }}
+        >
+          <Typography>Submit for Review</Typography>
         </MenuItem>
-
-        <MenuItem key="publishContent" onClick={handlePublishContent}>
-          Approve Content for Publish
+        <MenuItem
+          key="rejectContent"
+          onClick={handlePublishContent}
+          style={{ display: hasItemsInReview ? 'block' : 'none' }}
+        >
+          <Typography>Reject Submission</Typography>
+        </MenuItem>
+        <MenuItem
+          key="publishContent"
+          onClick={handlePublishContent}
+          style={{ display: hasItemsForPublish ? 'block' : 'none' }}
+        >
+          <Typography>Publish</Typography>
+        </MenuItem>
+        <Divider style={{ display: hasItems ? 'block' : 'none' }} />
+        <MenuItem key="openInTrello">
+          <Typography>
+            <Link href={card.url} target="new">
+              Open Card in Trello
+            </Link>
+          </Typography>
         </MenuItem>
       </Menu>
     </>

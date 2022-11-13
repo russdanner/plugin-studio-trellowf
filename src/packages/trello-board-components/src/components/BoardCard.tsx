@@ -47,10 +47,6 @@ const BoardCard = ({ card }: BoardCardProps) => {
     attachedDocuments: null
   });
 
-  const handleShowMoreClick = () => {
-    setDetailsOpen(!detailsOpen);
-  };
-
   const loadCardDetailsData = () => {
     // why is this running for each card?
     if (card.badges.attachments === 0) return;
@@ -110,10 +106,17 @@ const BoardCard = ({ card }: BoardCardProps) => {
     });
   };
 
-  // load details data
-  useEffect(() => {
+  const handleActionsClick = () => {
     loadCardDetailsData();
-  }, []);
+  };
+
+  const handleShowMoreClick = () => {
+    loadCardDetailsData();
+    setDetailsOpen(!detailsOpen);
+  };
+  // load details data
+  // useEffect(() => {
+  // }, []);
 
   return (
     <>
@@ -129,6 +132,7 @@ const BoardCard = ({ card }: BoardCardProps) => {
 
       <Card elevation={3} sx={{ borderTop: card.cover.color ? `10px solid ${card.cover.color}` : `` }}>
         <CardHeader
+          onClick={handleActionsClick}
           action={<BoardCardActions card={card} cardDetails={cardDetailsData} />}
           title={card.name}
           titleTypographyProps={{ variant: 'body1' }}
