@@ -122,12 +122,12 @@ const Board = ({ boardId }: BoardProps) => {
 
   useEffect(() => {
     loadBoardData();
-    // let intervalRef = setInterval(() => {
-    //   loadBoardData();
-    // }, 10000);
-    // return function () {
-    //   clearInterval(intervalRef);
-    // };
+    let intervalRef = setInterval(() => {
+      loadBoardData();
+    }, 10000);
+    return function () {
+      clearInterval(intervalRef);
+    };
   }, []);
 
   return (
