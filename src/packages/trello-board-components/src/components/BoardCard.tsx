@@ -90,7 +90,7 @@ const BoardCard = ({ card }: BoardCardProps) => {
         if (contentItemPaths.length > 0) {
           fetchItemsByPath(siteId, contentItemPaths, { castAsDetailedItem: true }).subscribe({
             next(sandboxItems) {
-              let newCardDetails = { ...cardDetailsData, attachedContentItems: sandboxItems };
+              newCardDetails = { ...newCardDetails, attachedContentItems: sandboxItems };
               setCardDetailsData(newCardDetails);
             }
           });
@@ -106,7 +106,7 @@ const BoardCard = ({ card }: BoardCardProps) => {
   };
 
   const handleCardCloseClick = () => {
-      setDetailsOpen(false);
+    setDetailsOpen(false);
   };
 
   const handleShowMoreClick = () => {
@@ -118,19 +118,9 @@ const BoardCard = ({ card }: BoardCardProps) => {
 
   return (
     <>
-      <Dialog open={detailsOpen} keepMounted aria-describedby="alert-dialog-slide-description">
-        <DialogTitle sx={{ backgroundColor: card.cover.color ? `${card.cover.color}` : `` }}>{card.name}</DialogTitle>
-        <DialogContent>
-          <CardDetails card={card} cardDetails={cardDetailsData} />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleCardCloseClick}>Close</Button>
-        </DialogActions>
-      </Dialog>
-
       <Card elevation={3} sx={{ borderTop: card.cover.color ? `10px solid ${card.cover.color}` : `` }}>
         <CardHeader
-          action={<BoardCardActions card={card} cardDetails={cardDetailsData} />}
+          action={<BoardCardActions card={card} cardDetails={cardDetailsData} onMenuOpen={loadCardDetailsData} />}
           title={card.name}
           titleTypographyProps={{ variant: 'body1' }}
         />
@@ -142,6 +132,16 @@ const BoardCard = ({ card }: BoardCardProps) => {
           </CardActions>
         )}
       </Card>
+
+      <Dialog open={detailsOpen} aria-describedby="alert-dialog-slide-description">
+        <DialogTitle sx={{ backgroundColor: card.cover.color ? `${card.cover.color}` : `` }}>{card.name}</DialogTitle>
+        <DialogContent>
+          <CardDetails card={card} cardDetails={cardDetailsData} />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCardCloseClick}>Close</Button>
+        </DialogActions>
+      </Dialog>
     </>
   );
 };

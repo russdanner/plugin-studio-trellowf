@@ -40,9 +40,10 @@ import CardDetailsRecord from '../types/CardDetailsRecord';
 export interface CardActionsProps {
   card: CardRecord;
   cardDetails: CardDetailsRecord;
+  onMenuOpen(): void;
 }
 
-const CardActions = ({ card, cardDetails }: CardActionsProps) => {
+const CardActions = ({ card, cardDetails, onMenuOpen }: CardActionsProps) => {
   const PLUGIN_SERVICE_BASE = '/studio/api/2/plugin/script/plugins/org/rd/plugin/trellowf/trellowf';
 
   const siteId = useActiveSiteId();
@@ -226,6 +227,8 @@ const CardActions = ({ card, cardDetails }: CardActionsProps) => {
   };
 
   const handleClickActions = (event: React.MouseEvent<HTMLElement>) => {
+    onMenuOpen();
+
     setAnchorEl(event.currentTarget);
   };
 
