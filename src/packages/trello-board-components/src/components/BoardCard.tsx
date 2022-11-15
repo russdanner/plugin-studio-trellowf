@@ -42,6 +42,7 @@ const BoardCard = ({ card }: BoardCardProps) => {
   const siteId = useActiveSiteId();
   const [error, setError] = useState();
   const [state, setState] = useState();
+
   const [cardDetailsData, setCardDetailsData] = useState<any>({
     attachedContentItems: null,
     attachedDocuments: null
@@ -83,14 +84,14 @@ const BoardCard = ({ card }: BoardCardProps) => {
         });
 
         // now set the component state
-        cardDetailsData.attachedDocuments = documentItems;
-        setCardDetailsData(cardDetailsData);
+        let newCardDetails = { ...cardDetailsData, attachedDocuments: documentItems };
+        setCardDetailsData(newCardDetails);
 
         if (contentItemPaths.length > 0) {
           fetchItemsByPath(siteId, contentItemPaths, { castAsDetailedItem: true }).subscribe({
             next(sandboxItems) {
-              cardDetailsData.attachedContentItems = sandboxItems;
-              setCardDetailsData(cardDetailsData);
+              let newCardDetails = { ...cardDetailsData, attachedContentItems: sandboxItems };
+              setCardDetailsData(newCardDetails);
             }
           });
         }
@@ -104,23 +105,16 @@ const BoardCard = ({ card }: BoardCardProps) => {
     });
   };
 
-  const handleShowMoreClick = () => {
-    setDetailsOpen(!detailsOpen);
+  const handleCardCloseClick = () => {
+      setDetailsOpen(false);
+  };
 
-    if(detailsOpen === true){
+  const handleShowMoreClick = () => {
+    if (!detailsOpen) {
+      setDetailsOpen(true);
       loadCardDetailsData();
     }
   };
-
-  useEffect(() => {
-    if (!cardDetailsData.attachedContentItems || !cardDetailsData.attachedDocuments) {
-      // For now load only once
-      console.log('loading details for card ' + card.name);
-      loadCardDetailsData();
-    } else {
-      console.log(card.name + 'card alread has details data');
-    }
-  }, []);
 
   return (
     <>
@@ -130,7 +124,7 @@ const BoardCard = ({ card }: BoardCardProps) => {
           <CardDetails card={card} cardDetails={cardDetailsData} />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleShowMoreClick}>Close</Button>
+          <Button onClick={handleCardCloseClick}>Close</Button>
         </DialogActions>
       </Dialog>
 

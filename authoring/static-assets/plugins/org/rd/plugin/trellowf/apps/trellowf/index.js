@@ -9274,13 +9274,13 @@ var BoardCard = function (_a) {
                     }
                 });
                 // now set the component state
-                cardDetailsData.attachedDocuments = documentItems;
-                setCardDetailsData(cardDetailsData);
+                var newCardDetails = __assign(__assign({}, cardDetailsData), { attachedDocuments: documentItems });
+                setCardDetailsData(newCardDetails);
                 if (contentItemPaths.length > 0) {
                     fetchItemsByPath(siteId, contentItemPaths, { castAsDetailedItem: true }).subscribe({
                         next: function (sandboxItems) {
-                            cardDetailsData.attachedContentItems = sandboxItems;
-                            setCardDetailsData(cardDetailsData);
+                            var newCardDetails = __assign(__assign({}, cardDetailsData), { attachedContentItems: sandboxItems });
+                            setCardDetailsData(newCardDetails);
                         }
                     });
                 }
@@ -9292,29 +9292,22 @@ var BoardCard = function (_a) {
             }
         });
     };
+    var handleCardCloseClick = function () {
+        setDetailsOpen(false);
+    };
     var handleShowMoreClick = function () {
-        setDetailsOpen(!detailsOpen);
-        if (detailsOpen === true) {
+        if (!detailsOpen) {
+            setDetailsOpen(true);
             loadCardDetailsData();
         }
     };
-    useEffect(function () {
-        if (!cardDetailsData.attachedContentItems || !cardDetailsData.attachedDocuments) {
-            // For now load only once
-            console.log('loading details for card ' + card.name);
-            loadCardDetailsData();
-        }
-        else {
-            console.log(card.name + 'card alread has details data');
-        }
-    }, []);
     return (React.createElement(React.Fragment, null,
         React.createElement(Dialog, { open: detailsOpen, keepMounted: true, "aria-describedby": "alert-dialog-slide-description" },
             React.createElement(DialogTitle, { sx: { backgroundColor: card.cover.color ? "".concat(card.cover.color) : "" } }, card.name),
             React.createElement(DialogContent, null,
                 React.createElement(CardDetails, { card: card, cardDetails: cardDetailsData })),
             React.createElement(DialogActions, null,
-                React.createElement(Button, { onClick: handleShowMoreClick }, "Close"))),
+                React.createElement(Button, { onClick: handleCardCloseClick }, "Close"))),
         React.createElement(Card, { elevation: 3, sx: { borderTop: card.cover.color ? "10px solid ".concat(card.cover.color) : "" } },
             React.createElement(CardHeader, { action: React.createElement(CardActions, { card: card, cardDetails: cardDetailsData }), title: card.name, titleTypographyProps: { variant: 'body1' } }),
             card.badges.attachments > 0 && (React.createElement(CardActions$1, { disableSpacing: true },
@@ -9392,12 +9385,12 @@ var Board = function (_a) {
     };
     useEffect(function () {
         loadBoardData();
-        var intervalRef = setInterval(function () {
-            loadBoardData();
-        }, 10000);
-        return function () {
-            clearInterval(intervalRef);
-        };
+        // let intervalRef = setInterval(() => {
+        //   loadBoardData();
+        // }, 10000);
+        // return function () {
+        //   clearInterval(intervalRef);
+        // };
     }, []);
     return (React.createElement(DragDropContext, { onDragEnd: function (result) { return onDragEnd(result); } },
         React.createElement(Box, { sx: {
