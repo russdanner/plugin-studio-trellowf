@@ -4,9 +4,7 @@ package plugins.org.rd.plugin.trellowf
 
 import groovy.json.JsonSlurper
 import groovyx.net.http.HttpBuilder
-import static groovyx.net.http.HttpBuilder.configure;
-
-
+import static groovyx.net.http.HttpBuilder.configure
 
 /**
  * API service wrapper for Trello
@@ -17,6 +15,9 @@ public class Trello {
     def key
     def token
     def defaultBoardId
+    static def responseCache = [:]
+    def CARD_CACHE_SECONDS = 20
+    def BOARD_CACHE_SECONDS = 60
 
    /**
      * constructor
@@ -47,8 +48,8 @@ public class Trello {
      */
     def getBoard(boardId) {
         def tBoardId = getBoardId(boardId)
-        def board = trelloGet("/1/boards/${tBoardId}")
-        return board
+                def board = trelloGet("/1/boards/${tBoardId}")
+                return board
     }
 
     /**
@@ -56,25 +57,23 @@ public class Trello {
      * @param boardId the board to retrieve
      */
     def getListsForBoard(boardId) { 
-        def result = [:]
+        def cacheKey = "boardAndLists"+boardId
+        def result = getCachedResponse(cacheKey, BOARD_CACHE_SECONDS)
+       
+        if(result == null) {
+            result = [:]
+            def tBoardId = getBoardId(boardId)
+            result.board = getBoard(tBoardId)
+            result.lists = trelloGet("/1/boards/${tBoardId}/lists")
 
-        def tBoardId = getBoardId(boardId)
+            result.lists.each { list -> 
+                def cards = getCardsForList(list.id)
+                list.cards = cards
+            }
 
-        result.board = getBoard(tBoardId)
-
-        result.lists = trelloGet("/1/boards/${tBoardId}/lists")
-
-        result.lists.each { list -> 
-            def cards = getCardsForList(list.id)
-            list.cards = cards
-
-            // cards.each { card ->
-            //     if(card.badges.attachments > 0) {
-            //         card.cardAttachments = getAttachmentsForCard(card.id)
-            //     }
-            // }
+            cacheResponse(cacheKey, result)
         }
-
+        
         return result
     }
 
@@ -109,7 +108,14 @@ public class Trello {
      * @param cardId the list of cards to retrieve
      */
     def getAttachmentsForCard(cardId) {
-        def attachments = trelloGet("/1/cards/${cardId}/attachments")
+        def cacheKey = "attachments${cardId}"
+        def attachments = getCachedResponse(cacheKey, CARD_CACHE_SECONDS)
+       
+        if(attachments == null) {
+            attachments = trelloGet("/1/cards/${cardId}/attachments")
+            cacheResponse(cacheKey, attachments)
+        }
+
         return attachments
     }
 
@@ -138,7 +144,7 @@ public class Trello {
      * Make a POST request to Trello
      * @param url - the API URL
      */
-    def trelloPost(url) {
+    def trelloPost(url, body) {
         def apiUrl = "https://api.trello.com${url}&key=${key}&token=${token}"
         def result = HttpBuilder.configure { request.raw = apiUrl }.post()
         def object = [:] //(json && json != "") ? new JsonSlurper().parseText(result.text) : [:]
@@ -154,5 +160,47 @@ public class Trello {
         def json = new URL(apiUrl).text
         def object = new JsonSlurper().parseText(json)
         return object
+    }
+
+    def createWebHookWithTrello(token, key, callback, modelId, description) {
+        trelloPost("/1/tokens/${token}/webhooks", [
+            key: key,
+            callbackURL: callback,
+            idModel: modelId,
+            description: description            
+        ])
+    }
+
+    def cacheResponse(id, response) {
+        System.out.println("caching (${id})")
+        def currentTime = System.currentTimeMillis()
+
+        def cachedResponseEntry = [:]
+        cachedResponseEntry.time =  currentTime
+        cachedResponseEntry.response = response
+        
+        responseCache.put(id, cachedResponseEntry)
+    }
+
+    def getCachedResponse(id, maxAgeSeconds) {
+        def result = null
+        def currentTime = System.currentTimeMillis()
+        def cachedResponseEntry = responseCache.get(id)
+
+        if(cachedResponseEntry) {
+            def expires = cachedResponseEntry.time+maxAgeSeconds*1000
+            if(currentTime <= expires) {
+                System.out.println("cache hit (${id})")
+                result = cachedResponseEntry.response
+            }
+            else {
+               System.out.println("miss due to age (${currentTime} <= ${expires})") 
+            }
+        }
+        else {
+            System.out.println("cache miss (${id} :::: ${cachedResponseEntry})")
+        }
+
+        return result
     }
 }
