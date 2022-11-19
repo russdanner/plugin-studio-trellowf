@@ -134,7 +134,7 @@ function App() {
     <HashRouter>
       <Switch>
         <Route path="/preview/:arg1?" component={Preview} />
-        <Route path="/" exact component={Index} />
+         <Route path="/" exact component={Index} />
       </Switch>
     </HashRouter>
   );

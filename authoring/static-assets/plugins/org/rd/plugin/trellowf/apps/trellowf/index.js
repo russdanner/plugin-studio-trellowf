@@ -2,7 +2,7 @@ const React = craftercms.libs.React;
 const { useState, useRef, useEffect, useContext, useLayoutEffect } = craftercms.libs.React;
 const React__default = craftercms.libs.React && Object.prototype.hasOwnProperty.call(craftercms.libs.React, 'default') ? craftercms.libs.React['default'] : craftercms.libs.React;
 const EditRoundedIcon = craftercms.utils.constants.components.get('@mui/icons-material/EditRounded') && Object.prototype.hasOwnProperty.call(craftercms.utils.constants.components.get('@mui/icons-material/EditRounded'), 'default') ? craftercms.utils.constants.components.get('@mui/icons-material/EditRounded')['default'] : craftercms.utils.constants.components.get('@mui/icons-material/EditRounded');
-const { Typography, Link, Dialog, DialogTitle, DialogContent, DialogActions, Button, Card, CardHeader, CardActions: CardActions$1, Box, Fab, Paper, cardClasses } = craftercms.libs.MaterialUI;
+const { Typography, Link, Card, CardHeader, CardActions: CardActions$1, Button, Dialog, DialogTitle, DialogContent, DialogActions, Box, Fab, Paper, cardClasses } = craftercms.libs.MaterialUI;
 const { connect, Provider, useSelector, useDispatch } = craftercms.libs.ReactRedux;
 const ReactDOM = craftercms.libs.ReactDOM && Object.prototype.hasOwnProperty.call(craftercms.libs.ReactDOM, 'default') ? craftercms.libs.ReactDOM['default'] : craftercms.libs.ReactDOM;
 const { createCustomDocumentEventListener } = craftercms.utils.dom;
@@ -9062,7 +9062,7 @@ const dispatchDOMEvent = /*#__PURE__*/ createAction('DISPATCH_DOM_EVENT');
 
 var CardActions = function (_a) {
     var _b;
-    var card = _a.card, cardDetails = _a.cardDetails;
+    var card = _a.card, cardDetails = _a.cardDetails, onMenuOpen = _a.onMenuOpen;
     var PLUGIN_SERVICE_BASE = '/studio/api/2/plugin/script/plugins/org/rd/plugin/trellowf/trellowf';
     var siteId = useActiveSiteId();
     var dispatch = useDispatch();
@@ -9181,6 +9181,7 @@ var CardActions = function (_a) {
         handleCardActionsClose();
     };
     var handleClickActions = function (event) {
+        onMenuOpen();
         setAnchorEl(event.currentTarget);
     };
     var hasItemsInReview = false;
@@ -9279,7 +9280,7 @@ var BoardCard = function (_a) {
                 if (contentItemPaths.length > 0) {
                     fetchItemsByPath(siteId, contentItemPaths, { castAsDetailedItem: true }).subscribe({
                         next: function (sandboxItems) {
-                            var newCardDetails = __assign(__assign({}, cardDetailsData), { attachedContentItems: sandboxItems });
+                            newCardDetails = __assign(__assign({}, newCardDetails), { attachedContentItems: sandboxItems });
                             setCardDetailsData(newCardDetails);
                         }
                     });
@@ -9302,16 +9303,16 @@ var BoardCard = function (_a) {
         }
     };
     return (React.createElement(React.Fragment, null,
-        React.createElement(Dialog, { open: detailsOpen, keepMounted: true, "aria-describedby": "alert-dialog-slide-description" },
+        React.createElement(Card, { elevation: 3, sx: { borderTop: card.cover.color ? "10px solid ".concat(card.cover.color) : "" } },
+            React.createElement(CardHeader, { action: React.createElement(CardActions, { card: card, cardDetails: cardDetailsData, onMenuOpen: loadCardDetailsData }), title: card.name, titleTypographyProps: { variant: 'body1' } }),
+            card.badges.attachments > 0 && (React.createElement(CardActions$1, { disableSpacing: true },
+                React.createElement(Button, { size: "small", onClick: handleShowMoreClick, "aria-label": "Show more" }, "Show More")))),
+        React.createElement(Dialog, { open: detailsOpen, "aria-describedby": "alert-dialog-slide-description" },
             React.createElement(DialogTitle, { sx: { backgroundColor: card.cover.color ? "".concat(card.cover.color) : "" } }, card.name),
             React.createElement(DialogContent, null,
                 React.createElement(CardDetails, { card: card, cardDetails: cardDetailsData })),
             React.createElement(DialogActions, null,
-                React.createElement(Button, { onClick: handleCardCloseClick }, "Close"))),
-        React.createElement(Card, { elevation: 3, sx: { borderTop: card.cover.color ? "10px solid ".concat(card.cover.color) : "" } },
-            React.createElement(CardHeader, { action: React.createElement(CardActions, { card: card, cardDetails: cardDetailsData }), title: card.name, titleTypographyProps: { variant: 'body1' } }),
-            card.badges.attachments > 0 && (React.createElement(CardActions$1, { disableSpacing: true },
-                React.createElement(Button, { size: "small", onClick: handleShowMoreClick, "aria-label": "Show more" }, "Show More"))))));
+                React.createElement(Button, { onClick: handleCardCloseClick }, "Close")))));
 };
 
 var Board = function (_a) {
@@ -9385,12 +9386,12 @@ var Board = function (_a) {
     };
     useEffect(function () {
         loadBoardData();
-        // let intervalRef = setInterval(() => {
-        //   loadBoardData();
-        // }, 10000);
-        // return function () {
-        //   clearInterval(intervalRef);
-        // };
+        var intervalRef = setInterval(function () {
+            loadBoardData();
+        }, 10000);
+        return function () {
+            clearInterval(intervalRef);
+        };
     }, []);
     return (React.createElement(DragDropContext, { onDragEnd: function (result) { return onDragEnd(result); } },
         React.createElement(Box, { sx: {

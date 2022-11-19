@@ -2,14 +2,20 @@ package plugins.org.rd.plugin.trellowf
 
 @Grab(group='io.github.http-builder-ng', module='http-builder-ng-core', version='1.0.4', initClass=false)
 
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
+
 import groovy.json.JsonSlurper
 import groovyx.net.http.HttpBuilder
+
 import static groovyx.net.http.HttpBuilder.configure
 
 /**
  * API service wrapper for Trello
  */
 public class Trello {
+
+    private static final Logger logger = LoggerFactory.getLogger(Trello.class);
 
     def pluginConfig
     def key
@@ -146,8 +152,9 @@ public class Trello {
      */
     def trelloPost(url, body) {
         def apiUrl = "https://api.trello.com${url}&key=${key}&token=${token}"
+        
         def result = HttpBuilder.configure { request.raw = apiUrl }.post()
-        def object = [:] //(json && json != "") ? new JsonSlurper().parseText(result.text) : [:]
+        def object = body //[:] //(json && json != "") ? new JsonSlurper().parseText(result.text) : [:]
         return object
     }
 
@@ -162,7 +169,7 @@ public class Trello {
         return object
     }
 
-    def createWebHookWithTrello(token, key, callback, modelId, description) {
+    def createWebHookWithTrello(callback, modelId, description) {
         trelloPost("/1/tokens/${token}/webhooks", [
             key: key,
             callbackURL: callback,
@@ -171,8 +178,13 @@ public class Trello {
         ])
     }
 
+    def clearCache(id) {
+        logger.debug("Trello Clearing cache (${id})")
+        responseCache.clear()
+    }
+
     def cacheResponse(id, response) {
-        System.out.println("caching (${id})")
+        logger.debug("Trello Caching (${id})")
         def currentTime = System.currentTimeMillis()
 
         def cachedResponseEntry = [:]
@@ -190,15 +202,15 @@ public class Trello {
         if(cachedResponseEntry) {
             def expires = cachedResponseEntry.time+maxAgeSeconds*1000
             if(currentTime <= expires) {
-                System.out.println("cache hit (${id})")
+                logger.debug("Trello Cache hit (${id})")
                 result = cachedResponseEntry.response
             }
             else {
-               System.out.println("miss due to age (${currentTime} <= ${expires})") 
+               logger.debug("Trello Cache miss due to age (${currentTime} <= ${expires})") 
             }
         }
         else {
-            System.out.println("cache miss (${id} :::: ${cachedResponseEntry})")
+            logger.debug("Trello Cache miss (${id} : ${cachedResponseEntry})")
         }
 
         return result

@@ -62,6 +62,9 @@ plugin:
     - label: Default Board Id
       name: trelloDefaultBoardId
       description: Default Board Id
+    - label: Studio JWT Token
+      name: studioJwtToken
+      description: Security token Studio on Trello callback      
   installation:
     - type: preview-app
       elementXpath: //widget[@id='org.rd.plugin.trellowf.openBoardButton']
