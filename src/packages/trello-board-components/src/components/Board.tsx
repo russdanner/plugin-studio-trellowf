@@ -15,7 +15,13 @@ import {
   Typography,
   cardClasses,
   Fab,
-  Button
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  TextField
 } from '@mui/material';
 
 import IconButton, { IconButtonProps } from '@mui/material/IconButton';
@@ -28,13 +34,52 @@ import { ApiResponse, ApiResponseErrorState } from '@craftercms/studio-ui';
 import BoardCard from './BoardCard';
 import CardRecord from '../types/CardRecord';
 
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+import FormControl from '@mui/material/FormControl';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+
 export interface BoardProps {
   boardId: string;
 }
 
 const Board = ({ boardId }: BoardProps) => {
+  const palette = {
+    red: 'red',
+    blue: 'blue',
+    green: 'green',
+    yellow: 'yellow',
+    cyan: 'cyan',
+    lime: 'lime',
+    gray: 'gray',
+    orange: 'orange',
+    purple: 'purple',
+    black: 'black',
+    pink: 'pink'
+  };
+
   const siteId = useActiveSiteId();
   const [error, setError] = useState();
+
+  const [createCardOpen, setCreateCardOpen] = React.useState(false);
+
+  const [newCardTitle, setNewCardTitle] = React.useState('New Card');
+  const [newCardDescription, setNewCardDescription] = React.useState('');
+  const [newCardColor, setNewCardColor] = React.useState('red');
+  const [newCardList, setNewCardList] = React.useState('');
+
+  const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setNewCardTitle(event.target.value as string);
+  };
+
+  const handleDescriptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setNewCardDescription(event.target.value as string);
+  };
+
+  const handleColorChange = (event: SelectChangeEvent) => {
+    setNewCardColor(event.target.value as string);
+  };
+
   let hooked = false;
   const setHooked = (b) => {
     hooked = b;
@@ -72,9 +117,22 @@ const Board = ({ boardId }: BoardProps) => {
     moveCard(cardId, sourceListId, targetListId, targetListIdIndex);
   };
 
-  const addCardToList = (listId) => {
-    let serviceUrl = `${PLUGIN_SERVICE_BASE}/card/create.json?siteId=${siteId}&listId=${listId}&title=foo&description=bar&color=blue`;
+  const handleCreateCard = () => {
+    addCardToList(newCardList, newCardTitle, newCardDescription, newCardColor);
+    setCreateCardOpen(false);
+  };
 
+  const handleAddCardToList = (listId) => {
+    setNewCardList(listId);
+    setCreateCardOpen(true);
+  };
+
+  const handleAddCardToListCancel = () => {
+    setCreateCardOpen(false);
+  };
+
+  const addCardToList = (listId, title, desc, color) => {
+    let serviceUrl = `${PLUGIN_SERVICE_BASE}/card/create.json?siteId=${siteId}&listId=${listId}&title=${title}&description=${desc}&color=${color}`;
     get(serviceUrl).subscribe({
       next: (response) => {
         loadBoardData();
@@ -203,105 +261,142 @@ const Board = ({ boardId }: BoardProps) => {
   }, []);
 
   return (
-    <DragDropContext onDragEnd={(result) => onDragEnd(result)}>
-      <Box
-        sx={{
-          backgroundImage: state.board ? `url(${state.board.prefs.backgroundImage})` : null,
-          flexDirection: 'row',
-          position: 'relative',
-          width: '300%;',
-          height: '500%'
-        }}
-      >
-        {error && <ApiResponseErrorState error={error} />}
-        {state.board && (
-          <>
-            <Fab
-              onClick={loadBoardData}
-              href={state.board.url}
-              target="new"
-              aria-label="Open Board in Trello"
-              sx={{ position: 'fixed', bottom: 60, right: 50 }}
-              color="info"
-            >
-              <EditRoundedIcon />
-            </Fab>
-            <Fab
-              onClick={refreshBoard}
-              aria-label="Refresh Board"
-              sx={{ position: 'fixed', bottom: 60, right: 150 }}
-              color="info"
-            >
-              <RefreshRoundedIcon />
-            </Fab>
-          </>
-        )}
-        {state.lists &&
-          state.lists.map((list) => {
-            return (
-              <Paper
-                elevation={1}
-                style={{}}
-                sx={(theme) => ({
-                  width: '280px',
-                  display: 'inline-table',
-                  margin: '5px',
-                  p: 1,
-                  bgcolor: theme.palette.mode === 'dark' ? 'grey' : 'grey.A200'
-                })}
+    <>
+      <DragDropContext onDragEnd={(result) => onDragEnd(result)}>
+        <Box
+          sx={{
+            backgroundImage: state.board ? `url(${state.board.prefs.backgroundImage})` : null,
+            flexDirection: 'row',
+            position: 'relative',
+            width: '300%;',
+            height: '500%'
+          }}
+        >
+          {error && <ApiResponseErrorState error={error} />}
+          {state.board && (
+            <>
+              <Fab
+                onClick={loadBoardData}
+                href={state.board.url}
+                target="new"
+                aria-label="Open Board in Trello"
+                sx={{ position: 'fixed', bottom: 60, right: 50 }}
+                color="info"
               >
-                <Typography variant="h6" component="h2" sx={{ mb: 1 }}>
-                  {list.name}
-                </Typography>
+                <EditRoundedIcon />
+              </Fab>
+              <Fab
+                onClick={refreshBoard}
+                aria-label="Refresh Board"
+                sx={{ position: 'fixed', bottom: 60, right: 150 }}
+                color="info"
+              >
+                <RefreshRoundedIcon />
+              </Fab>
+            </>
+          )}
+          {state.lists &&
+            state.lists.map((list) => {
+              return (
+                <Paper
+                  elevation={1}
+                  style={{}}
+                  sx={(theme) => ({
+                    width: '280px',
+                    display: 'inline-table',
+                    margin: '5px',
+                    p: 1,
+                    bgcolor: theme.palette.mode === 'dark' ? 'grey' : 'grey.A200'
+                  })}
+                >
+                  <Typography variant="h6" component="h2" sx={{ mb: 1 }}>
+                    {list.name}
+                  </Typography>
 
-                <Droppable droppableId={list.id} key={list.id}>
-                  {(provided, snapshot) => {
-                    return (
-                      <Box
-                        sx={{ [`.${cardClasses.root}:not(:last-child)`]: { mb: 1 } }}
-                        {...provided.droppableProps}
-                        ref={provided.innerRef}
-                      >
-                        {list.cards &&
-                          Object.values(list.cards).map((card, cardIndex) => {
-                            return (
-                              <Draggable key={card.id} draggableId={card.id} index={cardIndex}>
-                                {(provided, snapshot) => {
-                                  return (
-                                    <div
-                                      ref={provided.innerRef}
-                                      {...provided.draggableProps}
-                                      {...provided.dragHandleProps}
-                                    >
-                                      <div style={{ padding: '5px' }}>
-                                        <BoardCard card={card} />
-                                      </div>
-                                      {provided.placeholder}
-                                    </div>
-                                  );
-                                }}
-                              </Draggable>
-                            );
-                          })}
-                        <div style={{ height: snapshot.isDraggingOver ? '120px' : '80px' }}>&nbsp;</div>
-                        <Button
-                          size="small"
-                          aria-label="add card"
-                          onClick={() => {
-                            addCardToList(list.id);
-                          }}
+                  <Droppable droppableId={list.id} key={list.id}>
+                    {(provided, snapshot) => {
+                      return (
+                        <Box
+                          sx={{ [`.${cardClasses.root}:not(:last-child)`]: { mb: 1 } }}
+                          {...provided.droppableProps}
+                          ref={provided.innerRef}
                         >
-                          Add a Card
-                        </Button>
-                      </Box>
-                    );
-                  }}
-                </Droppable>
-              </Paper>
-            );
-          })}
-      </Box>
-    </DragDropContext>
+                          {list.cards &&
+                            Object.values(list.cards).map((card, cardIndex) => {
+                              return (
+                                <Draggable key={card.id} draggableId={card.id} index={cardIndex}>
+                                  {(provided, snapshot) => {
+                                    return (
+                                      <div
+                                        ref={provided.innerRef}
+                                        {...provided.draggableProps}
+                                        {...provided.dragHandleProps}
+                                      >
+                                        <div style={{ padding: '5px' }}>
+                                          <BoardCard card={card} />
+                                        </div>
+                                        {provided.placeholder}
+                                      </div>
+                                    );
+                                  }}
+                                </Draggable>
+                              );
+                            })}
+                          <div style={{ height: snapshot.isDraggingOver ? '120px' : '80px' }}>&nbsp;</div>
+                          <Button
+                            size="small"
+                            aria-label="add card"
+                            onClick={() => {
+                              handleAddCardToList(list.id);
+                            }}
+                          >
+                            Add a Card
+                          </Button>
+                        </Box>
+                      );
+                    }}
+                  </Droppable>
+                </Paper>
+              );
+            })}
+        </Box>
+      </DragDropContext>
+
+      <Dialog open={createCardOpen} aria-describedby="alert-dialog-slide-description">
+        <DialogTitle>Create Card</DialogTitle>
+        <DialogContent>
+          <FormControl margin="normal" fullWidth>
+            <TextField defaultValue="New Card" onChange={handleTitleChange} id="outlined-basic" label="Title" variant="outlined" />
+          </FormControl>
+          <FormControl margin="normal" fullWidth>
+            <TextField defaultValue="A description"  onChange={handleDescriptionChange} id="outlined-basic" label="Description" variant="outlined" />
+          </FormControl>
+          <FormControl margin="normal" fullWidth>
+            <InputLabel id="demo-simple-select-label">Color</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={newCardColor}
+              label="Color"
+              onChange={handleColorChange}
+            >
+              {palette &&
+                Object.keys(palette).map((color, colorIndex) => {
+                  return (
+                    <MenuItem sx={{ backgroundColor: color, color: 'white' }} value={color}>
+                      {color}
+                    </MenuItem>
+                  );
+                })}
+            </Select>
+          </FormControl>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleAddCardToListCancel}>Cancel</Button>
+          <Button onClick={handleCreateCard}>Create</Button>
+        </DialogActions>
+      </Dialog>
+    </>
   );
 };
 

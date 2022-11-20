@@ -229,9 +229,9 @@ const CardActions = ({ card, cardDetails, onMenuOpen }: CardActionsProps) => {
   };
 
   const handleClickActions = (event: React.MouseEvent<HTMLElement>) => {
-      onMenuOpen();
+    onMenuOpen();
 
-      setAnchorEl(event.currentTarget);
+    setAnchorEl(event.currentTarget);
   };
 
   const handleClickAttactActions = (event: React.MouseEvent<HTMLElement>) => {

@@ -142,16 +142,12 @@ const BoardCard = ({ card }: BoardCardProps) => {
 
   return (
     <>
-      <Card
-        elevation={3}
-        sx={{ borderTop: card.cover.color ? `10px solid ${card.cover.color}` : `` }}
-         >
-
-          
+      <Card elevation={3} sx={{ borderTop: card.cover.color ? `10px solid ${card.cover.color}` : `` }}>
         <CardHeader
           action={<BoardCardActions card={card} cardDetails={cardDetailsData} onMenuOpen={loadCardDetailsData} />}
-          title=<div onClick={handleShowMoreClick}>{card.name}</div>
+          title={card.name}
           titleTypographyProps={{ variant: 'body1' }}
+          onClick={handleShowMoreClick}
         />
         {card.badges.attachments > 0 && (
           <CardActions disableSpacing>
