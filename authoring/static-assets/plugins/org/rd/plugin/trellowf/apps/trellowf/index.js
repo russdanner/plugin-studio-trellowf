@@ -8986,15 +8986,17 @@ function useActiveSiteId() {
 var dense = true;
 var CardDetails = function (_a) {
     var _b, _c;
-    var card = _a.card, cardDetails = _a.cardDetails;
-    var handleRemoveAttachment = function (event) {
-        alert('yoink');
+    var card = _a.card, cardDetails = _a.cardDetails, onRemoveAttachment = _a.onRemoveAttachment;
+    var handleRemoveAttachment = function (id) {
+        onRemoveAttachment(id);
     };
     return (React.createElement(React.Fragment, null,
         React.createElement(Typography, { variant: "h6", component: "h4" }, "Description"),
         React.createElement(Typography, { paragraph: true }, card.desc),
         React.createElement(Typography, { variant: "h6", component: "h4" }, "Related Content"),
-        React.createElement(List, { dense: dense }, (_b = cardDetails.attachedContentItems) === null || _b === void 0 ? void 0 : _b.map(function (contentItem, contentIndex) { return (React.createElement(ListItem, { secondaryAction: React.createElement(IconButton, { edge: "end", "aria-label": "remove attachment", onClick: handleRemoveAttachment },
+        React.createElement(List, { dense: dense }, (_b = cardDetails.attachedContentItems) === null || _b === void 0 ? void 0 : _b.map(function (contentItem, contentIndex) { return (React.createElement(ListItem, { secondaryAction: React.createElement(IconButton, { edge: "end", "aria-label": "remove attachment", onClick: function () {
+                    handleRemoveAttachment(contentItem.path);
+                } },
                 React.createElement(ClearRoundedIcon, null)) },
             React.createElement(ListItemText, { primary: React.createElement(ItemDisplay, { key: contentItem.path, item: contentItem, showNavigableAsLinks: false }), secondary: contentItem.path  }))); })),
         React.createElement(Typography, { variant: "h6", component: "h4" }, "Related\u00A0Documents\u00A0&\u00A0Assets"),
@@ -9242,7 +9244,8 @@ var BoardCard = function (_a) {
     var _d = useState(); _d[0]; _d[1];
     var _e = useState({
         attachedContentItems: null,
-        attachedDocuments: null
+        attachedDocuments: null,
+        attachments: null
     }), cardDetailsData = _e[0], setCardDetailsData = _e[1];
     var loadCardDetailsData = function () {
         // why is this running for each card?
@@ -9257,6 +9260,8 @@ var BoardCard = function (_a) {
                 var _a;
                 // sort our our attachments vs everything else
                 var details = response.response.result;
+                var newCardDetailsAttachments = __assign(__assign({}, cardDetailsData), { attachments: details.attachments });
+                setCardDetailsData(newCardDetailsAttachments);
                 var contentItemPaths = [];
                 var documentItems = [];
                 (_a = details.attachments) === null || _a === void 0 ? void 0 : _a.forEach(function (attachment) {
@@ -9276,7 +9281,7 @@ var BoardCard = function (_a) {
                     }
                 });
                 // now set the component state
-                var newCardDetails = __assign(__assign({}, cardDetailsData), { attachedDocuments: documentItems });
+                var newCardDetails = __assign(__assign({}, newCardDetailsAttachments), { attachedDocuments: documentItems });
                 setCardDetailsData(newCardDetails);
                 if (contentItemPaths.length > 0) {
                     fetchItemsByPath(siteId, contentItemPaths, { castAsDetailedItem: true }).subscribe({
@@ -9303,15 +9308,31 @@ var BoardCard = function (_a) {
             loadCardDetailsData();
         }
     };
+    var handleRemoveAttachment = function (url) {
+        var _a;
+        (_a = cardDetailsData.attachments) === null || _a === void 0 ? void 0 : _a.forEach(function (attachment) {
+            if (attachment.url.includes(url)) {
+                var serviceUrl = "".concat(PLUGIN_SERVICE_BASE, "/card/remove-attachment.json?siteId=").concat(siteId, "&cardId=").concat(card.id, "&attachmentId=").concat(attachment.id);
+                get(serviceUrl).subscribe({
+                    next: function (response) {
+                        loadCardDetailsData();
+                    },
+                    error: function (e) {
+                        console.error(e);
+                    }
+                });
+            }
+        });
+    };
     return (React.createElement(React.Fragment, null,
         React.createElement(Card, { elevation: 3, sx: { borderTop: card.cover.color ? "10px solid ".concat(card.cover.color) : "" } },
             React.createElement(CardHeader, { action: React.createElement(CardActions, { card: card, cardDetails: cardDetailsData, onMenuOpen: loadCardDetailsData }), title: card.name, titleTypographyProps: { variant: 'body1' } }),
             card.badges.attachments > 0 && (React.createElement(CardActions$1, { disableSpacing: true },
                 React.createElement(Button, { size: "small", onClick: handleShowMoreClick, "aria-label": "Show more" }, "Show More")))),
         React.createElement(Dialog, { open: detailsOpen, "aria-describedby": "alert-dialog-slide-description" },
-            React.createElement(DialogTitle, { sx: { backgroundColor: card.cover.color ? "".concat(card.cover.color) : "" } }, card.name),
+            React.createElement(DialogTitle, { sx: { minWidth: '500px', backgroundColor: card.cover.color ? "".concat(card.cover.color) : "" } }, card.name),
             React.createElement(DialogContent, null,
-                React.createElement(CardDetails, { card: card, cardDetails: cardDetailsData })),
+                React.createElement(CardDetails, { card: card, cardDetails: cardDetailsData, onRemoveAttachment: handleRemoveAttachment })),
             React.createElement(DialogActions, null,
                 React.createElement(Button, { onClick: handleCardCloseClick }, "Close")))));
 };
@@ -9438,7 +9459,7 @@ var Board = function (_a) {
             // poll often. there is a cache on the server
             // polling often lets us pick up hooked updates quickly
             loadBoardData();
-        }, 2000);
+        }, 5000);
         return function () {
             clearInterval(intervalRef);
         };

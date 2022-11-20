@@ -45,7 +45,8 @@ const BoardCard = ({ card }: BoardCardProps) => {
 
   const [cardDetailsData, setCardDetailsData] = useState<any>({
     attachedContentItems: null,
-    attachedDocuments: null
+    attachedDocuments: null,
+    attachments: null
   });
 
   const loadCardDetailsData = () => {
@@ -62,6 +63,10 @@ const BoardCard = ({ card }: BoardCardProps) => {
       next: (response) => {
         // sort our our attachments vs everything else
         let details = response.response.result;
+
+        let newCardDetailsAttachments = { ...cardDetailsData, attachments: details.attachments };
+        setCardDetailsData(newCardDetailsAttachments)
+
         let contentItemPaths = [];
         let documentItems = [];
 
@@ -84,7 +89,7 @@ const BoardCard = ({ card }: BoardCardProps) => {
         });
 
         // now set the component state
-        let newCardDetails = { ...cardDetailsData, attachedDocuments: documentItems };
+        let newCardDetails = { ...newCardDetailsAttachments, attachedDocuments: documentItems };
         setCardDetailsData(newCardDetails);
 
         if (contentItemPaths.length > 0) {
@@ -116,6 +121,24 @@ const BoardCard = ({ card }: BoardCardProps) => {
     }
   };
 
+  const handleRemoveAttachment = (url) => {
+
+    cardDetailsData.attachments?.forEach(function (attachment) {
+      if(attachment.url.includes(url)) {
+        let serviceUrl = `${PLUGIN_SERVICE_BASE}/card/remove-attachment.json?siteId=${siteId}&cardId=${card.id}&attachmentId=${attachment.id}`;
+
+        get(serviceUrl).subscribe({
+          next: (response) => {
+            loadCardDetailsData();
+          },
+          error(e) {
+            console.error(e);
+          }
+        });
+      }
+    })
+  };
+
   return (
     <>
       <Card elevation={3} sx={{ borderTop: card.cover.color ? `10px solid ${card.cover.color}` : `` }}>
@@ -134,9 +157,11 @@ const BoardCard = ({ card }: BoardCardProps) => {
       </Card>
 
       <Dialog open={detailsOpen} aria-describedby="alert-dialog-slide-description">
-        <DialogTitle sx={{ backgroundColor: card.cover.color ? `${card.cover.color}` : `` }}>{card.name}</DialogTitle>
+        <DialogTitle sx={{ minWidth: '500px', backgroundColor: card.cover.color ? `${card.cover.color}` : `` }}>
+          {card.name}
+        </DialogTitle>
         <DialogContent>
-          <CardDetails card={card} cardDetails={cardDetailsData} />
+          <CardDetails card={card} cardDetails={cardDetailsData} onRemoveAttachment={handleRemoveAttachment} />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCardCloseClick}>Close</Button>

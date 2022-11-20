@@ -40,6 +40,8 @@ public class Trello {
 
     def moveCard(boardId, listId, cardId) {
         def result = trelloPut("/1/cards/${cardId}?idList=${listId}")
+        clearCache(null)
+        
         return result
     }
 
@@ -48,8 +50,23 @@ public class Trello {
         def contentName = java.net.URLEncoder.encode(name, "UTF-8")
         def attachmentUrl = "${studioServer}/studio/plugin%3Fsite%3D${siteId}%26type%3Dapps%26pluginId%3Dorg.rd.plugin.trellowf%26name%3Dtrellowf%26file%3Dapp.js%23/preview%3FcontentId%3D${contentId}%26siteId%3D${siteId}"
         def result = trelloPost("/1/cards/${cardId}/attachments?name=${contentName}&url=${attachmentUrl}")
+        clearCache(null)
+
         return result
     }
+
+    def removeAttachContentFromCard(cardId, attachmentId) {
+        def result = trelloDelete("/1/cards/${cardId}/attachments/${attachmentId}")    
+        clearCache(null)
+        
+        return result
+    }
+
+    def addCard(listId, title, description, color) {
+        clearCache(null)
+        return [:]
+    }
+
 
     /**
      * Get board details
@@ -197,10 +214,10 @@ public class Trello {
      * @param url - the API URL
      */
     def trelloPut(url) {
-        def apiUrl = "https://api.trello.com${url}&key=${key}&token=${token}"        
+        def apiUrl = createTelloApiUrl(url)
         def result = HttpBuilder.configure { request.raw = apiUrl }.put()
-        def object = [:] //(json && json != "") ? new JsonSlurper().parseText(result.text) : [:]
-        return object
+        
+        return result
     }
 
     /**
@@ -208,10 +225,7 @@ public class Trello {
      * @param url - the API URL
      */
     def trelloPost(url, payload) {
-        def qs = (url.indexOf("?")== -1) ? "?" : ":"
-
-        def apiUrl = "https://api.trello.com${url}${qs}key=${key}&token=${token}"
-
+        def apiUrl = createTelloApiUrl(url)
         def result = HttpBuilder.configure { 
             request.raw = apiUrl 
             request.contentType = "application/json" 
@@ -226,9 +240,10 @@ public class Trello {
      * @param url - the API URL
      */
     def trelloDelete(url) {
-        def apiUrl = "https://api.trello.com${url}?key=${key}&token=${token}"
+        def apiUrl = createTelloApiUrl(url)
         def result = HttpBuilder.configure { request.raw = apiUrl }.delete()
-        return [:]
+        
+        return result
     }
 
     /**
@@ -236,10 +251,16 @@ public class Trello {
      * @param url - the API URL
      */
     def trelloGet(url) {
-        def apiUrl = "https://api.trello.com${url}?key=${key}&token=${token}"
-        def json = new URL(apiUrl).text
-        def object = new JsonSlurper().parseText(json)
-        return object
+        def apiUrl = createTelloApiUrl(url)
+        def result = HttpBuilder.configure { request.raw = apiUrl }.get()
+    }
+
+    def createTelloApiUrl(url) {
+        def qs = (url.indexOf("?")== -1) ? "?" : "&"
+        def apiUrl = "https://api.trello.com${url}${qs}key=${key}&token=${token}"
+        
+        logger.debug("Creating Service URL: ${apiUrl}")
+        return  apiUrl       
     }
 
     def clearCache(id) {

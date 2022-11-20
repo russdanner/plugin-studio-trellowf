@@ -22,14 +22,16 @@ import CardDetailsRecord from '../types/CardDetailsRecord';
 export interface CardDetailsProps {
   card: CardRecord;
   cardDetails: CardDetailsRecord;
+  onRemoveAttachment(id): void;
 }
 
 const dense = true;
 const showAttachmentPath = true;
 
-const CardDetails = ({ card, cardDetails }: CardDetailsProps) => {
-  const handleRemoveAttachment = (event: React.MouseEvent<HTMLElement>) => {
-    alert('yoink');
+const CardDetails = ({ card, cardDetails, onRemoveAttachment }: CardDetailsProps) => {
+
+  const handleRemoveAttachment = (id) => {
+    onRemoveAttachment(id);
   };
 
   return (
@@ -46,7 +48,13 @@ const CardDetails = ({ card, cardDetails }: CardDetailsProps) => {
         {cardDetails.attachedContentItems?.map((contentItem, contentIndex) => (
           <ListItem
             secondaryAction={
-              <IconButton edge="end" aria-label="remove attachment" onClick={handleRemoveAttachment}>
+              <IconButton
+                edge="end"
+                aria-label="remove attachment"
+                onClick={() => {
+                  handleRemoveAttachment(contentItem.path);
+                }}
+              >
                 <ClearRoundedIcon />
               </IconButton>
             }

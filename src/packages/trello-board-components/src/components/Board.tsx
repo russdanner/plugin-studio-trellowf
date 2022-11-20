@@ -184,7 +184,7 @@ const Board = ({ boardId }: BoardProps) => {
       // poll often. there is a cache on the server
       // polling often lets us pick up hooked updates quickly
       loadBoardData();
-    }, 2000);
+    }, 5000);
     return function () {
       clearInterval(intervalRef);
     };
