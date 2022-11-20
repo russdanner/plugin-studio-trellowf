@@ -15,9 +15,11 @@ import {
   DialogActions,
   DialogContent,
   DialogContentText,
-  DialogTitle
+  DialogTitle,
+  Badge
 } from '@mui/material';
 import IconButton, { IconButtonProps } from '@mui/material/IconButton';
+import AttachmentRoundedIcon from '@mui/icons-material/AttachmentRounded';
 
 import { get } from '@craftercms/studio-ui/utils/ajax';
 import { ApiResponse, ApiResponseErrorState } from '@craftercms/studio-ui';
@@ -65,7 +67,7 @@ const BoardCard = ({ card }: BoardCardProps) => {
         let details = response.response.result;
 
         let newCardDetailsAttachments = { ...cardDetailsData, attachments: details.attachments };
-        setCardDetailsData(newCardDetailsAttachments)
+        setCardDetailsData(newCardDetailsAttachments);
 
         let contentItemPaths = [];
         let documentItems = [];
@@ -122,9 +124,8 @@ const BoardCard = ({ card }: BoardCardProps) => {
   };
 
   const handleRemoveAttachment = (url) => {
-
     cardDetailsData.attachments?.forEach(function (attachment) {
-      if(attachment.url.includes(url)) {
+      if (attachment.url.includes(url)) {
         let serviceUrl = `${PLUGIN_SERVICE_BASE}/card/remove-attachment.json?siteId=${siteId}&cardId=${card.id}&attachmentId=${attachment.id}`;
 
         get(serviceUrl).subscribe({
@@ -136,22 +137,29 @@ const BoardCard = ({ card }: BoardCardProps) => {
           }
         });
       }
-    })
+    });
   };
 
   return (
     <>
-      <Card elevation={3} sx={{ borderTop: card.cover.color ? `10px solid ${card.cover.color}` : `` }}>
+      <Card
+        elevation={3}
+        sx={{ borderTop: card.cover.color ? `10px solid ${card.cover.color}` : `` }}
+         >
+
+          
         <CardHeader
           action={<BoardCardActions card={card} cardDetails={cardDetailsData} onMenuOpen={loadCardDetailsData} />}
-          title={card.name}
+          title=<div onClick={handleShowMoreClick}>{card.name}</div>
           titleTypographyProps={{ variant: 'body1' }}
         />
         {card.badges.attachments > 0 && (
           <CardActions disableSpacing>
-            <Button size="small" onClick={handleShowMoreClick} aria-label="Show more">
-              Show More
-            </Button>
+            <IconButton size="small" aria-label="cart">
+              <Badge badgeContent={card.badges.attachments} color="primary">
+                <AttachmentRoundedIcon />
+              </Badge>
+            </IconButton>
           </CardActions>
         )}
       </Card>

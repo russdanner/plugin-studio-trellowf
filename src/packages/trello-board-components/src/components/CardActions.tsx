@@ -55,7 +55,9 @@ const CardActions = ({ card, cardDetails, onMenuOpen }: CardActionsProps) => {
   const attachOpen = Boolean(attachAnchorEl);
 
   const attachContent = (contentName, siteId, cardId, contentId) => {
-    let serviceUrl = `${PLUGIN_SERVICE_BASE}/card/attach-content.json?siteId=${siteId}&name=${contentName}&cardId=${cardId}&contentId=${contentId}`;
+    const serverAddress = window.location.protocol + '//' + window.location.hostname + ':' + window.location.port;
+
+    let serviceUrl = `${PLUGIN_SERVICE_BASE}/card/attach-content.json?siteId=${siteId}&name=${contentName}&cardId=${cardId}&contentId=${contentId}&server=${serverAddress}`;
 
     get(serviceUrl).subscribe({
       next: (response) => {},
@@ -227,13 +229,22 @@ const CardActions = ({ card, cardDetails, onMenuOpen }: CardActionsProps) => {
   };
 
   const handleClickActions = (event: React.MouseEvent<HTMLElement>) => {
-    onMenuOpen();
+      onMenuOpen();
 
-    setAnchorEl(event.currentTarget);
+      setAnchorEl(event.currentTarget);
   };
 
   const handleClickAttactActions = (event: React.MouseEvent<HTMLElement>) => {
     setAttachAnchorEl(event.currentTarget);
+  };
+
+  const handleDeleteCard = () => {
+    let serviceUrl = `${PLUGIN_SERVICE_BASE}/card/delete.json?siteId=${siteId}&cardId=${card.id}`;
+
+    get(serviceUrl).subscribe({
+      next: (response) => {},
+      error(e) {}
+    });
   };
 
   let hasItemsInReview = false;
@@ -334,6 +345,9 @@ const CardActions = ({ card, cardDetails, onMenuOpen }: CardActionsProps) => {
           <Typography>Publish</Typography>
         </MenuItem>
         <Divider style={{ display: hasItems ? 'block' : 'none' }} />
+        <MenuItem key="deleteCard" onClick={handleDeleteCard}>
+          <Typography>Delete Card</Typography>
+        </MenuItem>
         <MenuItem key="openInTrello">
           <Typography>
             <Link href={card.url} target="new">

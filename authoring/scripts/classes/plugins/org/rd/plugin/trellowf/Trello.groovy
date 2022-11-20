@@ -38,6 +38,9 @@ public class Trello {
         this.defaultBoardId = pluginConfig.getString("trelloDefaultBoardId")
     }
 
+    /**
+     * Move a card from one list to another
+     */
     def moveCard(boardId, listId, cardId) {
         def result = trelloPut("/1/cards/${cardId}?idList=${listId}")
         clearCache(null)
@@ -45,16 +48,22 @@ public class Trello {
         return result
     }
 
-    def attachContentToCard(name, cardId, siteId, contentId) {
-        def studioServer = "http://localhost:8080"
-        def contentName = java.net.URLEncoder.encode(name, "UTF-8")
+    /**
+     * Attach content to a card
+     */
+    def attachContentToCard(server, name, cardId, siteId, contentId) {
+        def studioServer = server
+        def contentName = urlEncode(name)
         def attachmentUrl = "${studioServer}/studio/plugin%3Fsite%3D${siteId}%26type%3Dapps%26pluginId%3Dorg.rd.plugin.trellowf%26name%3Dtrellowf%26file%3Dapp.js%23/preview%3FcontentId%3D${contentId}%26siteId%3D${siteId}"
-        def result = trelloPost("/1/cards/${cardId}/attachments?name=${contentName}&url=${attachmentUrl}")
+        def result = trelloPost("/1/cards/${cardId}/attachments?name=${contentName}&url=${attachmentUrl}", [:])
         clearCache(null)
 
         return result
     }
 
+    /**
+     * Remove an attachment form a given card
+     */
     def removeAttachContentFromCard(cardId, attachmentId) {
         def result = trelloDelete("/1/cards/${cardId}/attachments/${attachmentId}")    
         clearCache(null)
@@ -62,11 +71,21 @@ public class Trello {
         return result
     }
 
-    def addCard(listId, title, description, color) {
+    /**
+     * Create a card on a list
+     */
+    def createCard(listId, title, description, color) {
+        def result = trelloPost("/1/cards?idList=${listId}", [:])
         clearCache(null)
-        return [:]
     }
 
+    /**
+     * Delete a card
+     */
+    def deleteCard(cardId) {
+        def result = trelloDelete("/1/cards/${cardId}")
+        clearCache(null)
+    }
 
     /**
      * Get board details
@@ -261,6 +280,21 @@ public class Trello {
         
         logger.debug("Creating Service URL: ${apiUrl}")
         return  apiUrl       
+    }
+
+    /**
+     * Manually doing this to avoid sandbox issues
+     */
+    def urlEncode(value){
+
+        def encodedValue = value
+            .replace("%", "%25")
+            .replace(" ", "%20")
+            .replace("&", "%26")
+            .replace("?", "%3F")
+            .replace("=", "%3D")
+
+        return encodedValue
     }
 
     def clearCache(id) {

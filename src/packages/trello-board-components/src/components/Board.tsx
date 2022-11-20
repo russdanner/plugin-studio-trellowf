@@ -72,6 +72,19 @@ const Board = ({ boardId }: BoardProps) => {
     moveCard(cardId, sourceListId, targetListId, targetListIdIndex);
   };
 
+  const addCardToList = (listId) => {
+    let serviceUrl = `${PLUGIN_SERVICE_BASE}/card/create.json?siteId=${siteId}&listId=${listId}&title=foo&description=bar&color=blue`;
+
+    get(serviceUrl).subscribe({
+      next: (response) => {
+        loadBoardData();
+      },
+      error(e) {
+        console.error(e);
+      }
+    });
+  };
+
   const moveCard = (cardId, sourceListId, targetListId, targetListIdIndex) => {
     // update the board data locally
     let sourceList = state.lists.find((list) => {
@@ -95,7 +108,6 @@ const Board = ({ boardId }: BoardProps) => {
 
     get(serviceUrl).subscribe({
       next: (response) => {
-        clearBoardDataCache();
         loadBoardData();
       },
       error(e) {
@@ -272,8 +284,14 @@ const Board = ({ boardId }: BoardProps) => {
                             );
                           })}
                         <div style={{ height: snapshot.isDraggingOver ? '120px' : '80px' }}>&nbsp;</div>
-                        <Button size="small" aria-label="add card">
-                          Add Card
+                        <Button
+                          size="small"
+                          aria-label="add card"
+                          onClick={() => {
+                            addCardToList(list.id);
+                          }}
+                        >
+                          Add a Card
                         </Button>
                       </Box>
                     );

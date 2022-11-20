@@ -29,7 +29,6 @@ const dense = true;
 const showAttachmentPath = true;
 
 const CardDetails = ({ card, cardDetails, onRemoveAttachment }: CardDetailsProps) => {
-
   const handleRemoveAttachment = (id) => {
     onRemoveAttachment(id);
   };

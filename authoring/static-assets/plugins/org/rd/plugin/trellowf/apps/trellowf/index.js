@@ -3,15 +3,16 @@ const { useState, useRef, useEffect, useContext, useLayoutEffect } = craftercms.
 const React__default = craftercms.libs.React && Object.prototype.hasOwnProperty.call(craftercms.libs.React, 'default') ? craftercms.libs.React['default'] : craftercms.libs.React;
 const EditRoundedIcon = craftercms.utils.constants.components.get('@mui/icons-material/EditRounded') && Object.prototype.hasOwnProperty.call(craftercms.utils.constants.components.get('@mui/icons-material/EditRounded'), 'default') ? craftercms.utils.constants.components.get('@mui/icons-material/EditRounded')['default'] : craftercms.utils.constants.components.get('@mui/icons-material/EditRounded');
 const RefreshRoundedIcon = craftercms.utils.constants.components.get('@mui/icons-material/RefreshRounded') && Object.prototype.hasOwnProperty.call(craftercms.utils.constants.components.get('@mui/icons-material/RefreshRounded'), 'default') ? craftercms.utils.constants.components.get('@mui/icons-material/RefreshRounded')['default'] : craftercms.utils.constants.components.get('@mui/icons-material/RefreshRounded');
-const { Typography, Link, Card, CardHeader, CardActions: CardActions$1, Button, Dialog, DialogTitle, DialogContent, DialogActions, Box, Fab, Paper, cardClasses } = craftercms.libs.MaterialUI;
+const { Typography, Link, Card, CardHeader, CardActions: CardActions$1, Badge, Dialog, DialogTitle, DialogContent, DialogActions, Button, Box, Fab, Paper, cardClasses } = craftercms.libs.MaterialUI;
 const { connect, Provider, useSelector, useDispatch } = craftercms.libs.ReactRedux;
 const ReactDOM = craftercms.libs.ReactDOM && Object.prototype.hasOwnProperty.call(craftercms.libs.ReactDOM, 'default') ? craftercms.libs.ReactDOM['default'] : craftercms.libs.ReactDOM;
 const { createCustomDocumentEventListener } = craftercms.utils.dom;
 const { get } = craftercms.utils.ajax;
 const { ApiResponseErrorState } = craftercms.components;
+const IconButton = craftercms.libs.MaterialUI.IconButton && Object.prototype.hasOwnProperty.call(craftercms.libs.MaterialUI.IconButton, 'default') ? craftercms.libs.MaterialUI.IconButton['default'] : craftercms.libs.MaterialUI.IconButton;
+const AttachmentRoundedIcon = craftercms.utils.constants.components.get('@mui/icons-material/AttachmentRounded') && Object.prototype.hasOwnProperty.call(craftercms.utils.constants.components.get('@mui/icons-material/AttachmentRounded'), 'default') ? craftercms.utils.constants.components.get('@mui/icons-material/AttachmentRounded')['default'] : craftercms.utils.constants.components.get('@mui/icons-material/AttachmentRounded');
 const { fetchSandboxItem, fetchItemsByPath } = craftercms.services.content;
 const ClearRoundedIcon = craftercms.utils.constants.components.get('@mui/icons-material/ClearRounded') && Object.prototype.hasOwnProperty.call(craftercms.utils.constants.components.get('@mui/icons-material/ClearRounded'), 'default') ? craftercms.utils.constants.components.get('@mui/icons-material/ClearRounded')['default'] : craftercms.utils.constants.components.get('@mui/icons-material/ClearRounded');
-const IconButton = craftercms.libs.MaterialUI.IconButton && Object.prototype.hasOwnProperty.call(craftercms.libs.MaterialUI.IconButton, 'default') ? craftercms.libs.MaterialUI.IconButton['default'] : craftercms.libs.MaterialUI.IconButton;
 const List = craftercms.libs.MaterialUI.List && Object.prototype.hasOwnProperty.call(craftercms.libs.MaterialUI.List, 'default') ? craftercms.libs.MaterialUI.List['default'] : craftercms.libs.MaterialUI.List;
 const ListItem = craftercms.libs.MaterialUI.ListItem && Object.prototype.hasOwnProperty.call(craftercms.libs.MaterialUI.ListItem, 'default') ? craftercms.libs.MaterialUI.ListItem['default'] : craftercms.libs.MaterialUI.ListItem;
 const ListItemText = craftercms.libs.MaterialUI.ListItemText && Object.prototype.hasOwnProperty.call(craftercms.libs.MaterialUI.ListItemText, 'default') ? craftercms.libs.MaterialUI.ListItemText['default'] : craftercms.libs.MaterialUI.ListItemText;
@@ -9073,7 +9074,8 @@ var CardActions = function (_a) {
     var open = Boolean(anchorEl);
     var _d = React.useState(null); _d[0]; _d[1];
     var attachContent = function (contentName, siteId, cardId, contentId) {
-        var serviceUrl = "".concat(PLUGIN_SERVICE_BASE, "/card/attach-content.json?siteId=").concat(siteId, "&name=").concat(contentName, "&cardId=").concat(cardId, "&contentId=").concat(contentId);
+        var serverAddress = window.location.protocol + '//' + window.location.hostname + ':' + window.location.port;
+        var serviceUrl = "".concat(PLUGIN_SERVICE_BASE, "/card/attach-content.json?siteId=").concat(siteId, "&name=").concat(contentName, "&cardId=").concat(cardId, "&contentId=").concat(contentId, "&server=").concat(serverAddress);
         get(serviceUrl).subscribe({
             next: function (response) { },
             error: function (e) { }
@@ -9187,6 +9189,13 @@ var CardActions = function (_a) {
         onMenuOpen();
         setAnchorEl(event.currentTarget);
     };
+    var handleDeleteCard = function () {
+        var serviceUrl = "".concat(PLUGIN_SERVICE_BASE, "/card/delete.json?siteId=").concat(siteId, "&cardId=").concat(card.id);
+        get(serviceUrl).subscribe({
+            next: function (response) { },
+            error: function (e) { }
+        });
+    };
     var hasItemsInReview = false;
     var hasItemsForReview = false;
     var hasItemsForPublish = false;
@@ -9229,6 +9238,8 @@ var CardActions = function (_a) {
             React.createElement(MenuItem, { key: "publishContent", onClick: handlePublishContent, style: { display: hasItemsForPublish ? 'block' : 'none' } },
                 React.createElement(Typography, null, "Publish")),
             React.createElement(Divider, { style: { display: hasItems ? 'block' : 'none' } }),
+            React.createElement(MenuItem, { key: "deleteCard", onClick: handleDeleteCard },
+                React.createElement(Typography, null, "Delete Card")),
             React.createElement(MenuItem, { key: "openInTrello" },
                 React.createElement(Typography, null,
                     React.createElement(Link, { href: card.url, target: "new" }, "Open Card in Trello"))))));
@@ -9326,9 +9337,11 @@ var BoardCard = function (_a) {
     };
     return (React.createElement(React.Fragment, null,
         React.createElement(Card, { elevation: 3, sx: { borderTop: card.cover.color ? "10px solid ".concat(card.cover.color) : "" } },
-            React.createElement(CardHeader, { action: React.createElement(CardActions, { card: card, cardDetails: cardDetailsData, onMenuOpen: loadCardDetailsData }), title: card.name, titleTypographyProps: { variant: 'body1' } }),
+            React.createElement(CardHeader, { action: React.createElement(CardActions, { card: card, cardDetails: cardDetailsData, onMenuOpen: loadCardDetailsData }), title: React.createElement("div", { onClick: handleShowMoreClick }, card.name), titleTypographyProps: { variant: 'body1' } }),
             card.badges.attachments > 0 && (React.createElement(CardActions$1, { disableSpacing: true },
-                React.createElement(Button, { size: "small", onClick: handleShowMoreClick, "aria-label": "Show more" }, "Show More")))),
+                React.createElement(IconButton, { size: "small", "aria-label": "cart" },
+                    React.createElement(Badge, { badgeContent: card.badges.attachments, color: "primary" },
+                        React.createElement(AttachmentRoundedIcon, null)))))),
         React.createElement(Dialog, { open: detailsOpen, "aria-describedby": "alert-dialog-slide-description" },
             React.createElement(DialogTitle, { sx: { minWidth: '500px', backgroundColor: card.cover.color ? "".concat(card.cover.color) : "" } }, card.name),
             React.createElement(DialogContent, null,
@@ -9367,6 +9380,17 @@ var Board = function (_a) {
             return;
         moveCard(cardId, sourceListId, targetListId, targetListIdIndex);
     };
+    var addCardToList = function (listId) {
+        var serviceUrl = "".concat(PLUGIN_SERVICE_BASE, "/card/create.json?siteId=").concat(siteId, "&listId=").concat(listId, "&title=foo&description=bar&color=blue");
+        get(serviceUrl).subscribe({
+            next: function (response) {
+                loadBoardData();
+            },
+            error: function (e) {
+                console.error(e);
+            }
+        });
+    };
     var moveCard = function (cardId, sourceListId, targetListId, targetListIdIndex) {
         // update the board data locally
         var sourceList = state.lists.find(function (list) {
@@ -9387,7 +9411,6 @@ var Board = function (_a) {
         var serviceUrl = "".concat(PLUGIN_SERVICE_BASE, "/card/move.json?siteId=").concat(siteId, "&listId=").concat(targetListId, "&cardId=").concat(cardId);
         get(serviceUrl).subscribe({
             next: function (response) {
-                clearBoardDataCache();
                 loadBoardData();
             },
             error: function (e) {
@@ -9501,7 +9524,9 @@ var Board = function (_a) {
                                         }));
                                     }),
                                 React.createElement("div", { style: { height: snapshot.isDraggingOver ? '120px' : '80px' } }, "\u00A0"),
-                                React.createElement(Button, { size: "small", "aria-label": "add card" }, "Add Card")));
+                                React.createElement(Button, { size: "small", "aria-label": "add card", onClick: function () {
+                                        addCardToList(list.id);
+                                    } }, "Add a Card")));
                         })));
                 }))));
 };
