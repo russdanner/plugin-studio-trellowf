@@ -9203,8 +9203,6 @@ var CardActions = function (_a) {
     var hasItems = false;
     if (cardDetails && cardDetails.attachedContentItems) {
         (_b = cardDetails.attachedContentItems) === null || _b === void 0 ? void 0 : _b.map(function (contentItem, contentIndex) {
-            //console.log('Evaluating workflow options on attachedItem');
-            //console.log(contentItem);
             hasItems = true; // invariant
             var availableActionsMap = contentItem.availableActionsMap;
             // basic workflow evaluation
@@ -9311,6 +9309,15 @@ var BoardCard = function (_a) {
             }
         });
     };
+    var handleCardClick = function (event) {
+        if (event.target === event.currentTarget) {
+            setDetailsOpen(true);
+            loadCardDetailsData();
+        }
+        else {
+            event.stopPropagation();
+        }
+    };
     var handleCardCloseClick = function () {
         setDetailsOpen(false);
     };
@@ -9338,8 +9345,8 @@ var BoardCard = function (_a) {
     };
     return (React.createElement(React.Fragment, null,
         React.createElement(Card, { elevation: 3, sx: { borderTop: card.cover.color ? "10px solid ".concat(card.cover.color) : "" } },
-            React.createElement(CardHeader, { action: React.createElement(CardActions, { card: card, cardDetails: cardDetailsData, onMenuOpen: loadCardDetailsData }), title: card.name, titleTypographyProps: { variant: 'body1' }, onClick: handleShowMoreClick }),
-            card.badges.attachments > 0 && (React.createElement(CardActions$1, { disableSpacing: true },
+            React.createElement(CardHeader, { action: React.createElement(CardActions, { card: card, cardDetails: cardDetailsData, onMenuOpen: loadCardDetailsData }), title: card.name, titleTypographyProps: { variant: 'body1' }, onClick: function (e) { handleCardClick(e); } }),
+            card.badges.attachments > 0 && (React.createElement(CardActions$1, { disableSpacing: true, onClick: handleShowMoreClick },
                 React.createElement(IconButton, { size: "small", "aria-label": "cart" },
                     React.createElement(Badge, { badgeContent: card.badges.attachments, color: "primary" },
                         React.createElement(AttachmentRoundedIcon, null)))))),

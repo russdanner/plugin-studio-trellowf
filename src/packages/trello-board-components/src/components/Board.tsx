@@ -366,12 +366,24 @@ const Board = ({ boardId }: BoardProps) => {
         <DialogTitle>Create Card</DialogTitle>
         <DialogContent>
           <FormControl margin="normal" fullWidth>
-            <TextField defaultValue="New Card" onChange={handleTitleChange} id="outlined-basic" label="Title" variant="outlined" />
+            <TextField
+              defaultValue="New Card"
+              onChange={handleTitleChange}
+              id="outlined-basic"
+              label="Title"
+              variant="outlined"
+            />
           </FormControl>
           <FormControl margin="normal" fullWidth>
-            <TextField defaultValue="A description"  onChange={handleDescriptionChange} id="outlined-basic" label="Description" variant="outlined" />
+            <TextField
+              defaultValue="A description"
+              onChange={handleDescriptionChange}
+              id="outlined-basic"
+              label="Description"
+              variant="outlined"
+            />
           </FormControl>
-{/*          <FormControl margin="normal" fullWidth>
+          {/*          <FormControl margin="normal" fullWidth>
             <InputLabel id="demo-simple-select-label">Color</InputLabel>
             <Select
               labelId="demo-simple-select-label"

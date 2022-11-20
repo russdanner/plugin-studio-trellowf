@@ -254,8 +254,6 @@ const CardActions = ({ card, cardDetails, onMenuOpen }: CardActionsProps) => {
 
   if (cardDetails && cardDetails.attachedContentItems) {
     cardDetails.attachedContentItems?.map((contentItem, contentIndex) => {
-      //console.log('Evaluating workflow options on attachedItem');
-      //console.log(contentItem);
       hasItems = true; // invariant
       let availableActionsMap = contentItem.availableActionsMap;
 
