@@ -11,6 +11,16 @@ import {
   showEditItemSuccessNotification,
   unblockUI
 } from '@craftercms/studio-ui/state/actions/system';
+
+import IconButton, { IconButtonProps } from '@mui/material/IconButton';
+import DeleteOutlineRoundedIcon from '@mui/icons-material/DeleteOutlineRounded';
+
+import ListItemAvatar from '@mui/material/ListItemAvatar';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import Avatar from '@mui/material/Avatar';
+import PhishingRoundedIcon from '@mui/icons-material/PhishingRounded';
+
 import { batchActions } from '@craftercms/studio-ui/state/actions/misc';
 import { useSelection } from '@craftercms/studio-ui/hooks/useSelection';
 
@@ -19,6 +29,12 @@ import { showEditDialog, showPreviewDialog } from '@craftercms/studio-ui/state/a
 import { isImage } from '@craftercms/studio-ui/utils/content';
 //import { isPreviewable, isVideo } from '@craftercms/studio-ui/components/PathNavigator/utils';
 import { fetchSandboxItem } from '@craftercms/studio-ui/services/content';
+
+import HookConsole from './HookConsole';
+
+function Hooks(props) {
+  return <HookConsole />;
+}
 
 function handlePreviewRequest(sandboxItem, { siteId, contentId, authoringBase, setStatusMessage, dispatch }) {
   if (sandboxItem.systemType === 'page') {
@@ -134,7 +150,8 @@ function App() {
     <HashRouter>
       <Switch>
         <Route path="/preview/:arg1?" component={Preview} />
-         <Route path="/" exact component={Index} />
+        <Route path="/hooks" component={Hooks} />
+        <Route path="/" exact component={Index} />
       </Switch>
     </HashRouter>
   );

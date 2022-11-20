@@ -2,6 +2,8 @@ import * as React from 'react';
 import { styled } from '@mui/material/styles';
 import { useEffect, useState } from 'react';
 import EditRoundedIcon from '@mui/icons-material/EditRounded';
+import RefreshRoundedIcon from '@mui/icons-material/RefreshRounded';
+
 import {
   Box,
   Card,
@@ -33,6 +35,13 @@ export interface BoardProps {
 const Board = ({ boardId }: BoardProps) => {
   const siteId = useActiveSiteId();
   const [error, setError] = useState();
+  let hooked = false;
+  const setHooked = (b) => {
+    hooked = b;
+  };
+
+  //const [hooked, setHooked] = React.useState(false);
+  const [hookedSuccess, setHookedSuccess] = React.useState(true);
 
   const [state, setState] = useState({
     board: null,
@@ -86,6 +95,7 @@ const Board = ({ boardId }: BoardProps) => {
 
     get(serviceUrl).subscribe({
       next: (response) => {
+        clearBoardDataCache();
         loadBoardData();
       },
       error(e) {
@@ -93,6 +103,51 @@ const Board = ({ boardId }: BoardProps) => {
         setError(
           e.response?.response ?? ({ code: '?', message: 'Unknown Error. Check browser console.' } as ApiResponse)
         );
+      }
+    });
+  };
+
+  const hookBoardNotifications = (boardId) => {
+    if (hooked === false && hookedSuccess === true) {
+      console.log('hooking board notificaitons hooked: [' + hooked + '] hookedSuccess [' + hookedSuccess + ']');
+
+      if (window.location.hostname.includes('localhost')) {
+        console.log('Board events cannot be recieved on localhost');
+        setHooked(true); // Do not try and hook the board
+        setHookedSuccess(false); // show notice and refresh button
+      } else {
+        const serverAddress = window.location.protocol + '//' + window.location.hostname + ':' + window.location.port;
+
+        let serviceUrl = `${PLUGIN_SERVICE_BASE}/admin/sethook.json?siteId=${siteId}&boardId=${boardId}&server=${serverAddress}`;
+
+        get(serviceUrl).subscribe({
+          next: (response) => {
+            console.log('Set hook for board complete');
+            setHooked(true);
+            setHookedSuccess(true);
+          },
+          error(e) {
+            setHooked(true);
+            setHookedSuccess(false); // show notice and refresh button
+            console.log('Set hook for board failed');
+            console.error(e);
+          }
+        });
+      }
+    }
+  };
+
+  const refreshBoard = () => {
+    clearBoardDataCache();
+  };
+
+  const clearBoardDataCache = () => {
+    let serviceUrl = `${PLUGIN_SERVICE_BASE}/cache/clear.json?siteId=${siteId}`;
+
+    get(serviceUrl).subscribe({
+      next: (response) => {},
+      error(e) {
+        console.error(e);
       }
     });
   };
@@ -110,6 +165,8 @@ const Board = ({ boardId }: BoardProps) => {
           board: response.response.result.board,
           lists: response.response.result.lists
         });
+
+        hookBoardNotifications(response.response.result.board.id);
       },
       error(e) {
         console.error(e);
@@ -122,9 +179,12 @@ const Board = ({ boardId }: BoardProps) => {
 
   useEffect(() => {
     loadBoardData();
+
     let intervalRef = setInterval(() => {
+      // poll often. there is a cache on the server
+      // polling often lets us pick up hooked updates quickly
       loadBoardData();
-    }, 10000);
+    }, 2000);
     return function () {
       clearInterval(intervalRef);
     };
@@ -143,16 +203,26 @@ const Board = ({ boardId }: BoardProps) => {
       >
         {error && <ApiResponseErrorState error={error} />}
         {state.board && (
-          <Fab
-            onClick={loadBoardData}
-            href={state.board.url}
-            target="new"
-            aria-label="Open Board in Trello"
-            sx={{ position: 'fixed', bottom: 60, right: 50 }}
-            color="info"
-          >
-            <EditRoundedIcon />
-          </Fab>
+          <>
+            <Fab
+              onClick={loadBoardData}
+              href={state.board.url}
+              target="new"
+              aria-label="Open Board in Trello"
+              sx={{ position: 'fixed', bottom: 60, right: 50 }}
+              color="info"
+            >
+              <EditRoundedIcon />
+            </Fab>
+            <Fab
+              onClick={refreshBoard}
+              aria-label="Refresh Board"
+              sx={{ position: 'fixed', bottom: 60, right: 150 }}
+              color="info"
+            >
+              <RefreshRoundedIcon />
+            </Fab>
+          </>
         )}
         {state.lists &&
           state.lists.map((list) => {

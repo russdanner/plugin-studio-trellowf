@@ -2,6 +2,7 @@ const React = craftercms.libs.React;
 const { useState, useRef, useEffect, useContext, useLayoutEffect } = craftercms.libs.React;
 const React__default = craftercms.libs.React && Object.prototype.hasOwnProperty.call(craftercms.libs.React, 'default') ? craftercms.libs.React['default'] : craftercms.libs.React;
 const EditRoundedIcon = craftercms.utils.constants.components.get('@mui/icons-material/EditRounded') && Object.prototype.hasOwnProperty.call(craftercms.utils.constants.components.get('@mui/icons-material/EditRounded'), 'default') ? craftercms.utils.constants.components.get('@mui/icons-material/EditRounded')['default'] : craftercms.utils.constants.components.get('@mui/icons-material/EditRounded');
+const RefreshRoundedIcon = craftercms.utils.constants.components.get('@mui/icons-material/RefreshRounded') && Object.prototype.hasOwnProperty.call(craftercms.utils.constants.components.get('@mui/icons-material/RefreshRounded'), 'default') ? craftercms.utils.constants.components.get('@mui/icons-material/RefreshRounded')['default'] : craftercms.utils.constants.components.get('@mui/icons-material/RefreshRounded');
 const { Typography, Link, Card, CardHeader, CardActions: CardActions$1, Button, Dialog, DialogTitle, DialogContent, DialogActions, Box, Fab, Paper, cardClasses } = craftercms.libs.MaterialUI;
 const { connect, Provider, useSelector, useDispatch } = craftercms.libs.ReactRedux;
 const ReactDOM = craftercms.libs.ReactDOM && Object.prototype.hasOwnProperty.call(craftercms.libs.ReactDOM, 'default') ? craftercms.libs.ReactDOM['default'] : craftercms.libs.ReactDOM;
@@ -9319,10 +9320,16 @@ var Board = function (_a) {
     var boardId = _a.boardId;
     var siteId = useActiveSiteId();
     var _b = useState(), error = _b[0], setError = _b[1];
-    var _c = useState({
+    var hooked = false;
+    var setHooked = function (b) {
+        hooked = b;
+    };
+    //const [hooked, setHooked] = React.useState(false);
+    var _c = React.useState(true), hookedSuccess = _c[0], setHookedSuccess = _c[1];
+    var _d = useState({
         board: null,
         lists: null
-    }), state = _c[0], setState = _c[1];
+    }), state = _d[0], setState = _d[1];
     var PLUGIN_SERVICE_BASE = '/studio/api/2/plugin/script/plugins/org/rd/plugin/trellowf/trellowf';
     createCustomDocumentEventListener('TRELLO_CARD_UPDATE', function (response) {
         alert('stuff happened');
@@ -9359,12 +9366,52 @@ var Board = function (_a) {
         var serviceUrl = "".concat(PLUGIN_SERVICE_BASE, "/card/move.json?siteId=").concat(siteId, "&listId=").concat(targetListId, "&cardId=").concat(cardId);
         get(serviceUrl).subscribe({
             next: function (response) {
+                clearBoardDataCache();
                 loadBoardData();
             },
             error: function (e) {
                 var _a, _b;
                 console.error(e);
                 setError((_b = (_a = e.response) === null || _a === void 0 ? void 0 : _a.response) !== null && _b !== void 0 ? _b : { code: '?', message: 'Unknown Error. Check browser console.' });
+            }
+        });
+    };
+    var hookBoardNotifications = function (boardId) {
+        if (hooked === false && hookedSuccess === true) {
+            console.log('hooking board notificaitons hooked: [' + hooked + '] hookedSuccess [' + hookedSuccess + ']');
+            if (window.location.hostname.includes('localhost')) {
+                console.log('Board events cannot be recieved on localhost');
+                setHooked(true); // Do not try and hook the board
+                setHookedSuccess(false); // show notice and refresh button
+            }
+            else {
+                var serverAddress = window.location.protocol + '//' + window.location.hostname + ':' + window.location.port;
+                var serviceUrl = "".concat(PLUGIN_SERVICE_BASE, "/admin/sethook.json?siteId=").concat(siteId, "&boardId=").concat(boardId, "&server=").concat(serverAddress);
+                get(serviceUrl).subscribe({
+                    next: function (response) {
+                        console.log('Set hook for board complete');
+                        setHooked(true);
+                        setHookedSuccess(true);
+                    },
+                    error: function (e) {
+                        setHooked(true);
+                        setHookedSuccess(false); // show notice and refresh button
+                        console.log('Set hook for board failed');
+                        console.error(e);
+                    }
+                });
+            }
+        }
+    };
+    var refreshBoard = function () {
+        clearBoardDataCache();
+    };
+    var clearBoardDataCache = function () {
+        var serviceUrl = "".concat(PLUGIN_SERVICE_BASE, "/cache/clear.json?siteId=").concat(siteId);
+        get(serviceUrl).subscribe({
+            next: function (response) { },
+            error: function (e) {
+                console.error(e);
             }
         });
     };
@@ -9376,6 +9423,7 @@ var Board = function (_a) {
         get(serviceUrl).subscribe({
             next: function (response) {
                 setState(__assign(__assign({}, state), { board: response.response.result.board, lists: response.response.result.lists }));
+                hookBoardNotifications(response.response.result.board.id);
             },
             error: function (e) {
                 var _a, _b;
@@ -9387,8 +9435,10 @@ var Board = function (_a) {
     useEffect(function () {
         loadBoardData();
         var intervalRef = setInterval(function () {
+            // poll often. there is a cache on the server
+            // polling often lets us pick up hooked updates quickly
             loadBoardData();
-        }, 10000);
+        }, 2000);
         return function () {
             clearInterval(intervalRef);
         };
@@ -9402,8 +9452,11 @@ var Board = function (_a) {
                 height: '500%'
             } },
             error && React.createElement(ApiResponseErrorState, { error: error }),
-            state.board && (React.createElement(Fab, { onClick: loadBoardData, href: state.board.url, target: "new", "aria-label": "Open Board in Trello", sx: { position: 'fixed', bottom: 60, right: 50 }, color: "info" },
-                React.createElement(EditRoundedIcon, null))),
+            state.board && (React.createElement(React.Fragment, null,
+                React.createElement(Fab, { onClick: loadBoardData, href: state.board.url, target: "new", "aria-label": "Open Board in Trello", sx: { position: 'fixed', bottom: 60, right: 50 }, color: "info" },
+                    React.createElement(EditRoundedIcon, null)),
+                React.createElement(Fab, { onClick: refreshBoard, "aria-label": "Refresh Board", sx: { position: 'fixed', bottom: 60, right: 150 }, color: "info" },
+                    React.createElement(RefreshRoundedIcon, null)))),
             state.lists &&
                 state.lists.map(function (list) {
                     return (React.createElement(Paper, { elevation: 1, style: {}, sx: function (theme) { return ({

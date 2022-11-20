@@ -21,10 +21,13 @@ public class Trello {
     def key
     def token
     def defaultBoardId
+
     static def responseCache = [:]
+    static def hookedBoards = [:]
+
     def CARD_CACHE_SECONDS = 20
     def BOARD_CACHE_SECONDS = 60
-
+    
    /**
      * constructor
      */
@@ -54,8 +57,8 @@ public class Trello {
      */
     def getBoard(boardId) {
         def tBoardId = getBoardId(boardId)
-                def board = trelloGet("/1/boards/${tBoardId}")
-                return board
+        def board = trelloGet("/1/boards/${tBoardId}")
+        return board
     }
 
     /**
@@ -135,6 +138,60 @@ public class Trello {
     }
 
 
+    def listHooks() {
+        return trelloGet("/1/tokens/${token}/webhooks")
+    }
+
+    def deleteHook(id) {
+        return trelloDelete("/1/webhooks/${id}")
+    }
+
+    def createWebHookWithTrello(serverAddress, siteId, boardId) {
+        def boardHookKey = serverAddress+siteId+boardId
+        def cachedHook = hookedBoards.get(boardHookKey)
+
+        if(cachedHook == null) {
+            def callbackURL = "${serverAddress}/api/plugins/org/rd/plugin/trellowf/trellowf/hook/hook-callback.json?crafterSite=${siteId}&boardId=${boardId}" 
+
+            def existingHooks = listHooks()
+
+            def hookExists = false
+            
+            if(existingHooks) {
+                existingHooks.each { v ->
+                    if(v.callbackURL == callbackURL) {
+                        hookExists = true  
+                    }
+                }
+            }
+
+            if(!hookExists) {
+                def payload = [
+                    key: key,
+                    callbackURL: callbackURL,
+                    idModel: boardId,
+                    description: "Monitor Board ${boardId} for Server ${serverAddress}"            
+                ]
+
+                def response = null
+                
+                try {
+                    response = trelloPost("/1/tokens/${token}/webhooks", payload)
+                }
+                catch(err) {
+                    println("Error on register hook " + err)
+                } 
+
+                if(response) {
+                    hookedBoards.put(boardHookKey, [:])    
+                }
+            }
+            else {
+                hookedBoards.put(boardHookKey, [:])    
+            }
+        }
+    }
+
     /**
      * Make a PUT request to Trello
      * @param url - the API URL
@@ -150,12 +207,28 @@ public class Trello {
      * Make a POST request to Trello
      * @param url - the API URL
      */
-    def trelloPost(url, body) {
-        def apiUrl = "https://api.trello.com${url}&key=${key}&token=${token}"
-        
-        def result = HttpBuilder.configure { request.raw = apiUrl }.post()
-        def object = body //[:] //(json && json != "") ? new JsonSlurper().parseText(result.text) : [:]
-        return object
+    def trelloPost(url, payload) {
+        def qs = (url.indexOf("?")== -1) ? "?" : ":"
+
+        def apiUrl = "https://api.trello.com${url}${qs}key=${key}&token=${token}"
+
+        def result = HttpBuilder.configure { 
+            request.raw = apiUrl 
+            request.contentType = "application/json" 
+            request.body = payload            
+        }.post()
+
+        return result
+    }
+
+    /**
+     * Make a DELETE request to Trello
+     * @param url - the API URL
+     */
+    def trelloDelete(url) {
+        def apiUrl = "https://api.trello.com${url}?key=${key}&token=${token}"
+        def result = HttpBuilder.configure { request.raw = apiUrl }.delete()
+        return [:]
     }
 
     /**
@@ -167,15 +240,6 @@ public class Trello {
         def json = new URL(apiUrl).text
         def object = new JsonSlurper().parseText(json)
         return object
-    }
-
-    def createWebHookWithTrello(callback, modelId, description) {
-        trelloPost("/1/tokens/${token}/webhooks", [
-            key: key,
-            callbackURL: callback,
-            idModel: modelId,
-            description: description            
-        ])
     }
 
     def clearCache(id) {

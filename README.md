@@ -9,6 +9,7 @@ You will need the following information:
 - Trello API Key
 - Trello API Token
 - The ID of a board to load if no `boardId` is provided in the `Sidebar` widget configuration
+- A Studio JWT token for Trello callbacks to Studio
 
 # Generating Keys for Trello
 
@@ -38,26 +39,10 @@ You may add as many boards to your `Sidebar` as you like by adding the widget to
     </configuration>
 </widget>
 ```
-
-# Enabling Callbacks from Trello
-In order for Trello to provide notifications of updates to the Crafter Studio plugin you must allow the call back URL to be called.
-
-1. Edit `CRAFTER_HOME/bin/apache-tomcat/shared/classes/crafter/studio/extension/studio-config-override.yaml`
-
-Add the following value `/api/2/plugin/script/plugins/org/rd/plugin/trellowf/trellowf/hook/.*` to the `studio.security.publicUrls` property. 
-
-Example:
-`studio.security.publicUrls: >
-  /api/1/services/api/1/server/get-available-languages.*,/api/1/services/api/1/server/get-ui-resource-override.*,
-  /api/2/monitoring/.+,/api/2/users/forgot_password.*,/api/2/users/set_password.*,/static-assets/.+,
-  /api/2/users/validate_token.*,/api/1/services/api/1/security/login.*,/api/2/users/forgot_password.*,
-  /api/2/plugin/script/reload.*,/api/2/plugin/script/plugins/org/rd/plugin/trellowf/trellowf/hook/.*
-`
-
-2. Restart
-
-3. Visit the following URL to register the webhook with Trello
-`https://CRAFTERCMS_SERVER/studio/plugin?site=t1&type=apps&pluginId=org.rd.plugin.trellowf&name=trellowf&file=app.js#/registerhook&siteId=SITEID`
+# Hooks
+Each board will auto register for hooks. You can monitor these here.
+Localhost instances and servers which are not reachable by Trello do not get registered.
+https://STUDIOSERVER/studio/plugin?site=t1&type=apps&pluginId=org.rd.plugin.trellowf&name=trellowf&file=app.js#/hooks
 
 # Screenshots
 <img width="1446" alt="craftercms-trello-board-screenshot-1" src="https://user-images.githubusercontent.com/169432/198916799-f081ab78-e6ca-4866-9429-4ac746f415df.png">
