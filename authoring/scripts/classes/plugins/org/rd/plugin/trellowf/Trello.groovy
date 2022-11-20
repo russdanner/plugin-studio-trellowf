@@ -75,7 +75,11 @@ public class Trello {
      * Create a card on a list
      */
     def createCard(listId, title, description, color) {
-        def result = trelloPost("/1/cards?idList=${listId}", [:])
+        def result = trelloPost("/1/cards?idList=${listId}", [
+            name: title,
+            desc: description
+        ])
+
         clearCache(null)
     }
 
@@ -83,7 +87,8 @@ public class Trello {
      * Delete a card
      */
     def deleteCard(cardId) {
-        def result = trelloDelete("/1/cards/${cardId}")
+        def result = trelloPut("/1/cards/${cardId}", [
+            closed: "true"])
         clearCache(null)
     }
 
@@ -232,9 +237,13 @@ public class Trello {
      * Make a PUT request to Trello
      * @param url - the API URL
      */
-    def trelloPut(url) {
+    def trelloPut(url, payload) {
         def apiUrl = createTelloApiUrl(url)
-        def result = HttpBuilder.configure { request.raw = apiUrl }.put()
+        def result = HttpBuilder.configure { 
+            request.raw = apiUrl
+            request.contentType = "application/json" 
+            request.body = payload            
+        }.put()
         
         return result
     }

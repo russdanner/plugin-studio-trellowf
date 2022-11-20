@@ -3,7 +3,7 @@ const { useState, useRef, useEffect, useContext, useLayoutEffect } = craftercms.
 const React__default = craftercms.libs.React && Object.prototype.hasOwnProperty.call(craftercms.libs.React, 'default') ? craftercms.libs.React['default'] : craftercms.libs.React;
 const EditRoundedIcon = craftercms.utils.constants.components.get('@mui/icons-material/EditRounded') && Object.prototype.hasOwnProperty.call(craftercms.utils.constants.components.get('@mui/icons-material/EditRounded'), 'default') ? craftercms.utils.constants.components.get('@mui/icons-material/EditRounded')['default'] : craftercms.utils.constants.components.get('@mui/icons-material/EditRounded');
 const RefreshRoundedIcon = craftercms.utils.constants.components.get('@mui/icons-material/RefreshRounded') && Object.prototype.hasOwnProperty.call(craftercms.utils.constants.components.get('@mui/icons-material/RefreshRounded'), 'default') ? craftercms.utils.constants.components.get('@mui/icons-material/RefreshRounded')['default'] : craftercms.utils.constants.components.get('@mui/icons-material/RefreshRounded');
-const { Typography, Link, Card, CardHeader, CardActions: CardActions$1, Badge, Dialog, DialogTitle, DialogContent, DialogActions, Button, Box, Fab, Paper, cardClasses } = craftercms.libs.MaterialUI;
+const { Typography, Link, Card, CardHeader, CardActions: CardActions$1, Badge, Dialog, DialogTitle, DialogContent, DialogActions, Button, Box, Fab, Paper, cardClasses, TextField } = craftercms.libs.MaterialUI;
 const { connect, Provider, useSelector, useDispatch } = craftercms.libs.ReactRedux;
 const ReactDOM = craftercms.libs.ReactDOM && Object.prototype.hasOwnProperty.call(craftercms.libs.ReactDOM, 'default') ? craftercms.libs.ReactDOM['default'] : craftercms.libs.ReactDOM;
 const { createCustomDocumentEventListener } = craftercms.utils.dom;
@@ -22,6 +22,7 @@ const MenuItem = craftercms.libs.MaterialUI.MenuItem && Object.prototype.hasOwnP
 const Divider = craftercms.libs.MaterialUI.Divider && Object.prototype.hasOwnProperty.call(craftercms.libs.MaterialUI.Divider, 'default') ? craftercms.libs.MaterialUI.Divider['default'] : craftercms.libs.MaterialUI.Divider;
 const MoreVertRoundedIcon = craftercms.utils.constants.components.get('@mui/icons-material/MoreVertRounded') && Object.prototype.hasOwnProperty.call(craftercms.utils.constants.components.get('@mui/icons-material/MoreVertRounded'), 'default') ? craftercms.utils.constants.components.get('@mui/icons-material/MoreVertRounded')['default'] : craftercms.utils.constants.components.get('@mui/icons-material/MoreVertRounded');
 const { createAction } = craftercms.libs.ReduxToolkit;
+const FormControl = craftercms.libs.MaterialUI.FormControl && Object.prototype.hasOwnProperty.call(craftercms.libs.MaterialUI.FormControl, 'default') ? craftercms.libs.MaterialUI.FormControl['default'] : craftercms.libs.MaterialUI.FormControl;
 const ToolsPanelListItemButton = craftercms.components.ToolsPanelListItemButton && Object.prototype.hasOwnProperty.call(craftercms.components.ToolsPanelListItemButton, 'default') ? craftercms.components.ToolsPanelListItemButton['default'] : craftercms.components.ToolsPanelListItemButton;
 
 /******************************************************************************
@@ -9239,7 +9240,7 @@ var CardActions = function (_a) {
                 React.createElement(Typography, null, "Publish")),
             React.createElement(Divider, { style: { display: hasItems ? 'block' : 'none' } }),
             React.createElement(MenuItem, { key: "deleteCard", onClick: handleDeleteCard },
-                React.createElement(Typography, null, "Delete Card")),
+                React.createElement(Typography, null, "Close Card")),
             React.createElement(MenuItem, { key: "openInTrello" },
                 React.createElement(Typography, null,
                     React.createElement(Link, { href: card.url, target: "new" }, "Open Card in Trello"))))));
@@ -9337,7 +9338,7 @@ var BoardCard = function (_a) {
     };
     return (React.createElement(React.Fragment, null,
         React.createElement(Card, { elevation: 3, sx: { borderTop: card.cover.color ? "10px solid ".concat(card.cover.color) : "" } },
-            React.createElement(CardHeader, { action: React.createElement(CardActions, { card: card, cardDetails: cardDetailsData, onMenuOpen: loadCardDetailsData }), title: React.createElement("div", { onClick: handleShowMoreClick }, card.name), titleTypographyProps: { variant: 'body1' } }),
+            React.createElement(CardHeader, { action: React.createElement(CardActions, { card: card, cardDetails: cardDetailsData, onMenuOpen: loadCardDetailsData }), title: card.name, titleTypographyProps: { variant: 'body1' }, onClick: handleShowMoreClick }),
             card.badges.attachments > 0 && (React.createElement(CardActions$1, { disableSpacing: true },
                 React.createElement(IconButton, { size: "small", "aria-label": "cart" },
                     React.createElement(Badge, { badgeContent: card.badges.attachments, color: "primary" },
@@ -9354,16 +9355,27 @@ var Board = function (_a) {
     var boardId = _a.boardId;
     var siteId = useActiveSiteId();
     var _b = useState(), error = _b[0], setError = _b[1];
+    var _c = React.useState(false), createCardOpen = _c[0], setCreateCardOpen = _c[1];
+    var _d = React.useState('New Card'), newCardTitle = _d[0], setNewCardTitle = _d[1];
+    var _e = React.useState(''), newCardDescription = _e[0], setNewCardDescription = _e[1];
+    var _f = React.useState('red'), newCardColor = _f[0]; _f[1];
+    var _g = React.useState(''), newCardList = _g[0], setNewCardList = _g[1];
+    var handleTitleChange = function (event) {
+        setNewCardTitle(event.target.value);
+    };
+    var handleDescriptionChange = function (event) {
+        setNewCardDescription(event.target.value);
+    };
     var hooked = false;
     var setHooked = function (b) {
         hooked = b;
     };
     //const [hooked, setHooked] = React.useState(false);
-    var _c = React.useState(true), hookedSuccess = _c[0], setHookedSuccess = _c[1];
-    var _d = useState({
+    var _h = React.useState(true), hookedSuccess = _h[0], setHookedSuccess = _h[1];
+    var _j = useState({
         board: null,
         lists: null
-    }), state = _d[0], setState = _d[1];
+    }), state = _j[0], setState = _j[1];
     var PLUGIN_SERVICE_BASE = '/studio/api/2/plugin/script/plugins/org/rd/plugin/trellowf/trellowf';
     createCustomDocumentEventListener('TRELLO_CARD_UPDATE', function (response) {
         alert('stuff happened');
@@ -9380,8 +9392,19 @@ var Board = function (_a) {
             return;
         moveCard(cardId, sourceListId, targetListId, targetListIdIndex);
     };
-    var addCardToList = function (listId) {
-        var serviceUrl = "".concat(PLUGIN_SERVICE_BASE, "/card/create.json?siteId=").concat(siteId, "&listId=").concat(listId, "&title=foo&description=bar&color=blue");
+    var handleCreateCard = function () {
+        addCardToList(newCardList, newCardTitle, newCardDescription, newCardColor);
+        setCreateCardOpen(false);
+    };
+    var handleAddCardToList = function (listId) {
+        setNewCardList(listId);
+        setCreateCardOpen(true);
+    };
+    var handleAddCardToListCancel = function () {
+        setCreateCardOpen(false);
+    };
+    var addCardToList = function (listId, title, desc, color) {
+        var serviceUrl = "".concat(PLUGIN_SERVICE_BASE, "/card/create.json?siteId=").concat(siteId, "&listId=").concat(listId, "&title=").concat(title, "&description=").concat(desc, "&color=").concat(color);
         get(serviceUrl).subscribe({
             next: function (response) {
                 loadBoardData();
@@ -9487,48 +9510,59 @@ var Board = function (_a) {
             clearInterval(intervalRef);
         };
     }, []);
-    return (React.createElement(DragDropContext, { onDragEnd: function (result) { return onDragEnd(result); } },
-        React.createElement(Box, { sx: {
-                backgroundImage: state.board ? "url(".concat(state.board.prefs.backgroundImage, ")") : null,
-                flexDirection: 'row',
-                position: 'relative',
-                width: '300%;',
-                height: '500%'
-            } },
-            error && React.createElement(ApiResponseErrorState, { error: error }),
-            state.board && (React.createElement(React.Fragment, null,
-                React.createElement(Fab, { onClick: loadBoardData, href: state.board.url, target: "new", "aria-label": "Open Board in Trello", sx: { position: 'fixed', bottom: 60, right: 50 }, color: "info" },
-                    React.createElement(EditRoundedIcon, null)),
-                React.createElement(Fab, { onClick: refreshBoard, "aria-label": "Refresh Board", sx: { position: 'fixed', bottom: 60, right: 150 }, color: "info" },
-                    React.createElement(RefreshRoundedIcon, null)))),
-            state.lists &&
-                state.lists.map(function (list) {
-                    return (React.createElement(Paper, { elevation: 1, style: {}, sx: function (theme) { return ({
-                            width: '280px',
-                            display: 'inline-table',
-                            margin: '5px',
-                            p: 1,
-                            bgcolor: theme.palette.mode === 'dark' ? 'grey' : 'grey.A200'
-                        }); } },
-                        React.createElement(Typography, { variant: "h6", component: "h2", sx: { mb: 1 } }, list.name),
-                        React.createElement(ConnectedDroppable, { droppableId: list.id, key: list.id }, function (provided, snapshot) {
-                            var _a;
-                            return (React.createElement(Box, __assign({ sx: (_a = {}, _a[".".concat(cardClasses.root, ":not(:last-child)")] = { mb: 1 }, _a) }, provided.droppableProps, { ref: provided.innerRef }),
-                                list.cards &&
-                                    Object.values(list.cards).map(function (card, cardIndex) {
-                                        return (React.createElement(PublicDraggable, { key: card.id, draggableId: card.id, index: cardIndex }, function (provided, snapshot) {
-                                            return (React.createElement("div", __assign({ ref: provided.innerRef }, provided.draggableProps, provided.dragHandleProps),
-                                                React.createElement("div", { style: { padding: '5px' } },
-                                                    React.createElement(BoardCard, { card: card })),
-                                                provided.placeholder));
-                                        }));
-                                    }),
-                                React.createElement("div", { style: { height: snapshot.isDraggingOver ? '120px' : '80px' } }, "\u00A0"),
-                                React.createElement(Button, { size: "small", "aria-label": "add card", onClick: function () {
-                                        addCardToList(list.id);
-                                    } }, "Add a Card")));
-                        })));
-                }))));
+    return (React.createElement(React.Fragment, null,
+        React.createElement(DragDropContext, { onDragEnd: function (result) { return onDragEnd(result); } },
+            React.createElement(Box, { sx: {
+                    backgroundImage: state.board ? "url(".concat(state.board.prefs.backgroundImage, ")") : null,
+                    flexDirection: 'row',
+                    position: 'relative',
+                    width: '300%;',
+                    height: '500%'
+                } },
+                error && React.createElement(ApiResponseErrorState, { error: error }),
+                state.board && (React.createElement(React.Fragment, null,
+                    React.createElement(Fab, { onClick: loadBoardData, href: state.board.url, target: "new", "aria-label": "Open Board in Trello", sx: { position: 'fixed', bottom: 60, right: 50 }, color: "info" },
+                        React.createElement(EditRoundedIcon, null)),
+                    React.createElement(Fab, { onClick: refreshBoard, "aria-label": "Refresh Board", sx: { position: 'fixed', bottom: 60, right: 150 }, color: "info" },
+                        React.createElement(RefreshRoundedIcon, null)))),
+                state.lists &&
+                    state.lists.map(function (list) {
+                        return (React.createElement(Paper, { elevation: 1, style: {}, sx: function (theme) { return ({
+                                width: '280px',
+                                display: 'inline-table',
+                                margin: '5px',
+                                p: 1,
+                                bgcolor: theme.palette.mode === 'dark' ? 'grey' : 'grey.A200'
+                            }); } },
+                            React.createElement(Typography, { variant: "h6", component: "h2", sx: { mb: 1 } }, list.name),
+                            React.createElement(ConnectedDroppable, { droppableId: list.id, key: list.id }, function (provided, snapshot) {
+                                var _a;
+                                return (React.createElement(Box, __assign({ sx: (_a = {}, _a[".".concat(cardClasses.root, ":not(:last-child)")] = { mb: 1 }, _a) }, provided.droppableProps, { ref: provided.innerRef }),
+                                    list.cards &&
+                                        Object.values(list.cards).map(function (card, cardIndex) {
+                                            return (React.createElement(PublicDraggable, { key: card.id, draggableId: card.id, index: cardIndex }, function (provided, snapshot) {
+                                                return (React.createElement("div", __assign({ ref: provided.innerRef }, provided.draggableProps, provided.dragHandleProps),
+                                                    React.createElement("div", { style: { padding: '5px' } },
+                                                        React.createElement(BoardCard, { card: card })),
+                                                    provided.placeholder));
+                                            }));
+                                        }),
+                                    React.createElement("div", { style: { height: snapshot.isDraggingOver ? '120px' : '80px' } }, "\u00A0"),
+                                    React.createElement(Button, { size: "small", "aria-label": "add card", onClick: function () {
+                                            handleAddCardToList(list.id);
+                                        } }, "Add a Card")));
+                            })));
+                    }))),
+        React.createElement(Dialog, { open: createCardOpen, "aria-describedby": "alert-dialog-slide-description" },
+            React.createElement(DialogTitle, null, "Create Card"),
+            React.createElement(DialogContent, null,
+                React.createElement(FormControl, { margin: "normal", fullWidth: true },
+                    React.createElement(TextField, { defaultValue: "New Card", onChange: handleTitleChange, id: "outlined-basic", label: "Title", variant: "outlined" })),
+                React.createElement(FormControl, { margin: "normal", fullWidth: true },
+                    React.createElement(TextField, { defaultValue: "A description", onChange: handleDescriptionChange, id: "outlined-basic", label: "Description", variant: "outlined" }))),
+            React.createElement(DialogActions, null,
+                React.createElement(Button, { onClick: handleAddCardToListCancel }, "Cancel"),
+                React.createElement(Button, { onClick: handleCreateCard }, "Create")))));
 };
 
 function OpenBoardDialogPanelButton(props) {

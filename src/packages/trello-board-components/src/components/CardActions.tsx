@@ -346,7 +346,7 @@ const CardActions = ({ card, cardDetails, onMenuOpen }: CardActionsProps) => {
         </MenuItem>
         <Divider style={{ display: hasItems ? 'block' : 'none' }} />
         <MenuItem key="deleteCard" onClick={handleDeleteCard}>
-          <Typography>Delete Card</Typography>
+          <Typography>Close Card</Typography>
         </MenuItem>
         <MenuItem key="openInTrello">
           <Typography>
