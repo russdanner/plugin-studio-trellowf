@@ -42,7 +42,7 @@ You may add as many boards to your `Sidebar` as you like by adding the widget to
 # Hooks
 Each board will auto register for hooks. You can monitor these here.
 Localhost instances and servers which are not reachable by Trello do not get registered.
-https://STUDIOSERVER/studio/plugin?site=t1&type=apps&pluginId=org.rd.plugin.trellowf&name=trellowf&file=app.js#/hooks
+https://`STUDIOSERVER`/studio/plugin?site=`A_SITEID_HERE`&type=apps&pluginId=org.rd.plugin.trellowf&name=trellowf&file=app.js#/hooks
 
 # Screenshots
 <img width="1446" alt="craftercms-trello-board-screenshot-1" src="https://user-images.githubusercontent.com/169432/198916799-f081ab78-e6ca-4866-9429-4ac746f415df.png">
