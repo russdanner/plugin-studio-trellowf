@@ -162,7 +162,7 @@ const Board = ({ boardId }: BoardProps) => {
     targetList.cards.splice(targetListIdIndex, 0, card);
 
     // Update the card on the server
-    let serviceUrl = `${PLUGIN_SERVICE_BASE}/card/move.json?siteId=${siteId}&listId=${targetListId}&cardId=${cardId}`;
+    let serviceUrl = `${PLUGIN_SERVICE_BASE}/card/move.json?siteId=${siteId}&listId=${targetListId}&cardId=${cardId}&index=${targetListIdIndex}`;
 
     get(serviceUrl).subscribe({
       next: (response) => {

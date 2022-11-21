@@ -41,8 +41,9 @@ public class Trello {
     /**
      * Move a card from one list to another
      */
-    def moveCard(boardId, listId, cardId) {
-        def result = trelloPut("/1/cards/${cardId}?idList=${listId}")
+    def moveCard(boardId, listId, cardId, index) {
+        def result = trelloPut("/1/cards/${cardId}?idList=${listId}", [
+        pos: "${Float.valueOf(index+1)}"])
         clearCache(null)
         
         return result

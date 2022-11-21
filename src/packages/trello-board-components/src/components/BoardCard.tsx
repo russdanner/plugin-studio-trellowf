@@ -113,14 +113,11 @@ const BoardCard = ({ card }: BoardCardProps) => {
   };
 
   const handleCardClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-
     if (event.target === event.currentTarget) {
       setDetailsOpen(true);
       loadCardDetailsData();
-
-    }
-    else {
-      event.stopPropagation()
+    } else {
+      event.stopPropagation();
     }
   };
 
@@ -159,7 +156,9 @@ const BoardCard = ({ card }: BoardCardProps) => {
           action={<BoardCardActions card={card} cardDetails={cardDetailsData} onMenuOpen={loadCardDetailsData} />}
           title={card.name}
           titleTypographyProps={{ variant: 'body1' }}
-          onClick={(e) => { handleCardClick(e) } }
+          onClick={(e) => {
+            handleCardClick(e);
+          }}
         />
         {card.badges.attachments > 0 && (
           <CardActions disableSpacing onClick={handleShowMoreClick}>

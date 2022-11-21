@@ -9345,7 +9345,9 @@ var BoardCard = function (_a) {
     };
     return (React.createElement(React.Fragment, null,
         React.createElement(Card, { elevation: 3, sx: { borderTop: card.cover.color ? "10px solid ".concat(card.cover.color) : "" } },
-            React.createElement(CardHeader, { action: React.createElement(CardActions, { card: card, cardDetails: cardDetailsData, onMenuOpen: loadCardDetailsData }), title: card.name, titleTypographyProps: { variant: 'body1' }, onClick: function (e) { handleCardClick(e); } }),
+            React.createElement(CardHeader, { action: React.createElement(CardActions, { card: card, cardDetails: cardDetailsData, onMenuOpen: loadCardDetailsData }), title: card.name, titleTypographyProps: { variant: 'body1' }, onClick: function (e) {
+                    handleCardClick(e);
+                } }),
             card.badges.attachments > 0 && (React.createElement(CardActions$1, { disableSpacing: true, onClick: handleShowMoreClick },
                 React.createElement(IconButton, { size: "small", "aria-label": "cart" },
                     React.createElement(Badge, { badgeContent: card.badges.attachments, color: "primary" },
@@ -9438,7 +9440,7 @@ var Board = function (_a) {
         // @ts-ignore
         targetList.cards.splice(targetListIdIndex, 0, card);
         // Update the card on the server
-        var serviceUrl = "".concat(PLUGIN_SERVICE_BASE, "/card/move.json?siteId=").concat(siteId, "&listId=").concat(targetListId, "&cardId=").concat(cardId);
+        var serviceUrl = "".concat(PLUGIN_SERVICE_BASE, "/card/move.json?siteId=").concat(siteId, "&listId=").concat(targetListId, "&cardId=").concat(cardId, "&index=").concat(targetListIdIndex);
         get(serviceUrl).subscribe({
             next: function (response) {
                 loadBoardData();
